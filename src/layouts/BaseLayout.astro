@@ -1,0 +1,80 @@
+---
+import MainHead from '../components/MainHead.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+	title?: string | undefined;
+	description?: string | undefined;
+}
+
+const { title, description } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<MainHead title={title} description={description} />
+	</head>
+	<body>
+		<div class="stack backgrounds">
+			<Nav />
+			<slot />
+			<Footer />
+		</div>
+
+		<script>
+			addEventListener('load', () => document.documentElement.classList.add('loaded'));
+		</script>
+
+		<style>
+			:root {
+				--_placeholder-bg: linear-gradient(transparent, transparent);
+				--bg-image-subtle-1: var(--_placeholder-bg);
+				--bg-image-subtle-2: var(--_placeholder-bg);
+				--bg-image-footer: var(--_placeholder-bg);
+				--bg-svg-blend-mode: overlay;
+				--bg-blend-mode: darken;
+				--bg-image-aspect-ratio: 2.25;
+				--bg-scale: 1.68;
+				--bg-aspect-ratio: calc(var(--bg-image-aspect-ratio) / var(--bg-scale));
+				--bg-gradient-size: calc(var(--bg-scale) * 100%);
+			}
+
+			:root.theme-dark {
+				--bg-svg-blend-mode: darken;
+				--bg-blend-mode: lighten;
+			}
+
+			/* Mantemos esses blocos vazios para caso queira reativar depois */
+			:root.loaded {}
+			:root.loaded.theme-dark {}
+
+			@media (min-width: 50em) {
+				:root {
+					--bg-scale: 1;
+					--bg-image-main: none;
+				}
+				:root.theme-dark {
+					--bg-image-main: none;
+				}
+				:root.loaded {}
+				:root.loaded.theme-dark {}
+			}
+
+			.backgrounds {
+				min-height: 100%;
+				isolation: isolate;
+				background: var(--gray-999); /* Apenas cor base */
+				background-blend-mode: normal;
+			}
+
+			@media (forced-colors: active) {
+				.backgrounds {
+					background: none;
+					background-blend-mode: none;
+					--bg-gradient-size: none;
+				}
+			}
+		</style>
+	</body>
+</html>
