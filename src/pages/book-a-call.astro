@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import ScheduleForm from '../components/ScheduleForm.astro';
+import ContactCTA from '../components/ContactCTA.astro';
 
 ---
 
@@ -14,22 +15,28 @@ import ScheduleForm from '../components/ScheduleForm.astro';
 				align="center"
 			/>
 			<div class="schedule-container">
-				<ScheduleForm />
+				<!-- Calendly inline widget begin -->
+				<div class="calendly-inline-widget" data-url="https://calendly.com/leandromqrs/30min?background_color=1a1a1a&text_color=ffffff"></div>
+				<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+				<!-- Calendly inline widget end -->
 			</div>
 		</main>
+		<ContactCTA />
 	</div>
 </BaseLayout>
 
 <style>
 	.schedule-container {
-		margin-top: 2rem;
 		display: flex;
 		justify-content: center;
 	}
+
+	.calendly-inline-widget {
+		width: 100%;
+		max-width: 1200px;
+		height: 800px;
+	}
 	
 	@media (min-width: 50em) {
-		.schedule-container {
-			margin-top: 3rem;
-		}
 	}
 </style>
