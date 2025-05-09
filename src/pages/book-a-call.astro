@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ScheduleForm from '../components/ScheduleForm.astro';
+
+---
+
+<BaseLayout title="Book a Call | Leandro Rodrigues" description="Book a Google Meet call with Leandro Rodrigues at a time that works for you.">
+	<div class="stack gap-20">
+		<main class="wrapper stack gap-8">
+			<Hero
+				title="Book a Call"
+				tagline="Choose a convenient time to discuss your project or opportunity."
+				align="center"
+			/>
+			<div class="schedule-container">
+				<ScheduleForm />
+			</div>
+		</main>
+	</div>
+</BaseLayout>
+
+<style>
+	.schedule-container {
+		margin-top: 2rem;
+		display: flex;
+		justify-content: center;
+	}
+	
+	@media (min-width: 50em) {
+		.schedule-container {
+			margin-top: 3rem;
+		}
+	}
+</style>

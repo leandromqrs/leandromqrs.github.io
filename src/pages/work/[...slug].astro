@@ -22,6 +22,8 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
+console.log('entry', entry);
+
 const { Content } = await render(entry);
 ---
 
@@ -140,6 +142,10 @@ const { Content } = await render(entry);
 		.details {
 			flex-direction: row;
 			gap: 2.5rem;
+		}
+
+		.content {
+			max-width: 110ch;
 		}
 
 		.content :global(blockquote) {

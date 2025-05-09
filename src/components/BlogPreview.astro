@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 import FormattedDate from '../components/FormattedDate.astro';
 
@@ -11,7 +12,7 @@ const { data, id } = Astro.props.post;
 ---
 
 <a class="card" href={`/blog/${id}/`}>
-    <img src={data.img} alt="" />
+    <img src={data.img} alt={data.img_alt || ''} loading="lazy" decoding="async" />
     <h4 class="title">{data.title}</h4>
     <p class="date">
         <FormattedDate date={data.publishDate} />

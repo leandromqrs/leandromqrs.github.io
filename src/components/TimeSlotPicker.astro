@@ -1,0 +1,446 @@
+---
+---
+
+<div class="time-slot-picker">
+    <div class="calendar-header">
+        <div class="month-navigation">
+            <button id="prevMonth" aria-label="Previous month" class="pill-button">
+                &larr;
+            </button>
+            <h2 id="monthYear">May 2025</h2>
+            <button id="nextMonth" aria-label="Next month" class="pill-button">
+                &rarr;
+            </button>
+        </div>
+        
+        <div class="time-mode-selector">
+            <button class="pill-button active">12h</button>
+            <button class="pill-button">24h</button>
+        </div>
+    </div>
+    
+    <div class="calendar-body">
+        <div class="weekdays-header">
+            <span>SUN</span>
+            <span>MON</span>
+            <span>TUE</span>
+            <span>WED</span>
+            <span>THU</span>
+            <span>FRI</span>
+            <span>SAT</span>
+        </div>
+        
+        <div id="calendarDays" class="calendar-days-grid"></div>
+    </div>
+    
+    <div id="timeSlots" class="time-slots-container">
+        <h3 id="selectedDateLabel">Select a date to see available times</h3>
+        <div id="timeSlotContainer" class="time-slots-grid"></div>
+    </div>
+</div>
+
+<script>
+// Ensures script runs in client-side environment only
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the current date
+    const today = new Date();
+    const currentDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    
+    // Calendar state
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+    let selectedDate = null;
+    
+    // DOM elements
+    const calendarDays = document.getElementById('calendarDays');
+    const monthYearLabel = document.getElementById('monthYear');
+    const timeSlots = document.getElementById('timeSlots');
+    const selectedDateLabel = document.getElementById('selectedDateLabel');
+    const timeSlotContainer = document.getElementById('timeSlotContainer');
+    const prevMonthBtn = document.getElementById('prevMonth');
+    const nextMonthBtn = document.getElementById('nextMonth');
+    
+    // Debug: Log elements to verify they're found
+    console.log('Calendar elements initialized');
+    
+    // Initialize calendar with current month
+    renderCalendar(currentMonth, currentYear);
+    
+    // Set up event listeners for month navigation
+    if (prevMonthBtn) {
+        prevMonthBtn.addEventListener('click', function() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentMonth, currentYear);
+            console.log('Previous month clicked');
+        });
+    }
+    
+    if (nextMonthBtn) {
+        nextMonthBtn.addEventListener('click', function() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentMonth, currentYear);
+            console.log('Next month clicked');
+        });
+    }
+    
+    // Render the calendar for a given month and year
+    function renderCalendar(month, year) {
+        if (!calendarDays) return;
+        
+        calendarDays.innerHTML = '';
+        
+        // Update the month and year display
+        const months = ["January", "February", "March", "April", "May", "June", 
+                        "July", "August", "September", "October", "November", "December"];
+        if (monthYearLabel) {
+            monthYearLabel.textContent = `${months[month]} ${year}`;
+        }
+        
+        // Get first day of month and number of days
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        // Add empty cells for days before the first day of the month
+        for (let i = 0; i < firstDay; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'calendar-day empty';
+            calendarDays.appendChild(emptyCell);
+        }
+        
+        // Add cells for each day of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(year, month, day);
+            const dayCell = document.createElement('button'); // Using button for better accessibility
+            dayCell.className = 'calendar-day';
+            dayCell.textContent = day.toString();
+            dayCell.setAttribute('data-date', formatDate(date));
+            
+            // Check if the date is in the past
+            if (date < currentDay) {
+                dayCell.classList.add('past');
+                dayCell.disabled = true;
+            } 
+            // Check if it's Saturday (6) - highlightable
+            else if (date.getDay() === 6) {
+                dayCell.classList.add('available');
+                
+                // Add event listener for date selection
+                dayCell.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent any default button behavior
+                    console.log(`Clicked on date: ${formatDate(date)}`);
+                    selectDate(date, dayCell);
+                });
+            }
+            
+            // Check if this is today's date
+            if (date.getDate() === today.getDate() && 
+                date.getMonth() === today.getMonth() && 
+                date.getFullYear() === today.getFullYear()) {
+                dayCell.classList.add('today');
+            }
+            
+            // Add the day cell to the calendar
+            calendarDays.appendChild(dayCell);
+        }
+    }
+    
+    // Handle date selection
+    function selectDate(date, element) {
+        // Clear previous selection
+        const previouslySelected = document.querySelector('.calendar-day.selected');
+        if (previouslySelected) {
+            previouslySelected.classList.remove('selected');
+        }
+        
+        // Mark this date as selected
+        element.classList.add('selected');
+        selectedDate = date;
+        
+        // Format the date for display
+        const formattedDate = formatReadableDate(date);
+        if (selectedDateLabel) {
+            selectedDateLabel.textContent = `${formattedDate}`;
+        }
+        
+        // Generate time slots for this date
+        generateTimeSlots(date);
+        
+        // Make sure time slots are visible
+        if (timeSlots) {
+            timeSlots.style.display = 'block';
+        }
+        
+        console.log(`Date selected: ${formatDate(date)}`);
+    }
+    
+    // Generate available time slots
+    function generateTimeSlots(date) {
+        if (!timeSlotContainer) return;
+        
+        timeSlotContainer.innerHTML = '';
+        
+        // Define available hours (2:30 AM to 7:30 AM)
+        const timeSlots = [
+            '2:30am', '3:00am', '3:30am', '4:00am', '4:30am', 
+            '5:00am', '5:30am', '6:00am', '6:30am', '7:00am', '7:30am'
+        ];
+        
+        // Create a button for each time slot
+        timeSlots.forEach(time => {
+            const timeSlot = document.createElement('button');
+            timeSlot.className = 'time-slot-btn';
+            timeSlot.textContent = time;
+            
+            // Add event listener for time selection
+            timeSlot.addEventListener('click', function() {
+                // Clear previous selection
+                const previouslySelected = document.querySelector('.time-slot-btn.selected');
+                if (previouslySelected) {
+                    previouslySelected.classList.remove('selected');
+                }
+                
+                // Mark this time as selected
+                timeSlot.classList.add('selected');
+                
+                // Get 24-hour format of time for data
+                const time24h = convertTo24Hour(time);
+                
+                // Dispatch event with selected date and time
+                const timeSlotEvent = new CustomEvent('timeSlotSelected', {
+                    detail: {
+                        date: formatDate(date),
+                        time: time24h
+                    }
+                });
+                window.dispatchEvent(timeSlotEvent);
+                console.log(`Selected time: ${time} (${time24h})`);
+            });
+            
+            timeSlotContainer.appendChild(timeSlot);
+        });
+    }
+    
+    // Helper function to format date as YYYY-MM-DD
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+    
+    // Helper function to format date in a readable format
+    function formatReadableDate(date) {
+        const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }
+    
+    // Helper function to convert 12-hour time format to 24-hour
+    function convertTo24Hour(time12h) {
+        const [time, modifier] = time12h.split(/([ap]m)/i);
+        let [hours, minutes] = time.split(':');
+        
+        hours = parseInt(hours, 10);
+        
+        if (modifier.toLowerCase() === 'pm' && hours < 12) {
+            hours += 12;
+        } else if (modifier.toLowerCase() === 'am' && hours === 12) {
+            hours = 0;
+        }
+        
+        return `${hours.toString().padStart(2, '0')}:${minutes}`;
+    }
+});
+</script>
+
+<style>
+    .time-slot-picker {
+        font-family: var(--font-brand);
+        color: var(--gray-0);
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .month-navigation {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .month-navigation h2 {
+        font-size: var(--text-lg);
+        font-weight: 600;
+        margin: 0;
+        white-space: nowrap;
+    }
+    
+    .pill-button {
+        background: var(--accent-subtle-overlay);
+        color: var(--gray-0);
+        border: 1px solid var(--gray-800);
+        border-radius: 999rem;
+        padding: 0.4rem 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: var(--text-sm);
+        font-family: var(--font-brand);
+        transition: background-color var(--theme-transition);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .pill-button:hover {
+        background: var(--accent-overlay);
+    }
+    
+    .pill-button.active {
+        background: var(--accent-regular);
+        color: var(--accent-text-over);
+    }
+    
+    .time-mode-selector {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .weekdays-header {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: center;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--gray-300);
+        font-size: 0.75rem;
+    }
+    
+    .calendar-days-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.25rem;
+        margin-bottom: 2rem;
+    }
+    
+    .calendar-day {
+        aspect-ratio: 1;
+        border: 1px solid var(--gray-800);
+        border-radius: 999rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        background: none;
+        color: var(--gray-200);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: var(--font-brand);
+    }
+    
+    .calendar-day:hover:not(.empty, .past) {
+        border-color: var(--accent-regular);
+        color: var(--gray-0);
+        transform: translateY(-2px);
+    }
+    
+    .calendar-day.empty {
+        cursor: default;
+        border: none;
+        background: none;
+    }
+    
+    .calendar-day.past {
+        color: var(--gray-600);
+        cursor: not-allowed;
+        background: none;
+    }
+    
+    .calendar-day.available {
+        color: var(--gray-0);
+        font-weight: 500;
+        border: 1px solid var(--accent-regular);
+    }
+    
+    .calendar-day.selected {
+        background: var(--accent-regular);
+        color: var(--accent-text-over);
+        transform: translateY(-2px);
+        font-weight: 600;
+        border-color: var(--accent-regular);
+    }
+    
+    .calendar-day.today {
+        background: var(--gray-800);
+        font-weight: 600;
+    }
+    
+    .time-slots-container {
+        border-top: 1px solid var(--gray-800);
+        padding-top: 1.5rem;
+    }
+    
+    .time-slots-container h3 {
+        margin: 0 0 1rem 0;
+        font-size: var(--text-md);
+        font-weight: 500;
+        color: var(--gray-100);
+    }
+    
+    .time-slots-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+        gap: 0.5rem;
+    }
+    
+    .time-slot-btn {
+        background: var(--accent-subtle-overlay);
+        color: var(--gray-0);
+        border: 1px solid var(--gray-800);
+        border-radius: 999rem;
+        padding: 0.6rem 0.5rem;
+        font-size: var(--text-sm);
+        cursor: pointer;
+        font-family: var(--font-brand);
+        transition: all 0.2s ease;
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .time-slot-btn:hover {
+        background: var(--accent-overlay);
+        border-color: var(--accent-regular);
+        transform: translateY(-2px);
+    }
+    
+    .time-slot-btn.selected {
+        background: var(--accent-regular);
+        border-color: var(--accent-regular);
+        color: var(--accent-text-over);
+        transform: translateY(-2px);
+    }
+    
+    @media (max-width: 600px) {
+        .calendar-header {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        
+        .time-slots-grid {
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        }
+    }
+</style>
