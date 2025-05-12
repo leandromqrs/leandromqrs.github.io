@@ -12,6 +12,7 @@ import Hero from '../components/Hero.astro';
 import Icon from '../components/Icon.astro';
 import Pill from '../components/Pill.astro';
 import PortfolioPreview from '../components/PortfolioPreview.astro';
+import TechIcon from '../components/TechIcon.astro';
 
 // Page section components
 import ContactCTA from '../components/ContactCTA.astro';
@@ -21,6 +22,44 @@ import Skills from '../components/Skills.astro';
 const projects = (await getCollection('work'))
 	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
 	.slice(0, 4);
+
+const stacks = [
+	{ icon: 'java', name: 'Java' },
+	{ icon: 'grails', name: 'Grails' },
+	{ icon: 'react', name: 'React' },
+	{ icon: 'nodedotjs', name: 'Node.js' },
+	{ icon: 'docker', name: 'Docker' },
+	{ icon: 'kubernetes', name: 'Kubernetes' },
+	{ icon: 'amazonwebservices', name: 'AWS' },
+	{ icon: 'python', name: 'Python' },
+	{ icon: 'typescript', name: 'TypeScript' },
+	{ icon: 'spring', name: 'Spring Boot' },
+	{ icon: 'postgresql', name: 'PostgreSQL' },
+	{ icon: 'mongodb', name: 'MongoDB' },
+	{ icon: 'redis', name: 'Redis' },
+	{ icon: 'apachekafka', name: 'Kafka' },
+	{ icon: 'jenkins', name: 'Jenkins' },
+	{ icon: 'git', name: 'Git' },
+	{ icon: 'nginx', name: 'NGINX' },
+	{ icon: 'mysql', name: 'MySQL' },
+	{ icon: 'html5', name: 'HTML5' },
+	{ icon: 'css3', name: 'CSS3' },
+	{ icon: 'bootstrap', name: 'Bootstrap' },
+	{ icon: 'tailwindcss', name: 'Tailwind CSS' },
+	{ icon: 'vuedotjs', name: 'Vue.js' },
+	{ icon: 'flutter', name: 'Flutter' },
+	{ icon: 'jest', name: 'Jest' },
+	{ icon: 'cypress', name: 'Cypress' },
+	{ icon: 'webpack', name: 'Webpack' },
+	{ icon: 'babel', name: 'Babel' },
+	{ icon: 'eslint', name: 'ESLint' },
+	{ icon: 'prettier', name: 'Prettier' },
+	{ icon: 'postman', name: 'Postman' },
+	{ icon: 'jira', name: 'Jira' },
+	{ icon: 'github', name: 'GitHub' },
+	{ icon: 'gitlab', name: 'GitLab' },
+	{ icon: 'bitbucket', name: 'Bitbucket' }
+]
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/basics/astro-components/
@@ -91,9 +130,10 @@ const projects = (await getCollection('work'))
 				<div class="gallery">
 					<Grid variant="small">
 						{
-							['React', 'Node.js', 'Docker', 'Kubernetes', 'AWS'].map((stack) => (
+							stacks.map((stack) => (
 								<li class="stack-card">
-									<p>{stack}</p>
+									<TechIcon iconName={stack.icon} size={34} />
+									<p>{stack.name}</p>
 								</li>
 							))
 						}
@@ -232,21 +272,41 @@ const projects = (await getCollection('work'))
 
 	.stack-card {
 		display: flex;
-		height: 7rem;
+		height: 5rem;
 		justify-content: center;
 		align-items: center;
 		text-align: center;
 		border: 1px solid var(--gray-800);
-		border-radius: 1.5rem;
+		border-radius: 1rem;
 		color: var(--gray-300);
 		background: var(--gradient-subtle);
 		box-shadow: var(--shadow-sm);
+		gap: 1rem;
+		transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+	}
+
+	.stack-card:hover {
+		transform: translateY(-5px);
+		box-shadow: var(--shadow-md);
+	}
+
+	.stack-card .tech-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 2em;
+	}
+
+	.stack-card p {
+		font-weight: 500;
+		font-size: var(--text-md);
 	}
 
 	@media (min-width: 50em) {
 		.stack-card {
-			border-radius: 1.5rem;
-			height: 9.5rem;
+			border-radius: 1rem;
+			padding: 0 1.5rem;
+			height: 4rem;
 		}
 	}
 </style>

@@ -1,0 +1,49 @@
+---
+import * as simpleIcons from 'simple-icons';
+import type { SimpleIcon } from 'simple-icons';
+import { customIcons } from '../icons/customIcons';
+
+interface Props {
+  iconName: string;
+  size?: number;
+  color?: string;
+  className?: string;
+}
+
+const { iconName, size = 24, color, className = '' } = Astro.props;
+
+
+// Verifica se o ícone está nos ícones personalizados
+let iconPath;
+let iconHex;
+
+if (iconName in customIcons) {
+  const customIcon = customIcons[iconName as keyof typeof customIcons];
+  iconPath = customIcon.path;
+  iconHex = customIcon.hex;
+} else {
+  // Use Simple Icons para os outros ícones
+  const iconKey = `si${iconName.charAt(0).toUpperCase()}${iconName.slice(1)}`;
+  const icon = (simpleIcons as unknown as Record<string, SimpleIcon>)[iconKey];
+  
+  if (!icon) {
+    console.warn(`Ícone "${iconKey}" não encontrado.`);
+  }
+  
+  iconPath = icon?.path;
+  iconHex = icon?.hex;
+}
+---
+
+<svg
+    class={className}
+    role="img"
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    fill={`#${color ?? iconHex}`}
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <title>{iconName} icon</title>
+    <path d={iconPath} />
+</svg>
