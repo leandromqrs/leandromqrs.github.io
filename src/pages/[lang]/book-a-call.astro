@@ -3,6 +3,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
 import ContactCTA from '../../components/ContactCTA.astro';
 
+// For dynamic routing
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'pt-br' } }
+  ];
+}
 ---
 
 <BaseLayout title="Book a Call | Leandro Rodrigues" description="Book a Google Meet call with Leandro Rodrigues at a time that works for you.">

@@ -1,25 +1,25 @@
 ---
 import { m } from '../paraglide/messages.js';
-import { getLocale, locales } from '../paraglide/runtime';
+import { deLocalizeHref, localizeHref } from '../paraglide/runtime';
 
-const pathName = Astro.url.pathname.replace(`/${getLocale()}`, '');
-console.log('pathName', pathName);
+// Usa a função deLocalizeHref para remover automaticamente o prefixo de idioma da URL atual
+const deLocalizedPath = deLocalizeHref(Astro.url.pathname);
 const lang = Astro.params.lang;
 ---
 
 <div class="language-picker">
-    <div class="language-picker-button">
+    <button class="language-picker-button" aria-label="Selecionar idioma" aria-haspopup="true" aria-expanded="false">
         <span>{m.languageName()}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
-    </div>
+    </button>
     <ul class="language-options">
         <li>
-            <a class={lang === locales ? "active" : ""} href={`/pt-br/${pathName}`}>{m.languageName(undefined, { locale: 'pt-br' })}</a>
+            <a class={lang === 'pt-br' ? "active" : ""} href={localizeHref(deLocalizedPath, { locale: 'pt-br' })}>{m.languageName(undefined, { locale: 'pt-br' })}</a>
         </li>
         <li>
-            <a class={lang === locales ? "active" : ""} href={`/en/${pathName}`}>{m.languageName(undefined, { locale: 'en' })}</a>
+            <a class={lang === 'en' ? "active" : ""} href={localizeHref(deLocalizedPath, { locale: 'en' })}>{m.languageName(undefined, { locale: 'en' })}</a>
         </li>
     </ul>
 </div>
@@ -41,11 +41,7 @@ const lang = Astro.params.lang;
         cursor: pointer;
         font-size: var(--text-sm);
     }
-
-    .language-picker:hover .language-options {
-        display: block;
-    }
-
+    
     .language-options {
         display: none;
         position: absolute;
@@ -59,6 +55,25 @@ const lang = Astro.params.lang;
         right: 0;
         overflow: hidden;
         min-width: 120px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transform-origin: top right;
+        transition: all 0.2s ease;
+    }
+    
+    .language-picker.open .language-options {
+        display: block;
+        animation: menuAppear 0.2s ease-out;
+    }
+    
+    @keyframes menuAppear {
+        from {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .language-options a {
@@ -82,3 +97,64 @@ const lang = Astro.params.lang;
         font-weight: 500;
     }
 </style>
+
+<script is:inline>
+// Script simples para controlar o menu de idiomas
+window.addEventListener('load', function() {
+    // Encontra todos os seletores de idioma na página
+    var pickers = document.querySelectorAll('.language-picker');
+    
+    // Para cada seletor...
+    pickers.forEach(function(picker) {
+        var button = picker.querySelector('button');
+        if (!button) return;
+        
+        // Manipulador para alternar o menu
+        function toggleMenu(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Verifica se o menu está aberto
+            var isOpen = picker.classList.contains('open');
+            
+            if (isOpen) {
+                // Fecha o menu
+                picker.classList.remove('open');
+                button.setAttribute('aria-expanded', 'false');
+                document.removeEventListener('click', handleOutsideClick);
+            } else {
+                // Abre o menu
+                picker.classList.add('open');
+                button.setAttribute('aria-expanded', 'true');
+                
+                // Adiciona evento para detectar cliques fora
+                setTimeout(function() {
+                    document.addEventListener('click', handleOutsideClick);
+                }, 10);
+            }
+        }
+        
+        // Fecha o menu ao clicar fora
+        function handleOutsideClick(e) {
+            if (!picker.contains(e.target)) {
+                picker.classList.remove('open');
+                button.setAttribute('aria-expanded', 'false');
+                document.removeEventListener('click', handleOutsideClick);
+            }
+        }
+        
+        // Adiciona evento de clique ao botão
+        button.addEventListener('click', toggleMenu);
+        
+        // Adiciona suporte para fechar com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && picker.classList.contains('open')) {
+                picker.classList.remove('open');
+                button.setAttribute('aria-expanded', 'false');
+                document.removeEventListener('click', handleOutsideClick);
+                if (button.focus) button.focus();
+            }
+        });
+    });
+});
+</script>

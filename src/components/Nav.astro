@@ -4,17 +4,17 @@ import ThemeToggle from './ThemeToggle.astro';
 import LanguagePicker from './LanguagePicker.astro';
 import type { iconPaths } from './IconPaths';
 import { m } from "../paraglide/messages.js";
-import { getLocale } from '../paraglide/runtime';
+import { getLocale } from '../paraglide/runtime.js';
 
 const locale = getLocale();
 
 /** Main menu items */
 const textLinks: { label: string; href: string, className: string }[] = [
-	{ label: m.navHome(), href: '/' + locale + '/', className: 'link' },
-	{ label: m.navWork(), href: '/' + locale + '/work/', className: 'link' },
-	{ label: m.navAbout(), href: '/' + locale + '/about/', className: 'link' },
-	{ label: 'Blog', href: '/' + locale + '/blog/', className: 'link' },
-	{ label: m.navBookACall(), href: '/' + locale + '/book-a-call/', className: 'link call-to-action' },
+	{ label: m.navHome(), href: `/${locale}/`, className: 'link' },
+	{ label: m.navWork(), href: `/${locale}/work/`, className: 'link' },
+	{ label: m.navAbout(), href: `/${locale}/about/`, className: 'link' },
+	{ label: 'Blog', href: `/${locale}/blog/`, className: 'link' },
+	{ label: m.navBookACall(), href: `/${locale}/book-a-call/`, className: 'link call-to-action' },
 ];
 
 /** Icon links to social media — edit these with links to your profiles! */
@@ -29,7 +29,28 @@ const isCurrentPage = (href: string) => {
 	let pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
 	if (pathname.at(0) !== '/') pathname = '/' + pathname;
 	if (pathname.at(-1) !== '/') pathname += '/';
-	return pathname === href || (href !== '/' && pathname.startsWith(href));
+
+	// Exact match
+	if (pathname === href) return true;
+
+	// Special case for home page with language prefix
+	if (href === `/${locale}/` && pathname === `/${locale}/`) return true;
+
+	// Check if we're in a section (like /work/ or /blog/)
+	// But avoid matching partial paths (like /work/ matching /worked/)
+	if (href !== '/' && href !== `/${locale}/`) {
+		// Extract the section from the URL (e.g., /en/work/ => work)
+		const hrefParts = href.split('/').filter(Boolean);
+		const pathnameParts = pathname.split('/').filter(Boolean);
+
+		// If href has at least a language and section, and pathname has same parts
+		if (hrefParts.length >= 2 && pathnameParts.length >= 2) {
+			// Check if the language and section match
+			return hrefParts[0] === pathnameParts[0] && hrefParts[1] === pathnameParts[1];
+		}
+	}
+
+	return false;
 };
 ---
 

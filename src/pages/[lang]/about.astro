@@ -3,6 +3,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 import ContactCTA from '../../components/ContactCTA.astro';
 import Hero from '../../components/Hero.astro';
+
+// For dynamic routing
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'pt-br' } }
+  ];
+}
 ---
 
 <BaseLayout title="About | Leandro Rodrigues" description="About Leandro Rodrigues, Senior Full Stack Developer and Software Engineer.">
