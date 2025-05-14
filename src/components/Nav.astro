@@ -3,23 +3,23 @@ import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import LanguagePicker from './LanguagePicker.astro';
 import type { iconPaths } from './IconPaths';
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { m } from "../paraglide/messages.js";
+import { getLocale } from '../paraglide/runtime';
 
-const lang = getLangFromUrl(Astro.request.url);
-const t = useTranslations(lang);
+const locale = getLocale();
 
 /** Main menu items */
 const textLinks: { label: string; href: string, className: string }[] = [
-	{ label: 'Home', href: '/', className: 'link' },
-	{ label: 'Work', href: '/work/', className: 'link' },
-	{ label: 'About', href: '/about/', className: 'link' },
-	{ label: 'Blog', href: '/blog/', className: 'link' },
-	{ label: 'Book a Call', href: '/book-a-call/', className: 'link call-to-action' },
+	{ label: m.navHome(), href: '/' + locale + '/', className: 'link' },
+	{ label: m.navWork(), href: '/' + locale + '/work/', className: 'link' },
+	{ label: m.navAbout(), href: '/' + locale + '/about/', className: 'link' },
+	{ label: 'Blog', href: '/' + locale + '/blog/', className: 'link' },
+	{ label: m.navBookACall(), href: '/' + locale + '/book-a-call/', className: 'link call-to-action' },
 ];
 
 /** Icon links to social media — edit these with links to your profiles! */
 const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[] = [
-{ label: 'LinkedIn', href: 'https://linkedin.com/in/leandromqrs', icon: 'linkedin-logo' },
+	{ label: 'LinkedIn', href: 'https://linkedin.com/in/leandromqrs', icon: 'linkedin-logo' },
 	{ label: 'GitHub', href: 'https://github.com/leandromqrs', icon: 'github-logo' },
 	{ label: 'Twitter', href: 'https://twitter.com/leandromqrs', icon: 'twitter-logo' },
 ];
@@ -99,6 +99,9 @@ const isCurrentPage = (href: string) => {
 				}
 			</div>
 
+			<div class="language-picker">
+				<LanguagePicker />
+			</div>
 			<div class="theme-toggle">
 				<ThemeToggle />
 			</div>

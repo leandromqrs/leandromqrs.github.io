@@ -1,0 +1,8 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "navHome": "Home",
+  "navAbout": "About",
+  "navWork": "Work",
+  "navBookACall": "Book a Call",
+  "languageName": "English"
+}

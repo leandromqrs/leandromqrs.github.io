@@ -3,20 +3,20 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 
 // Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
 // Component Imports
-import CallToAction from '../components/CallToAction.astro';
-import Grid from '../components/Grid.astro';
-import Hero from '../components/Hero.astro';
-import Icon from '../components/Icon.astro';
-import Pill from '../components/Pill.astro';
-import PortfolioPreview from '../components/PortfolioPreview.astro';
-import TechIcon from '../components/TechIcon.astro';
+import CallToAction from '../../components/CallToAction.astro';
+import Grid from '../../components/Grid.astro';
+import Hero from '../../components/Hero.astro';
+import Icon from '../../components/Icon.astro';
+import Pill from '../../components/Pill.astro';
+import PortfolioPreview from '../../components/PortfolioPreview.astro';
+import TechIcon from '../../components/TechIcon.astro';
 
 // Page section components
-import ContactCTA from '../components/ContactCTA.astro';
-import Skills from '../components/Skills.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
+import Skills from '../../components/Skills.astro';
 
 // Content Fetching: List four most recent work projects
 const projects = (await getCollection('work'))
@@ -63,9 +63,11 @@ const stacks = [
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/basics/astro-components/
+const data = Astro.locals;
 ---
 
 <BaseLayout>
+	<h1>{data.title}</h1>
 	<div class="stack gap-20 lg:gap-48">
 		<div class="wrapper stack gap-8 lg:gap-20">
 			<header class="hero">

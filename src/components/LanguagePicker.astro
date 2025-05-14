@@ -1,11 +1,84 @@
 ---
-import { languages } from '../i18n/ui';
+import { m } from '../paraglide/messages.js';
+import { getLocale, locales } from '../paraglide/runtime';
+
+const pathName = Astro.url.pathname.replace(`/${getLocale()}`, '');
+console.log('pathName', pathName);
+const lang = Astro.params.lang;
 ---
 
-<ul>
-    {Object.entries(languages).map(([lang, label]) => (
+<div class="language-picker">
+    <div class="language-picker-button">
+        <span>{m.languageName()}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+    </div>
+    <ul class="language-options">
         <li>
-            <a href={`/?lang=${lang}`}>{label}</a>
+            <a class={lang === locales ? "active" : ""} href={`/pt-br/${pathName}`}>{m.languageName(undefined, { locale: 'pt-br' })}</a>
         </li>
-    ))}
-</ul>
+        <li>
+            <a class={lang === locales ? "active" : ""} href={`/en/${pathName}`}>{m.languageName(undefined, { locale: 'en' })}</a>
+        </li>
+    </ul>
+</div>
+
+<style>
+    .language-picker {
+        position: relative;
+    }
+
+    .language-picker-button {
+        background: var(--gradient-subtle);
+        border: 1px solid var(--gray-800);
+        border-radius: 999rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4em;
+        padding: 0.5rem 1rem;
+        color: var(--gray-300);
+        cursor: pointer;
+        font-size: var(--text-sm);
+    }
+
+    .language-picker:hover .language-options {
+        display: block;
+    }
+
+    .language-options {
+        display: none;
+        position: absolute;
+        z-index: 100;
+        list-style: none;
+        padding: 0.5rem;
+        background: var(--gradient-subtle);
+        border: 1px solid var(--gray-800);
+        border-radius: 0.5rem;
+        margin-top: 0.25rem;
+        right: 0;
+        overflow: hidden;
+        min-width: 120px;
+    }
+
+    .language-options a {
+        display: block;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        color: var(--gray-300);
+        border-radius: 0.25rem;
+        transition: background-color 0.2s ease;
+        font-size: var(--text-sm);
+    }
+
+    .language-options a:hover {
+        background-color: var(--gray-800);
+        color: var(--gray-200);
+    }
+
+    .language-options a.active {
+        background-color: var(--accent-regular);
+        color: var(--accent-text-over);
+        font-weight: 500;
+    }
+</style>
