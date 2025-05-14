@@ -4,5 +4,58 @@
   "navAbout": "About",
   "navWork": "Work",
   "navBookACall": "Book a Call",
-  "languageName": "English"
+  "languageName": "English",
+  
+  "heroTitle": "Hello, welcome to my portfolio!",
+  "heroTagline": "I build scalable systems, integrate complex platforms, and turn ideas into high-performance solutions.",
+  "heroDeveloper": "Developer",
+  "heroArchitect": "System Architect",
+  "heroDevOps": "DevOps & CI/CD",
+  "heroImageAlt": "Leandro Rodrigues smiling in a green shirt",
+  
+  "skillsFullStackTitle": "Full Stack",
+  "skillsFullStackDesc": "Solid experience in back-end with Java, Spring Boot and Grails, as well as mastery of modern front-end. Developed systems from scratch with a focus on performance, scalability and integration with complex APIs.",
+  "skillsIndustryTitle": "Industry Leader",
+  "skillsIndustryDesc": "Led automation projects with Kubernetes clusters, Docker Swarm and Kafka integration. Created and maintained orchestrators that compete with market solutions such as Control-M, adopted in public and critical environments.",
+  "skillsStrategyTitle": "Strategy-Minded",
+  "skillsStrategyDesc": "Ability to connect business demands to technology. Structures modular and efficient architectures, promoting high availability, security and constant evolution of systems — always with a technical and strategic focus.",
+  
+  "workSectionTitle": "Selected Work",
+  "workSectionDesc": "Take a look below at some of my featured work for clients from the past few years.",
+  "workViewAll": "View All",
+  "workPageTitle": "My Work",
+  "workPageDesc": "Explore Leandro Rodrigues' portfolio showcasing his expertise in building scalable systems, integrating complex platforms, and crafting high-performance solutions across diverse industries.",
+  "workPageTagline": "See my most recent projects below to get an idea of my past experience.",
+  
+  "stacksSectionTitle": "Stacks",
+  "stacksSectionDesc": "I have experience working with various technologies and frameworks. Below are some of the key stacks I've worked with.",
+  
+  "contactTitle": "Interested in working together?",
+  "contactCTA": "Send Me a Message",
+  
+  "aboutTitle": "About",
+  "aboutTagline": "Thanks for stopping by. Read below to learn more about myself and my background.",
+  "aboutBackgroundTitle": "Background",
+  "aboutBackgroundP1": "I'm Leandro Rodrigues, a Senior Full Stack Developer with over 5 years of experience turning complex problems into scalable, efficient, and impactful digital solutions. My journey has taken me through mission-critical systems, process automation platforms, and cloud-native architectures — all built with clean code and strategic vision.",
+  "aboutBackgroundP2": "With strong expertise in Java, Spring Boot, Quarkus, C#, and front-end technologies like Vue.js, React.js and TypeScript, I design modular microservices and robust APIs. My focus lies not just in coding, but in building high-performance ecosystems. I'm also deeply familiar with containerized environments using Docker, Kubernetes, and OpenShift, and I often work with messaging tools like Kafka and RabbitMQ for system integration.",
+  "aboutBackgroundP3": "Throughout my career, I've improved system scalability by over 40% through efficient microservice design, automated 15+ CI/CD pipelines, accelerated software delivery by 25%, developed 50+ custom plugins for SAP and enterprise tools, and migrated legacy systems to modern, highly available infrastructure with 99.9% uptime. I thrive on building solutions that simply work — and scale.",
+  "aboutEducationTitle": "Education",
+  "aboutEducationP1": "Bachelor's in Computer Science (UniCEUB & IFB)",
+  "aboutEducationP2": "Postgraduate MBA in Software Engineering (USP - in progress)",
+  "aboutEducationP3": "Certifications: Docker for Beginners, Spring Framework, Agile Methodologies, AWS Educate",
+  "aboutSkillsTitle": "Skills",
+  "aboutSkillsP1": "Java, Spring Boot, Quarkus, Grails, C#, ASP.NET, Python, Vue.js, TypeScript",
+  "aboutSkillsP2": "SQL Server, PostgreSQL, MongoDB, Cassandra",
+  "aboutSkillsP3": "Docker, Kubernetes, OpenShift, CI/CD, Azure DevOps",
+  "aboutSkillsP4": "Kafka, RabbitMQ, RESTful APIs, Microservices Architecture",
+  
+  "callPageTitle": "Book a Call",
+  "callPageTagline": "Choose a convenient time to discuss your project or opportunity.",
+  
+  "notFoundTitle": "Page Not Found",
+  "notFoundTagline": "Not found",
+  
+  "backToHome": "Back to Home",
+  
+  "blogTitle": "Blog"
 }

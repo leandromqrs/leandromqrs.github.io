@@ -1,47 +1,50 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
-import ContactCTA from '../../components/ContactCTA.astro';
-import PortfolioPreview from '../../components/PortfolioPreview.astro';
-import Hero from '../../components/Hero.astro';
-import Grid from '../../components/Grid.astro';
+import ContactCTA from "../../components/ContactCTA.astro";
+import PortfolioPreview from "../../components/PortfolioPreview.astro";
+import Hero from "../../components/Hero.astro";
+import Grid from "../../components/Grid.astro";
+
+// Paraglide translations
+import { m } from "../../paraglide/messages.js";
 
 // For dynamic routing
 export function getStaticPaths() {
-  return [
-    { params: { lang: 'en' } },
-    { params: { lang: 'pt-br' } }
-  ];
+	return [
+		{ params: { lang: 'en' } },
+		{ params: { lang: 'pt-br' } }
+	];
 }
 
-const projects = (await getCollection('work')).sort(
-	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+const projects = (await getCollection("work")).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
 ---
 
 <BaseLayout
-	title="My Work | Leandro Rodrigues"
-	description="Explore Leandro Rodrigues' portfolio showcasing his expertise in building scalable systems, integrating complex platforms, and crafting high-performance solutions across diverse industries."
+  title={m.workPageTitle() + " | Leandro Rodrigues"}
+  description={m.workPageDesc()}
 >
-	<div class="stack gap-20">
-		<main class="wrapper stack gap-8">
-			<Hero
-				title="My Work"
-				tagline="See my most recent projects below to get an idea of my past experience."
-				align="start"
-			/>
-			<Grid variant="offset">
-				{
-					projects.map((project) => (
-						<li>
-							<PortfolioPreview project={project} />
-						</li>
-					))
-				}
-			</Grid>
-		</main>
-		<ContactCTA />
-	</div>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-8">
+      <Hero
+        title={m.workPageTitle()}
+        tagline={m.workPageTagline()}
+        align="start"
+      />
+      <Grid variant="offset">
+        {
+          projects.map((project) => (
+            <li>
+              <PortfolioPreview project={project} />
+            </li>
+          ))
+        }
+      </Grid>
+    </main>
+    <ContactCTA />
+  </div>
 </BaseLayout>

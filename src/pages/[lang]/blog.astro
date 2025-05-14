@@ -1,38 +1,44 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
-import BlogPreview from '../../components/BlogPreview.astro';
-import Grid from '../../components/Grid.astro';
+import BlogPreview from "../../components/BlogPreview.astro";
+import Grid from "../../components/Grid.astro";
+import Hero from "../../components/Hero.astro";
+
+// Paraglide translations
+import { m } from "../../paraglide/messages.js";
 
 // For dynamic routing
 export function getStaticPaths() {
-  return [
-    { params: { lang: 'en' } },
-    { params: { lang: 'pt-br' } }
-  ];
+	return [
+		{ params: { lang: 'en' } },
+		{ params: { lang: 'pt-br' } }
+	];
 }
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
 ---
 
 <BaseLayout
-	title="Blog | Leandro Rodrigues"
-	description="Blog posts by Leandro Rodrigues">
-	<div class="stack gap-20">
-		<main class="wrapper stack gap-8">
-			<Grid variant="spotlight">
-				{
-					posts.map((post) => (
-						<li>
-							<BlogPreview post={post} />
-						</li>
-					))
-				}
-			</Grid>
-		</main>
-	</div>
+  title={m.blogTitle() + " | Leandro Rodrigues"}
+  description={m.blogTitle() + " posts by Leandro Rodrigues"}
+>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-8">
+      <Hero title={m.blogTitle()} tagline="" align="start" />
+      <Grid variant="spotlight">
+        {
+          posts.map((post) => (
+            <li>
+              <BlogPreview post={post} />
+            </li>
+          ))
+        }
+      </Grid>
+    </main>
+  </div>
 </BaseLayout>

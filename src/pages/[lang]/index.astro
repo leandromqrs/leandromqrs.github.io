@@ -18,12 +18,16 @@ import TechIcon from '../../components/TechIcon.astro';
 import ContactCTA from '../../components/ContactCTA.astro';
 import Skills from '../../components/Skills.astro';
 
+// Paraglide translations
+import { m } from "../../paraglide/messages.js";
+import { getLocale } from "../../paraglide/runtime.js";
+
 // For dynamic routing
 export function getStaticPaths() {
-  return [
-    { params: { lang: 'en' } },
-    { params: { lang: 'pt-br' } }
-  ];
+	return [
+		{ params: { lang: 'en' } },
+		{ params: { lang: 'pt-br' } }
+	];
 }
 
 // Content Fetching: List four most recent work projects
@@ -71,28 +75,28 @@ const stacks = [
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/basics/astro-components/
-const data = Astro.locals;
+// No locals data needed here
 ---
 
 <BaseLayout>
-	<h1>{data.title}</h1>
+	<div>
 	<div class="stack gap-20 lg:gap-48">
 		<div class="wrapper stack gap-8 lg:gap-20">
 			<header class="hero">
 				<Hero
-					title="Hello, welcome to my portfolio!"
-					tagline="I build scalable systems, integrate complex platforms, and turn ideas into high-performance solutions."
+					title={m.heroTitle()}
+					tagline={m.heroTagline()}
 					align="start"
 				>
 					<div class="roles">
-						<Pill><Icon icon="code" size="1.33em" /> Developer</Pill>
-						<Pill><Icon icon="terminal-window" size="1.33em" /> System Architect</Pill>
-						<Pill><Icon icon="rocket-launch" size="1.33em" /> DevOps & CI/CD</Pill>
+						<Pill><Icon icon="code" size="1.33em" /> {m.heroDeveloper()}</Pill>
+						<Pill><Icon icon="terminal-window" size="1.33em" /> {m.heroArchitect()}</Pill>
+						<Pill><Icon icon="rocket-launch" size="1.33em" /> {m.heroDevOps()}</Pill>
 					</div>
 				</Hero>
 
 				<Image
-					alt="Leandro Rodrigues smiling in a green shirt"
+					alt={m.heroImageAlt()}
 					width="480"
 					height="620"
 					src="/assets/portrait.jpg"
@@ -105,8 +109,8 @@ const data = Astro.locals;
 		<main class="wrapper stack gap-20 lg:gap-48">
 			<section class="section with-background with-cta">
 				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Selected Work</h3>
-					<p>Take a look below at some of my featured work for clients from the past few years.</p>
+					<h3>{m.workSectionTitle()}</h3>
+					<p>{m.workSectionDesc()}</p>
 				</header>
 
 				<div class="gallery">
@@ -122,8 +126,8 @@ const data = Astro.locals;
 				</div>
 
 				<div class="cta">
-					<CallToAction href="/work/">
-						View All
+					<CallToAction href={`/${getLocale()}/work/`}>
+						{m.workViewAll()}
 						<Icon icon="arrow-right" size="1.2em" />
 					</CallToAction>
 				</div>
@@ -131,9 +135,9 @@ const data = Astro.locals;
 
 			<section class="section with-background bg-variant">
 				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Stacks</h3>
+					<h3>{m.stacksSectionTitle()}</h3>
 					<p>
-						I have experience working with various technologies and frameworks. Below are some of the key stacks I've worked with.
+						{m.stacksSectionDesc()}
 					</p>
 				</header>
 

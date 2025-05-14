@@ -1,48 +1,58 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import ContactCTA from '../../components/ContactCTA.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import ContactCTA from "../../components/ContactCTA.astro";
+
+// Paraglide translations
+import { m } from "../../paraglide/messages.js";
 
 // For dynamic routing
 export function getStaticPaths() {
-  return [
-    { params: { lang: 'en' } },
-    { params: { lang: 'pt-br' } }
-  ];
+  return [{ params: { lang: "en" } }, { params: { lang: "pt-br" } }];
 }
 ---
 
-<BaseLayout title="Book a Call | Leandro Rodrigues" description="Book a Google Meet call with Leandro Rodrigues at a time that works for you.">
-	<div class="stack gap-20">
-		<main class="wrapper stack gap-8">
-			<Hero
-				title="Book a Call"
-				tagline="Choose a convenient time to discuss your project or opportunity."
-				align="center"
-			/>
-			<div class="schedule-container">
-				<!-- Calendly inline widget begin -->
-				<div class="calendly-inline-widget" data-url="https://calendly.com/leandromqrs/30min?background_color=1a1a1a&text_color=ffffff"></div>
-				<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-				<!-- Calendly inline widget end -->
-			</div>
-		</main>
-		<ContactCTA />
-	</div>
+<BaseLayout
+  title={m.callPageTitle() + " | Leandro Rodrigues"}
+  description="Book a Google Meet call with Leandro Rodrigues at a time that works for you."
+>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-8">
+      <Hero
+        title={m.callPageTitle()}
+        tagline={m.callPageTagline()}
+        align="center"
+      />
+      <div class="schedule-container">
+        <!-- Calendly inline widget begin -->
+        <div
+          class="calendly-inline-widget"
+          data-url="https://calendly.com/leandromqrs/30min?background_color=1a1a1a&text_color=ffffff"
+        >
+        </div>
+        <script
+          type="text/javascript"
+          src="https://assets.calendly.com/assets/external/widget.js"
+          async></script>
+        <!-- Calendly inline widget end -->
+      </div>
+    </main>
+    <ContactCTA />
+  </div>
 </BaseLayout>
 
 <style>
-	.schedule-container {
-		display: flex;
-		justify-content: center;
-	}
+  .schedule-container {
+    display: flex;
+    justify-content: center;
+  }
 
-	.calendly-inline-widget {
-		width: 100%;
-		max-width: 1200px;
-		height: 800px;
-	}
-	
-	@media (min-width: 50em) {
-	}
+  .calendly-inline-widget {
+    width: 100%;
+    max-width: 1200px;
+    height: 800px;
+  }
+
+  @media (min-width: 50em) {
+  }
 </style>

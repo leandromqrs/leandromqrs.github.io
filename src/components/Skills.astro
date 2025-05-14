@@ -1,22 +1,23 @@
 ---
 import Icon from './Icon.astro';
+import { m } from "../paraglide/messages.js";
 ---
 
 <section class="box skills">
 	<div class="stack gap-2 lg:gap-4">
 		<Icon icon="terminal-window" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Full Stack</h2>
-		<p>Solid experience in back-end with Java, Spring Boot and Grails, as well as mastery of modern front-end. Developed systems from scratch with a focus on performance, scalability and integration with complex APIs.</p>
+		<h2>{m.skillsFullStackTitle()}</h2>
+		<p>{m.skillsFullStackDesc()}</p>
 	</div>
 	<div class="stack gap-2 lg:gap-4">
 		<Icon icon="trophy" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Industry Leader</h2>
-		<p>Led automation projects with Kubernetes clusters, Docker Swarm and Kafka integration. Created and maintained orchestrators that compete with market solutions such as Control-M, adopted in public and critical environments.</p>
+		<h2>{m.skillsIndustryTitle()}</h2>
+		<p>{m.skillsIndustryDesc()}</p>
 	</div>
 	<div class="stack gap-2 lg:gap-4">
 		<Icon icon="strategy" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Strategy-Minded</h2>
-		<p>Ability to connect business demands to technology. Structures modular and efficient architectures, promoting high availability, security and constant evolution of systems — always with a technical and strategic focus.</p>
+		<h2>{m.skillsStrategyTitle()}</h2>
+		<p>{m.skillsStrategyDesc()}</p>
 	</div>
 </section>
 

@@ -1,120 +1,123 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
-import ContactCTA from '../../components/ContactCTA.astro';
-import Hero from '../../components/Hero.astro';
+import ContactCTA from "../../components/ContactCTA.astro";
+import Hero from "../../components/Hero.astro";
+
+// Paraglide translations
+import { m } from "../../paraglide/messages.js";
+import { getLocale } from "../../paraglide/runtime.js";
 
 // For dynamic routing
 export function getStaticPaths() {
-  return [
-    { params: { lang: 'en' } },
-    { params: { lang: 'pt-br' } }
-  ];
+	return [
+		{ params: { lang: 'en' } },
+		{ params: { lang: 'pt-br' } }
+	];
 }
 ---
 
-<BaseLayout title="About | Leandro Rodrigues" description="About Leandro Rodrigues, Senior Full Stack Developer and Software Engineer.">
-	<div class="stack gap-20">
-		<main class="wrapper about">
-			<Hero
-				title="About"
-				tagline="Thanks for stopping by. Read below to learn more about myself and my background."
-			>
-			</Hero>
+<BaseLayout
+  title={m.aboutTitle() + " | Leandro Rodrigues"}
+  description="About Leandro Rodrigues, Senior Full Stack Developer and Software Engineer."
+>
+  <div class="stack gap-20">
+    <main class="wrapper about">
+      <Hero title={m.aboutTitle()} tagline={m.aboutTagline()} />
 
-			<section>
-				<h2 class="section-title">Background</h2>
-				<div class="content">
-					<p>
-						I'm Leandro Rodrigues, a Senior Full Stack Developer with over 5 years of experience turning complex problems into scalable, efficient, and impactful digital solutions. My journey has taken me through mission-critical systems, process automation platforms, and cloud-native architectures — all built with clean code and strategic vision.
-					</p>
-					<p>
-						With strong expertise in Java, Spring Boot, Quarkus, C#, and front-end technologies like Vue.js, React.js and TypeScript, I design modular microservices and robust APIs. My focus lies not just in coding, but in building high-performance ecosystems. I'm also deeply familiar with containerized environments using Docker, Kubernetes, and OpenShift, and I often work with messaging tools like Kafka and RabbitMQ for system integration.
-					</p>
-					<p>
-						Throughout my career, I've improved system scalability by over 40% through efficient microservice design, automated 15+ CI/CD pipelines, accelerated software delivery by 25%, developed 50+ custom plugins for SAP and enterprise tools, and migrated legacy systems to modern, highly available infrastructure with 99.9% uptime. I thrive on building solutions that simply work — and scale.
-					</p>
-				</div>
-			</section>
+      <section>
+        <h2 class="section-title">{m.aboutBackgroundTitle()}</h2>
+        <div class="content">
+          <p>
+            {m.aboutBackgroundP1()}
+          </p>
+          <p>
+            {m.aboutBackgroundP2()}
+          </p>
+          <p>
+            {m.aboutBackgroundP3()}
+          </p>
+        </div>
+      </section>
 
-			<section>
-				<h2 class="section-title">Education</h2>
-				<div class="content">
-					<p>Bachelor’s in Computer Science (UniCEUB & IFB)</p>
-					<p>Postgraduate MBA in Software Engineering (USP - in progress)</p>
-					<p>Certifications: Docker for Beginners, Spring Framework, Agile Methodologies, AWS Educate</p>
-				</div>
-			</section>
+      <section>
+        <h2 class="section-title">{m.aboutEducationTitle()}</h2>
+        <div class="content">
+          <p>{m.aboutEducationP1()}</p>
+          <p>{m.aboutEducationP2()}</p>
+          <p>{m.aboutEducationP3()}</p>
+        </div>
+      </section>
 
-			<section>
-				<h2 class="section-title">Skills</h2>
-				<div class="content">
-					<p>Java, Spring Boot, Quarkus, Grails, C#, ASP.NET, Python, Vue.js, TypeScript</p>
-					<p>SQL Server, PostgreSQL, MongoDB, Cassandra</p>
-					<p>Docker, Kubernetes, OpenShift, CI/CD, Azure DevOps</p>
-					<p>Kafka, RabbitMQ, RESTful APIs, Microservices Architecture</p>
-				</div>
-			</section>
-		</main>
+      <section>
+        <h2 class="section-title">{m.aboutSkillsTitle()}</h2>
+        <div class="content">
+          <p>{m.aboutSkillsP1()}</p>
+          <p>{m.aboutSkillsP2()}</p>
+          <p>{m.aboutSkillsP3()}</p>
+          <p>{m.aboutSkillsP4()}</p>
+        </div>
+      </section>
+    </main>
 
-		<ContactCTA />
-	</div>
+    <ContactCTA />
+  </div>
 </BaseLayout>
 
 <style>
-	.about {
-		display: flex;
-		flex-direction: column;
-		gap: 3.5rem;
-	}
+  .about {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
 
-	img {
-		margin-top: 1.5rem;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
-	}
+  img {
+    margin-top: 1.5rem;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-md);
+  }
 
-	section {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		color: var(--gray-200);
-	}
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--gray-200);
+  }
 
-	.section-title {
-		grid-column-start: 1;
-		font-size: var(--text-xl);
-		color: var(--gray-0);
-	}
+  .section-title {
+    grid-column-start: 1;
+    font-size: var(--text-xl);
+    color: var(--gray-0);
+  }
 
-	.content {
-		grid-column: 2 / 4;
-	}
+  .content {
+    grid-column: 2 / 4;
+  }
 
-	.content :global(a) {
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
-	}
+  .content :global(a) {
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
 
-	.content :global(a:hover),
-	.content :global(a:focus) {
-		text-decoration-color: currentColor;
-	}
+  .content :global(a:hover),
+  .content :global(a:focus) {
+    text-decoration-color: currentColor;
+  }
 
-	@media (min-width: 50em) {
-		.about {
-			display: grid;
-			grid-template-columns: 1fr 60% 1fr;
-		}
+  @media (min-width: 50em) {
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 60% 1fr;
+    }
 
-		.about > :global(:first-child) {
-			grid-column-start: 2;
-		}
+    .about > :global(:first-child) {
+      grid-column-start: 2;
+    }
 
-		section {
-			display: contents;
-			font-size: var(--text-lg);
-		}
-	}
+    section {
+      display: contents;
+      font-size: var(--text-lg);
+    }
+  }
 </style>

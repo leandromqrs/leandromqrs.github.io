@@ -4,5 +4,58 @@
   "navAbout": "Sobre",
   "navWork": "Trabalho",
   "navBookACall": "Agendar Conversa",
-  "languageName": "Português"
+  "languageName": "Português",
+  
+  "heroTitle": "Olá, bem-vindo ao meu portfólio!",
+  "heroTagline": "Construo sistemas escaláveis, integro plataformas complexas e transformo ideias em soluções de alto desempenho.",
+  "heroDeveloper": "Desenvolvedor",
+  "heroArchitect": "Arquiteto de Sistemas",
+  "heroDevOps": "DevOps & CI/CD",
+  "heroImageAlt": "Leandro Rodrigues sorrindo com uma camisa verde",
+  
+  "skillsFullStackTitle": "Full Stack",
+  "skillsFullStackDesc": "Experiência sólida em back-end com Java, Spring Boot e Grails, além de maestria em front-end moderno. Desenvolvi sistemas do zero com foco em desempenho, escalabilidade e integração com APIs complexas.",
+  "skillsIndustryTitle": "Líder do Setor",
+  "skillsIndustryDesc": "Liderou projetos de automação com clusters Kubernetes, Docker Swarm e integração Kafka. Criei e mantive orquestradores que competem com soluções de mercado como Control-M, adotados em ambientes públicos e críticos.",
+  "skillsStrategyTitle": "Visão Estratégica",
+  "skillsStrategyDesc": "Capacidade de conectar demandas de negócios à tecnologia. Estrutura arquiteturas modulares e eficientes, promovendo alta disponibilidade, segurança e evolução constante dos sistemas — sempre com foco técnico e estratégico.",
+  
+  "workSectionTitle": "Trabalhos Selecionados",
+  "workSectionDesc": "Veja abaixo alguns dos meus trabalhos em destaque para clientes dos últimos anos.",
+  "workViewAll": "Ver Todos",
+  "workPageTitle": "Meus Trabalhos",
+  "workPageDesc": "Explore o portfólio de Leandro Rodrigues, demonstrando sua expertise em construir sistemas escaláveis, integrar plataformas complexas e criar soluções de alto desempenho em diversas indústrias.",
+  "workPageTagline": "Veja meus projetos mais recentes abaixo para ter uma ideia da minha experiência anterior.",
+  
+  "stacksSectionTitle": "Tecnologias",
+  "stacksSectionDesc": "Tenho experiência trabalhando com várias tecnologias e frameworks. Abaixo estão algumas das principais stacks com as quais trabalhei.",
+  
+  "contactTitle": "Interessado em trabalharmos juntos?",
+  "contactCTA": "Envie-me uma Mensagem",
+  
+  "aboutTitle": "Sobre",
+  "aboutTagline": "Obrigado por visitar. Leia abaixo para saber mais sobre mim e minha experiência.",
+  "aboutBackgroundTitle": "Experiência",
+  "aboutBackgroundP1": "Sou Leandro Rodrigues, Desenvolvedor Full Stack Sênior com mais de 5 anos de experiência transformando problemas complexos em soluções digitais escaláveis, eficientes e impactantes. Minha jornada me levou por sistemas críticos, plataformas de automação de processos e arquiteturas nativas para nuvem — tudo construído com código limpo e visão estratégica.",
+  "aboutBackgroundP2": "Com forte experiência em Java, Spring Boot, Quarkus, C# e tecnologias front-end como Vue.js, React.js e TypeScript, desenho microsserviços modulares e APIs robustas. Meu foco não está apenas em programar, mas em construir ecossistemas de alto desempenho. Também sou profundamente familiarizado com ambientes em contêineres usando Docker, Kubernetes e OpenShift, e frequentemente trabalho com ferramentas de mensageria como Kafka e RabbitMQ para integração de sistemas.",
+  "aboutBackgroundP3": "Ao longo da minha carreira, melhorei a escalabilidade do sistema em mais de 40% através de design eficiente de microsserviços, automatizei mais de 15 pipelines de CI/CD, acelerei a entrega de software em 25%, desenvolvi mais de 50 plugins personalizados para SAP e ferramentas empresariais, e migrei sistemas legados para infraestrutura moderna e altamente disponível com 99,9% de tempo de atividade. Prospero construindo soluções que simplesmente funcionam — e escalam.",
+  "aboutEducationTitle": "Educação",
+  "aboutEducationP1": "Bacharelado em Ciência da Computação (UniCEUB & IFB)",
+  "aboutEducationP2": "MBA em Engenharia de Software (USP - em andamento)",
+  "aboutEducationP3": "Certificações: Docker para Iniciantes, Spring Framework, Metodologias Ágeis, AWS Educate",
+  "aboutSkillsTitle": "Habilidades",
+  "aboutSkillsP1": "Java, Spring Boot, Quarkus, Grails, C#, ASP.NET, Python, Vue.js, TypeScript",
+  "aboutSkillsP2": "SQL Server, PostgreSQL, MongoDB, Cassandra",
+  "aboutSkillsP3": "Docker, Kubernetes, OpenShift, CI/CD, Azure DevOps",
+  "aboutSkillsP4": "Kafka, RabbitMQ, APIs RESTful, Arquitetura de Microsserviços",
+  
+  "callPageTitle": "Agendar Conversa",
+  "callPageTagline": "Escolha um horário conveniente para discutir seu projeto ou oportunidade.",
+  
+  "notFoundTitle": "Página Não Encontrada",
+  "notFoundTagline": "Não encontrado",
+  
+  "backToHome": "Voltar para o Início",
+  
+  "blogTitle": "Blog"
 }

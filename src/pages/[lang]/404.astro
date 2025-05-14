@@ -2,15 +2,18 @@
 import Hero from '../../components/Hero.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+// Paraglide translations
+import { m } from "../../paraglide/messages.js";
+
 // For dynamic routing
 export function getStaticPaths() {
-  return [
-    { params: { lang: 'en' } },
-    { params: { lang: 'pt-br' } }
-  ];
+	return [
+		{ params: { lang: 'en' } },
+		{ params: { lang: 'pt-br' } }
+	];
 }
 ---
 
-<BaseLayout title="Not Found" description="404 Error — this page was not found">
-	<Hero title="Page Not Found" tagline="Not found" />
+<BaseLayout title={m.notFoundTitle()} description="404 Error — this page was not found">
+	<Hero title={m.notFoundTitle()} tagline={m.notFoundTagline()} />
 </BaseLayout>
