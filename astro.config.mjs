@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import { paraglideVitePlugin } from "@inlang/paraglide-js";
-import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
@@ -9,9 +8,9 @@ export default defineConfig({
     i18n: {
         locales: ['en', 'pt-br'],
         defaultLocale: 'en',
-/*         routing: {
+        routing: {
             prefixDefaultLocale: true
-        } */
+        }
     },
     vite: {
 		plugins: [
