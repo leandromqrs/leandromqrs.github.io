@@ -1,0 +1,265 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormattedDate from '../FormattedDate.astro';
+import Hero from '../Hero.astro';
+import Icon from '../Icon.astro';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+	lang?: 'en' | 'pt-br';
+}
+
+const { post, lang = 'en' } = Astro.props;
+const { Content } = await render(post);
+
+const sourceUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
+const targetLang = lang === 'pt-br' ? 'en' : 'pt';
+const targetLabel = lang === 'pt-br' ? 'English' : 'PT-BR';
+const translateUrl = new URL('https://translate.google.com/translate');
+translateUrl.searchParams.set('sl', 'auto');
+translateUrl.searchParams.set('tl', targetLang);
+translateUrl.searchParams.set('u', sourceUrl);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+	<div class="stack gap-20">
+		<div class="stack gap-15">
+			<header>
+				<div class="wrapper stack gap-2">
+					<a class="back-link" href={`/${lang}/blog/`}><Icon icon="arrow-left" /> Blog</a>
+					<div class="post-meta">
+						<div class="date">
+							<FormattedDate date={post.data.publishDate} />
+						</div>
+						<a
+							class="translate-link"
+							href={translateUrl.toString()}
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label={`Translate this post to ${targetLabel} with Google Translate`}
+							title={`Translate to ${targetLabel}`}
+						>
+							<Icon icon="translate" size="1.1em" />
+							<span>Translate to {targetLabel}</span>
+						</a>
+					</div>
+					<Hero title={post.data.title} align="start">
+						<div class="details">
+							<p class="description">{post.data.description}</p>
+						</div>
+					</Hero>
+				</div>
+			</header>
+			<main class="wrapper">
+				<div class="stack gap-10 content">
+					{post.data.img && <img src={post.data.img} alt={post.data.img_alt ?? ''} />}
+					<div class="content">
+						<Content />
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+</BaseLayout>
+
+<style>
+	header {
+		padding-bottom: 2.5rem;
+		border-bottom: 1px solid var(--gray-800);
+	}
+
+	.back-link {
+		display: none;
+	}
+
+	.post-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem;
+		margin-top: 1rem;
+	}
+
+	.date {
+		font-size: var(--text-sm);
+	}
+
+	.translate-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		width: fit-content;
+		border: 1px solid var(--gray-800);
+		border-radius: 999rem;
+		padding: 0.45rem 0.75rem;
+		background: var(--gradient-subtle);
+		color: var(--gray-200);
+		font-family: var(--font-brand);
+		font-size: var(--text-sm);
+		font-weight: 500;
+		text-decoration: none;
+		box-shadow: var(--shadow-sm);
+		transition:
+			border-color var(--theme-transition),
+			color var(--theme-transition),
+			box-shadow var(--theme-transition);
+	}
+
+	.translate-link:hover,
+	.translate-link:focus {
+		border-color: var(--accent-regular);
+		color: var(--accent-regular);
+		box-shadow: var(--shadow-md);
+	}
+
+	.details {
+		display: flex;
+		flex-direction: column;
+		padding: 0.5rem;
+		gap: 1.5rem;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.description {
+		font-size: var(--text-lg);
+		max-width: 54ch;
+	}
+
+	.content {
+		max-width: 28ch;
+		margin-inline: auto;
+		margin-bottom: 2rem;
+	}
+
+	.content > :global(* + *) {
+		margin-top: 1rem;
+	}
+
+	.content :global(h1),
+	.content :global(h2),
+	.content :global(h3),
+	.content :global(h4),
+	.content :global(h5) {
+		margin: 1.5rem 0;
+	}
+
+	.content :global(img) {
+		border-radius: 1.5rem;
+		box-shadow: var(--shadow-sm);
+		background: var(--gradient-subtle);
+		border: 1px solid var(--gray-800);
+	}
+
+	.content :global(blockquote) {
+		font-size: var(--text-lg);
+		font-family: var(--font-brand);
+		font-weight: 600;
+		line-height: 1.1;
+		padding-inline-start: 1.5rem;
+		border-inline-start: 0.25rem solid var(--accent-dark);
+		color: var(--gray-0);
+	}
+
+	.content :global(pre) {
+		background-color: var(--gray-900);
+		color: var(--gray-0);
+		border: 1px solid var(--gray-700);
+		border-radius: 0.75rem;
+		padding: 1.25rem;
+		overflow-x: auto;
+		margin-top: 1.5rem;
+		margin-bottom: 1.5rem;
+		box-shadow: var(--shadow-sm);
+	}
+
+	.content :global(.mermaid) {
+		width: 100%;
+		overflow-x: auto;
+		border: 1px solid var(--gray-800);
+		border-radius: 0.75rem;
+		padding: 1.5rem;
+		background: var(--gradient-subtle);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.content :global(.mermaid svg) {
+		display: block;
+		max-width: 100%;
+		margin-inline: auto;
+	}
+
+	.content :global(code) {
+		font-family: 'Fira Code', monospace;
+		font-size: 0.95rem;
+		line-height: 1.6;
+		white-space: pre;
+	}
+
+	.back-link,
+	.content :global(a) {
+		text-decoration: 1px solid underline transparent;
+		text-underline-offset: 0.25em;
+		transition: text-decoration-color var(--theme-transition);
+	}
+
+	.back-link:hover,
+	.back-link:focus,
+	.content :global(a:hover),
+	.content :global(a:focus) {
+		text-decoration-color: currentColor;
+	}
+
+	@media (min-width: 50em) {
+		.back-link {
+			display: block;
+			align-self: flex-start;
+		}
+
+		.details {
+			flex-direction: row;
+			gap: 2.5rem;
+		}
+
+		.content {
+			max-width: 110ch;
+		}
+
+		.content :global(blockquote) {
+			font-size: var(--text-2xl);
+		}
+	}
+</style>
+
+<script>
+	const highlightedBlocks = Array.from(document.querySelectorAll('pre[data-language="mermaid"]'));
+	const languageBlocks = Array.from(document.querySelectorAll('pre > code.language-mermaid'))
+		.map((block) => block.closest('pre'))
+		.filter((block) => block !== null);
+	const mermaidBlocks = Array.from(new Set([...highlightedBlocks, ...languageBlocks]));
+
+	if (mermaidBlocks.length > 0) {
+		import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs').then(
+			({ default: mermaid }) => {
+				const isDark = document.documentElement.classList.contains('theme-dark');
+				mermaid.initialize({
+					startOnLoad: false,
+					theme: isDark ? 'dark' : 'default',
+					securityLevel: 'strict',
+				});
+
+				for (const block of mermaidBlocks) {
+					const container = document.createElement('div');
+					container.className = 'mermaid';
+					container.textContent = block.textContent ?? '';
+					block.replaceWith(container);
+				}
+
+				mermaid.run({ querySelector: '.mermaid' });
+			},
+		);
+	}
+</script>

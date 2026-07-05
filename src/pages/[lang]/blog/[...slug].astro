@@ -1,0 +1,25 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+
+import BlogPostPage from '../../../components/blog/BlogPostPage.astro';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+	lang: 'en' | 'pt-br';
+}
+
+export async function getStaticPaths() {
+	const languages = ['en', 'pt-br'] as const;
+	const posts = await getCollection('blog');
+	return languages.flatMap((lang) =>
+		posts.map((post) => ({
+			params: { lang, slug: post.id },
+			props: { post, lang },
+		})),
+	);
+}
+
+const { post, lang } = Astro.props;
+---
+
+<BlogPostPage post={post} lang={lang} />
