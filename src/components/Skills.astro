@@ -5,19 +5,24 @@ import { m } from "../paraglide/messages.js";
 
 <section class="box skills">
 	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="terminal-window" color="var(--accent-regular)" size="2.5rem" gradient />
+		<Icon icon="terminal-window" color="var(--accent-regular)" size="2.5rem" />
 		<h2>{m.skillsFullStackTitle()}</h2>
 		<p>{m.skillsFullStackDesc()}</p>
 	</div>
 	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="trophy" color="var(--accent-regular)" size="2.5rem" gradient />
+		<Icon icon="trophy" color="var(--accent-regular)" size="2.5rem" />
 		<h2>{m.skillsIndustryTitle()}</h2>
 		<p>{m.skillsIndustryDesc()}</p>
 	</div>
 	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="strategy" color="var(--accent-regular)" size="2.5rem" gradient />
+		<Icon icon="strategy" color="var(--accent-regular)" size="2.5rem" />
 		<h2>{m.skillsStrategyTitle()}</h2>
 		<p>{m.skillsStrategyDesc()}</p>
+	</div>
+	<div class="stack gap-2 lg:gap-4">
+		<Icon icon="sparkle" color="var(--accent-regular)" size="2.5rem" />
+		<h2>{m.skillsAIFirstTitle()}</h2>
+		<p>{m.skillsAIFirstDesc()}</p>
 	</div>
 </section>
 
@@ -52,12 +57,18 @@ import { m } from "../paraglide/messages.js";
 
 		.skills {
 			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			gap: 5rem;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 3rem;
 		}
 
 		.skills h2 {
 			font-size: var(--text-2xl);
+		}
+	}
+
+	@media (min-width: 75em) {
+		.skills {
+			grid-template-columns: repeat(4, 1fr);
 		}
 	}
 </style>

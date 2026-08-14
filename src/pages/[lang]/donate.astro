@@ -1,0 +1,284 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Icon from '../../components/Icon.astro';
+import TechIcon from '../../components/TechIcon.astro';
+
+import { m } from '../../paraglide/messages.js';
+
+const platforms = [
+	{
+		icon: 'buymeacoffee',
+		label: m.donateCoffeeCTA(),
+		href: 'https://buymeacoffee.com/leandromqrs',
+		class: 'bmc',
+	},
+];
+
+const coins = [
+	{ name: 'Bitcoin', ticker: 'BTC', address: '' },
+	{ name: 'Ethereum', ticker: 'ETH', address: '' },
+	{ name: 'Tether', ticker: 'USDT', address: '' },
+	{ name: 'USD Coin', ticker: 'USDC', address: '' },
+	{ name: 'Solana', ticker: 'SOL', address: '' },
+	{ name: 'Litecoin', ticker: 'LTC', address: '' },
+];
+
+export function getStaticPaths() {
+	return [{ params: { lang: 'en' } }, { params: { lang: 'pt-br' } }];
+}
+---
+
+<BaseLayout title={m.donateTitle()} description={m.donateTagline()}>
+	<div class="wrapper stack gap-20">
+		<Hero title={m.donateTitle()} tagline={m.donateTagline()} align="start" />
+
+		<main class="stack gap-20">
+			<section class="stack gap-4">
+				<header class="section-header stack gap-2">
+					<h2>{m.donatePlatformsTitle()}</h2>
+					<p>{m.donatePlatformsDesc()}</p>
+				</header>
+
+				<div class="platforms">
+					{
+						platforms.map((platform) => (
+							<a
+								class:list={['platform-button', platform.class]}
+								href={platform.href}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<TechIcon iconName={platform.icon} size={20} mono />
+								<span>{platform.label}</span>
+							</a>
+						))
+					}
+				</div>
+			</section>
+
+			<section class="stack gap-4">
+				<header class="section-header stack gap-2">
+					<h2>{m.donateCryptoTitle()}</h2>
+					<p>{m.donateCryptoDesc()}</p>
+				</header>
+
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr>
+								<th>{m.donateColCoin()}</th>
+								<th>{m.donateColAddress()}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								coins.map((coin) => (
+									<tr>
+										<td>
+											<span class="coin">{coin.name}</span>
+											<span class="ticker">{coin.ticker}</span>
+										</td>
+										<td class="address">
+											<span class="address-inner">
+												{coin.address ? (
+													<code>{coin.address}</code>
+												) : (
+													<span class="coming-soon">{m.donateComingSoon()}</span>
+												)}
+												<button
+													class="copy-button"
+													data-address={coin.address}
+													disabled={!coin.address}
+													aria-label={m.donateCopy()}
+													title={m.donateCopy()}
+												>
+													<span class="icon-copy">
+														<Icon icon="copy" size="1em" />
+													</span>
+													<span class="icon-check">
+														<Icon icon="check" size="1em" />
+													</span>
+												</button>
+											</span>
+										</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</main>
+	</div>
+</BaseLayout>
+
+<style>
+	.section-header h2 {
+		font-size: var(--text-2xl);
+		color: var(--gray-0);
+	}
+
+	.section-header p {
+		color: var(--gray-400);
+	}
+
+	.platforms {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.platform-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.75rem 1.75rem;
+		border-radius: 999rem;
+		font-family: var(--font-brand);
+		font-weight: 600;
+		text-decoration: none;
+		transition:
+			background-color var(--theme-transition),
+			transform var(--theme-transition);
+	}
+
+	.platform-button:hover,
+	.platform-button:focus {
+		transform: translateY(-2px);
+	}
+
+	/* Buy Me a Coffee: amarelo da marca, texto escuro */
+	.platform-button.bmc {
+		background: #ffdd00;
+		color: #0d0c22;
+	}
+
+	.platform-button.bmc:hover,
+	.platform-button.bmc:focus {
+		background: #f2d200;
+	}
+
+	.table-wrapper {
+		overflow-x: auto;
+		border: 1px solid var(--gray-800);
+		border-radius: 0.75rem;
+		background: var(--card-bg);
+	}
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: var(--text-sm);
+	}
+
+	th,
+	td {
+		padding: 0.875rem 1rem;
+		text-align: left;
+		border-bottom: 1px solid var(--gray-800);
+	}
+
+	tbody tr:last-child td {
+		border-bottom: 0;
+	}
+
+	th {
+		font-family: var(--font-brand);
+		font-weight: 600;
+		color: var(--gray-200);
+	}
+
+	td {
+		color: var(--gray-300);
+	}
+
+	.coin {
+		font-weight: 600;
+		color: var(--gray-100);
+	}
+
+	.ticker {
+		margin-left: 0.5rem;
+		color: var(--gray-500);
+		font-size: var(--text-sm);
+	}
+
+	.address-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+	}
+
+	.address code {
+		font-size: var(--text-sm);
+		word-break: break-all;
+	}
+
+	.copy-button {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+		padding: 0.4rem;
+		border: 1px solid var(--gray-800);
+		border-radius: 0.5rem;
+		background: transparent;
+		color: var(--gray-400);
+		font-size: 1rem;
+		cursor: pointer;
+		transition:
+			color var(--theme-transition),
+			border-color var(--theme-transition);
+	}
+
+	.copy-button:hover:not(:disabled),
+	.copy-button:focus:not(:disabled) {
+		color: var(--gray-0);
+		border-color: var(--gray-600);
+	}
+
+	.copy-button:disabled {
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+
+	.copy-button .icon-check {
+		display: none;
+	}
+
+	.copy-button.copied {
+		color: #3fb950;
+		border-color: #3fb950;
+	}
+
+	.copy-button.copied .icon-copy {
+		display: none;
+	}
+
+	.copy-button.copied .icon-check {
+		display: flex;
+	}
+
+	.coming-soon {
+		color: var(--gray-500);
+		font-style: italic;
+	}
+</style>
+
+<script>
+	document.querySelectorAll<HTMLButtonElement>('.copy-button').forEach((button) => {
+		button.addEventListener('click', async () => {
+			const address = button.dataset.address;
+			if (!address) return;
+
+			try {
+				await navigator.clipboard.writeText(address);
+				button.classList.add('copied');
+				setTimeout(() => button.classList.remove('copied'), 1500);
+			} catch {
+				// Clipboard API indisponível (ex.: contexto não seguro). Ignora silenciosamente.
+			}
+		});
+	});
+</script>

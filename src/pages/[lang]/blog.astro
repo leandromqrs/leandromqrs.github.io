@@ -7,10 +7,8 @@ import BlogPreview from "../../components/BlogPreview.astro";
 import Grid from "../../components/Grid.astro";
 import Hero from "../../components/Hero.astro";
 
-// Paraglide translations
 import { m } from "../../paraglide/messages.js";
 
-// For dynamic routing
 export function getStaticPaths() {
 	return [
 		{ params: { lang: 'en' } },
@@ -18,18 +16,22 @@ export function getStaticPaths() {
 	];
 }
 
-const posts = (await getCollection("blog")).sort(
+const lang = Astro.params.lang as 'en' | 'pt-br';
+const posts = (await getCollection('blog', ({ id }) => id.startsWith(`${lang}/`))).sort(
   (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
 ---
 
 <BaseLayout
   title={m.blogTitle() + " | Leandro Rodrigues"}
-  description={m.blogTitle() + " posts by Leandro Rodrigues"}
+  description={m.blogDescription()}
 >
   <div class="stack gap-20">
     <main class="wrapper stack gap-8">
       <Hero title={m.blogTitle()} tagline="" align="start" />
+      {posts.length === 0 ? (
+        <p class="empty">{m.blogEmpty()}</p>
+      ) : (
       <Grid variant="spotlight">
         {
           posts.map((post) => (
@@ -39,6 +41,13 @@ const posts = (await getCollection("blog")).sort(
           ))
         }
       </Grid>
+      )}
     </main>
   </div>
 </BaseLayout>
+
+<style>
+  .empty {
+    color: var(--gray-400);
+  }
+</style>

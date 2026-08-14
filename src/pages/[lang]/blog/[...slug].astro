@@ -12,10 +12,12 @@ export async function getStaticPaths() {
 	const languages = ['en', 'pt-br'] as const;
 	const posts = await getCollection('blog');
 	return languages.flatMap((lang) =>
-		posts.map((post) => ({
-			params: { lang, slug: post.id },
-			props: { post, lang },
-		})),
+		posts
+			.filter((post) => post.id.startsWith(`${lang}/`))
+			.map((post) => ({
+				params: { lang, slug: post.id.slice(lang.length + 1) },
+				props: { post, lang },
+			})),
 	);
 }
 

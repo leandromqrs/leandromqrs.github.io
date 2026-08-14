@@ -12,16 +12,17 @@ const locale = getLocale();
 const textLinks: { label: string; href: string, className: string }[] = [
 	{ label: m.navHome(), href: `/${locale}/`, className: 'link' },
 	{ label: m.navWork(), href: `/${locale}/work/`, className: 'link' },
+	{ label: m.navBlog(), href: `/${locale}/blog/`, className: 'link' },
 	{ label: m.navAbout(), href: `/${locale}/about/`, className: 'link' },
-	{ label: 'Blog', href: `/${locale}/blog/`, className: 'link' },
 	{ label: m.navBookACall(), href: `/${locale}/book-a-call/`, className: 'link call-to-action' },
 ];
 
-/** Icon links to social media — edit these with links to your profiles! */
+/** Icon links to social media. Edit these with links to your profiles. */
 const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[] = [
 	{ label: 'LinkedIn', href: 'https://linkedin.com/in/leandromqrs', icon: 'linkedin-logo' },
 	{ label: 'GitHub', href: 'https://github.com/leandromqrs', icon: 'github-logo' },
 	{ label: 'Twitter', href: 'https://twitter.com/leandromqrs', icon: 'twitter-logo' },
+	{ label: 'Mastodon', href: 'https://mastodon.social/@leandromqrs', icon: 'mastodon-logo' },
 ];
 
 /** Test if a link is pointing to the current page. */
@@ -87,13 +88,21 @@ const isCurrentPage = (href: string) => {
 			<div class="socials">
 				{
 					iconLinks.map(({ href, icon, label }) => (
-						<a href={href} class="social">
+						<a href={href} class="social" rel={label === 'Mastodon' ? 'me' : undefined}>
 							<span class="sr-only">{label}</span>
 							<Icon icon={icon} />
 						</a>
 					))
 				}
 			</div>
+			<a
+				class="donate-link"
+				href={`/${locale}/donate/`}
+				aria-label={m.navDonate()}
+				title={m.navDonate()}
+			>
+				<Icon icon="heart" />
+			</a>
 		</div>
 	</noscript>
 	<div id="menu-content" hidden>
@@ -112,7 +121,7 @@ const isCurrentPage = (href: string) => {
 			<div class="socials">
 				{
 					iconLinks.map(({ href, icon, label }) => (
-						<a href={href} class="social">
+						<a href={href} class="social" rel={label === 'Mastodon' ? 'me' : undefined}>
 							<span class="sr-only">{label}</span>
 							<Icon icon={icon} />
 						</a>
@@ -123,6 +132,14 @@ const isCurrentPage = (href: string) => {
 			<div class="language-picker">
 				<LanguagePicker />
 			</div>
+			<a
+				class="donate-link"
+				href={`/${locale}/donate/`}
+				aria-label={m.navDonate()}
+				title={m.navDonate()}
+			>
+				<Icon icon="heart" />
+			</a>
 			<div class="theme-toggle">
 				<ThemeToggle />
 			</div>
@@ -195,33 +212,20 @@ const isCurrentPage = (href: string) => {
 	.menu-button {
 		position: relative;
 		display: flex;
-		border: 0;
+		border: 1px solid var(--gray-800);
 		border-radius: 999rem;
 		padding: 0.5rem;
 		font-size: 1.5rem;
 		color: var(--gray-300);
-		background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-		box-shadow: var(--shadow-md);
+		background: var(--gray-999);
 	}
 
 	.menu-button[aria-expanded='true'] {
 		color: var(--gray-0);
-		background:
-			linear-gradient(180deg, var(--gray-600), transparent),
-			radial-gradient(var(--gray-900), var(--gray-800) 150%);
 	}
 
 	.menu-button[hidden] {
 		display: none;
-	}
-
-	.menu-button::before {
-		position: absolute;
-		inset: -1px;
-		content: '';
-		background: var(--gradient-stroke);
-		border-radius: 999rem;
-		z-index: -1;
 	}
 
 	.menu-content {
@@ -269,21 +273,41 @@ const isCurrentPage = (href: string) => {
 	.socials {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: flex-start;
 		gap: 0.625rem;
 		font-size: var(--icon-size);
 	}
 
 	.social {
 		display: flex;
+		align-items: flex-start;
 		padding: var(--icon-padding);
 		text-decoration: none;
-		color: var(--accent-dark);
+		color: var(--gray-400);
 		transition: color var(--theme-transition);
 	}
 
 	.social:hover,
 	.social:focus {
-		color: var(--accent-text-over);
+		color: var(--gray-0);
+	}
+
+	.donate-link {
+		display: flex;
+		align-items: center;
+		padding: var(--icon-padding);
+		font-size: var(--icon-size);
+		color: #e5484d;
+		text-decoration: none;
+		transition:
+			color var(--theme-transition),
+			transform var(--theme-transition);
+	}
+
+	.donate-link:hover,
+	.donate-link:focus {
+		color: #f2555a;
+		transform: scale(1.1);
 	}
 
 	.theme-toggle {
@@ -333,19 +357,9 @@ const isCurrentPage = (href: string) => {
 			flex-direction: row;
 			font-size: var(--text-sm);
 			border-radius: 999rem;
-			border: 0;
+			border: 1px solid var(--gray-800);
 			padding: 0.5rem 0.5625rem;
-			background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-			box-shadow: var(--shadow-md);
-		}
-
-		.nav-items::before {
-			position: absolute;
-			inset: -1px;
-			content: '';
-			background: var(--gradient-stroke);
-			border-radius: 999rem;
-			z-index: -1;
+			background: var(--gray-999);
 		}
 
 		.link {

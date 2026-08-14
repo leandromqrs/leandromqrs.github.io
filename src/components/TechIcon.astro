@@ -7,10 +7,11 @@ interface Props {
   iconName: string;
   size?: number;
   color?: string;
+  mono?: boolean;
   className?: string;
 }
 
-const { iconName, size = 24, color, className = '' } = Astro.props;
+const { iconName, size = 24, color, mono = false, className = '' } = Astro.props;
 
 
 // Verifica se o ícone está nos ícones personalizados
@@ -41,7 +42,7 @@ if (iconName in customIcons) {
     viewBox="0 0 24 24"
     width={size}
     height={size}
-    fill={`#${color ?? iconHex}`}
+    fill={mono ? 'currentColor' : `#${color ?? iconHex}`}
     xmlns="http://www.w3.org/2000/svg"
 >
     <title>{iconName} icon</title>

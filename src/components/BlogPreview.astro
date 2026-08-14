@@ -11,17 +11,22 @@ interface Props {
 const { data, id } = Astro.props.post;
 const locale = getLocale();
 const imageSrc = data.img ?? '/blog-placeholder-1.jpg';
+// O id inclui o prefixo do idioma (ex.: "en/meu-post"). Remove para montar a URL.
+const slug = id.slice(id.indexOf('/') + 1);
 ---
 
-<a class="card" href={`/${locale}/blog/${id}/`}>
+<a class="card" href={`/${locale}/blog/${slug}/`}>
 	<span class="media">
 		<img src={imageSrc} alt={data.img_alt || ''} loading="lazy" decoding="async" />
 	</span>
 	<span class="body">
-		<h4 class="title">{data.title}</h4>
-		<span class="date">
-			<FormattedDate date={data.publishDate} />
+		<span class="meta">
+			<span class="tag">{data.tag}</span>
+			<span class="date">
+				<FormattedDate date={data.publishDate} />
+			</span>
 		</span>
+		<h4 class="title">{data.title}</h4>
 	</span>
 </a>
 
@@ -68,7 +73,7 @@ const imageSrc = data.img ?? '/blog-placeholder-1.jpg';
 		align-content: start;
 		gap: 0.5rem;
 		padding: 1rem;
-		background: var(--gradient-subtle);
+		background: var(--card-bg);
 	}
 
 	.title {
@@ -84,6 +89,21 @@ const imageSrc = data.img ?? '/blog-placeholder-1.jpg';
 		color: var(--gray-300);
 		font-size: var(--text-sm);
 		font-weight: 500;
+	}
+
+	.meta {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.tag {
+		font-size: var(--text-sm);
+		font-weight: 600;
+		color: var(--accent-regular);
+		border: 1px solid var(--gray-800);
+		border-radius: 999rem;
+		padding: 0.2rem 0.75rem;
 	}
 
 	@media (min-width: 50em) {

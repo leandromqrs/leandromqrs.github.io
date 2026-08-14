@@ -5,10 +5,7 @@ import { paraglideVitePlugin } from "@inlang/paraglide-js";
 // https://astro.build/config
 export default defineConfig({
     site: 'https://leandromqrs.dev',
-    i18n: {
-        locales: ['en', 'pt-br'],
-        defaultLocale: 'en',
-    },
+    compressHTML: true,
     vite: {
 		plugins: [
 			paraglideVitePlugin({

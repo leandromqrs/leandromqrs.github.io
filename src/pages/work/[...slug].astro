@@ -22,7 +22,6 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-console.log('entry', entry);
 
 const { Content } = await render(entry);
 ---
@@ -105,7 +104,7 @@ const { Content } = await render(entry);
 	.content :global(img) {
 		border-radius: 1.5rem;
 		box-shadow: var(--shadow-sm);
-		background: var(--gradient-subtle);
+		background: var(--card-bg);
 		border: 1px solid var(--gray-800);
 	}
 

@@ -1,22 +1,62 @@
 ---
 import '../styles/global.css';
+import { m } from '../paraglide/messages.js';
+import { getLocale } from '../paraglide/runtime.js';
 
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	image?: string | undefined;
+	imageAlt?: string | undefined;
+	type?: 'website' | 'article' | undefined;
+	publishedTime?: Date | undefined;
 }
 
-const {
-	title = 'Leandro Rodrigues - Software Engineer, Full Stack, Problem Solver',
-	description = 'Software Engineer with solid experience in distributed systems, infrastructure automation, and full stack applications. Focused on performance, scalability, and integration across platforms like Kubernetes, Kafka, VMware, and enterprise APIs. Delivers robust solutions by combining clean code with a strategic architectural vision.',
-} = Astro.props;
+const { title, description, image, imageAlt, type = 'website', publishedTime } = Astro.props;
+
+const locale = getLocale();
+const resolvedTitle = title ?? m.metaTitle();
+const resolvedDescription = description ?? m.metaDescription();
+const usesGeneratedCard = image === undefined;
+const resolvedImage = image ?? `/${locale}/og.png`;
+const resolvedImageAlt = imageAlt ?? (usesGeneratedCard ? m.socialImageAlt() : resolvedTitle);
+const imageType = resolvedImage.toLowerCase().endsWith('.jpg') || resolvedImage.toLowerCase().endsWith('.jpeg')
+	? 'image/jpeg'
+	: 'image/png';
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const assetOrigin = import.meta.env.DEV ? Astro.url.origin : (Astro.site ?? Astro.url.origin);
+const socialImage = new URL(resolvedImage, assetOrigin);
 ---
 
 <meta charset="UTF-8" />
-<meta name="description" property="og:description" content={description} />
+<meta name="description" content={resolvedDescription} />
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
-<title>{title}</title>
+<title>{resolvedTitle}</title>
+
+<link rel="canonical" href={canonical} />
+<meta property="og:title" content={resolvedTitle} />
+<meta property="og:description" content={resolvedDescription} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content="Leandro Rodrigues" />
+<meta property="og:locale" content={locale === 'pt-br' ? 'pt_BR' : 'en_US'} />
+<meta property="og:locale:alternate" content={locale === 'pt-br' ? 'en_US' : 'pt_BR'} />
+<meta property="og:image" content={socialImage} />
+<meta property="og:image:type" content={imageType} />
+{usesGeneratedCard && <meta property="og:image:width" content="1200" />}
+{usesGeneratedCard && <meta property="og:image:height" content="630" />}
+<meta property="og:image:alt" content={resolvedImageAlt} />
+<meta property="og:type" content={type} />
+{
+	type === 'article' && publishedTime && (
+		<meta property="article:published_time" content={publishedTime.toISOString()} />
+	)
+}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={resolvedTitle} />
+<meta name="twitter:description" content={resolvedDescription} />
+<meta name="twitter:image" content={socialImage} />
+<meta name="twitter:image:alt" content={resolvedImageAlt} />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />

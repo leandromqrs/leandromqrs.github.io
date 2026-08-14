@@ -10,13 +10,20 @@
  * 6. Replace any `fill="#000000"` attributes with `stroke="none"`
  *    (or add `stroke="none"` on shapes with no `fill` or `stroke` specified).
  */
+import { siMastodon } from 'simple-icons';
+
 export const iconPaths = {
 	'terminal-window': `<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="m80 96 40 32-40 32m56 0h40"/><rect width="192" height="160" x="32" y="48" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16.97" rx="8.5"/>`,
 	trophy: `<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M56 56v55.1c0 39.7 31.8 72.6 71.5 72.9a72 72 0 0 0 72.5-72V56a8 8 0 0 0-8-8H64a8 8 0 0 0-8 8Zm40 168h64m-32-40v40"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M198.2 128h9.8a32 32 0 0 0 32-32V80a8 8 0 0 0-8-8h-32M58 128H47.9a32 32 0 0 1-32-32V80a8 8 0 0 1 8-8h32"/>`,
 	strategy: `<circle cx="68" cy="188" r="28" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="m40 72 40 40m0-40-40 40m136 56 40 40m0-40-40 40M136 80V40h40"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="m136 40 16 16c40 40 8 88-24 96"/>`,
+	sparkle: `<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M128 24c8 52 28 72 80 80-52 8-72 28-80 80-8-52-28-72-80-80 52-8 72-28 80-80Z"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M208 168c4 24 16 36 40 40-24 4-36 16-40 40-4-24-16-36-40-40 24-4 36-16 40-40Z"/>`,
+	'mastodon-logo': `<g transform="translate(24 32) scale(8.6666667)"><path stroke="none" d="${siMastodon.path}"/></g>`,
 	'paper-plane-tilt': `<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M210.3 35.9 23.9 88.4a8 8 0 0 0-1.2 15l85.6 40.5a7.8 7.8 0 0 1 3.8 3.8l40.5 85.6a8 8 0 0 0 15-1.2l52.5-186.4a7.9 7.9 0 0 0-9.8-9.8Zm-99.4 109.2 45.2-45.2"/>`,
 	'arrow-right': `<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M40 128h176m-72-72 72 72-72 72"/>`,
 	'arrow-left': `<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M216 128H40m72-72-72 72 72 72"/>`,
+	heart: `<path stroke="none" d="M240,94c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,220.66,16,164,16,94A54.07,54.07,0,0,1,70,40c20.38,0,38.73,8.88,58,29.46C147.27,48.88,165.62,40,186,40A54.07,54.07,0,0,1,240,94Z"/>`,
+	copy: `<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M216 32H88a8 8 0 0 0-8 8v40H40a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h128a8 8 0 0 0 8-8v-40h40a8 8 0 0 0 8-8V40a8 8 0 0 0-8-8Z"/>`,
+	check: `<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="m40 136 56 56L216 72"/>`,
 	translate: `<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M48 88h112M96 56v32m20 0c-8 44-38 78-76 96m48-72c18 27 43 50 72 64"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M144 216 192 96l48 120m-78-48h60"/>`,
 	code: `<path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="m64 88-48 40 48 40m128-80 48 40-48 40M160 40 96 216"/>`,
 	'microphone-stage': `<circle cx="168" cy="88" r="64" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="m213.3 133.3-90.6-90.6M100 156l-12 12m16.8-70.1L28.1 202.5a7.9 7.9 0 0 0 .8 10.4l14.2 14.2a7.9 7.9 0 0 0 10.4.8l104.6-76.7"/>`,

@@ -2,6 +2,7 @@
 title: 'Developing Aetheris'
 description: 'How I developed Aetheris, a native GNOME Kubernetes client, and the main architecture decisions behind the project.'
 publishDate: 'Jul 05 2026'
+tag: 'Aetheris'
 img: '/assets/blog/aetheris-resources.png'
 img_alt: 'Aetheris showing the Kubernetes resource browser'
 ---

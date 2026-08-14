@@ -2,10 +2,8 @@
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 
-// Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Component Imports
 import CallToAction from '../../components/CallToAction.astro';
 import Grid from '../../components/Grid.astro';
 import Hero from '../../components/Hero.astro';
@@ -14,15 +12,12 @@ import Pill from '../../components/Pill.astro';
 import PortfolioPreview from '../../components/PortfolioPreview.astro';
 import TechIcon from '../../components/TechIcon.astro';
 
-// Page section components
 import ContactCTA from '../../components/ContactCTA.astro';
 import Skills from '../../components/Skills.astro';
 
-// Paraglide translations
 import { m } from "../../paraglide/messages.js";
 import { getLocale } from "../../paraglide/runtime.js";
 
-// For dynamic routing
 export function getStaticPaths() {
 	return [
 		{ params: { lang: 'en' } },
@@ -30,12 +25,11 @@ export function getStaticPaths() {
 	];
 }
 
-// Content Fetching: List four most recent work projects
 const projects = (await getCollection('work'))
 	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
 	.slice(0, 4);
 
-const stacks = [
+const stacks: { icon: string; name: string; mono?: boolean }[] = [
 	{ icon: 'java', name: 'Java' },
 	{ icon: 'grails', name: 'Grails' },
 	{ icon: 'react', name: 'React' },
@@ -68,18 +62,14 @@ const stacks = [
 	{ icon: 'prettier', name: 'Prettier' },
 	{ icon: 'postman', name: 'Postman' },
 	{ icon: 'jira', name: 'Jira' },
-	{ icon: 'github', name: 'GitHub' },
+	{ icon: 'github', name: 'GitHub', mono: true },
 	{ icon: 'gitlab', name: 'GitLab' },
 	{ icon: 'bitbucket', name: 'Bitbucket' }
 ]
 
-// Full Astro Component Syntax:
-// https://docs.astro.build/basics/astro-components/
-// No locals data needed here
 ---
 
 <BaseLayout>
-	<div>
 	<div class="stack gap-20 lg:gap-48">
 		<div class="wrapper stack gap-8 lg:gap-20">
 			<header class="hero">
@@ -97,8 +87,8 @@ const stacks = [
 
 				<Image
 					alt={m.heroImageAlt()}
-					width="480"
-					height="620"
+					width="360"
+					height="480"
 					src="/assets/portrait.jpg"
 				/>
 			</header>
@@ -107,7 +97,7 @@ const stacks = [
 		</div>
 
 		<main class="wrapper stack gap-20 lg:gap-48">
-			<section class="section with-background with-cta">
+			<section class="section with-cta">
 				<header class="section-header stack gap-2 lg:gap-4">
 					<h3>{m.workSectionTitle()}</h3>
 					<p>{m.workSectionDesc()}</p>
@@ -133,7 +123,7 @@ const stacks = [
 				</div>
 			</section>
 
-			<section class="section with-background bg-variant">
+			<section class="section">
 				<header class="section-header stack gap-2 lg:gap-4">
 					<h3>{m.stacksSectionTitle()}</h3>
 					<p>
@@ -146,7 +136,7 @@ const stacks = [
 						{
 							stacks.map((stack) => (
 								<li class="stack-card">
-									<TechIcon iconName={stack.icon} size={34} />
+									<TechIcon iconName={stack.icon} size={34} mono={stack.mono} />
 									<p>{stack.name}</p>
 								</li>
 							))
@@ -176,14 +166,15 @@ const stacks = [
 		aspect-ratio: 5 / 4;
 		object-fit: cover;
 		object-position: top;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
+		border-radius: 1rem;
+		border: 1px solid var(--gray-800);
+		max-width: 280px;
 	}
 
 	@media (min-width: 50em) {
 		.hero {
 			display: grid;
-			grid-template-columns: 6fr 4fr;
+			grid-template-columns: 7fr 3fr;
 			padding-inline: 2.5rem;
 			gap: 3.75rem;
 		}
@@ -196,44 +187,16 @@ const stacks = [
 
 		.hero img {
 			aspect-ratio: 3 / 4;
-			border-radius: 4.5rem;
+			border-radius: 1rem;
 			object-fit: cover;
+			max-width: 320px;
+			justify-self: center;
 		}
 	}
-
-	/* ====================================================== */
 
 	.section {
 		display: grid;
 		gap: 2rem;
-	}
-
-	.with-background {
-		position: relative;
-	}
-
-	.with-background::before {
-		--hero-bg: var(--bg-image-subtle-2);
-
-		content: '';
-		position: absolute;
-		pointer-events: none;
-		left: 50%;
-		width: 100vw;
-		aspect-ratio: calc(2.25 / var(--bg-scale));
-		top: 0;
-		transform: translateY(-75%) translateX(-50%);
-		background:
-			url('/assets/backgrounds/noise.png') top center/220px repeat,
-			var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
-			var(--gray-999);
-		background-blend-mode: overlay, normal, normal, normal;
-		mix-blend-mode: var(--bg-blend-mode);
-		z-index: -1;
-	}
-
-	.with-background.bg-variant::before {
-		--hero-bg: var(--bg-image-subtle-1);
 	}
 
 	.section-header {
@@ -282,8 +245,6 @@ const stacks = [
 		}
 	}
 
-	/* ====================================================== */
-
 	.stack-card {
 		display: flex;
 		height: 5rem;
@@ -293,7 +254,7 @@ const stacks = [
 		border: 1px solid var(--gray-800);
 		border-radius: 1rem;
 		color: var(--gray-300);
-		background: var(--gradient-subtle);
+		background: var(--card-bg);
 		box-shadow: var(--shadow-sm);
 		gap: 1rem;
 		transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;

@@ -1,70 +1,134 @@
 ---
 import { m } from '../paraglide/messages.js';
-import { deLocalizeHref, localizeHref } from '../paraglide/runtime';
+import { deLocalizeHref, localizeHref, getLocale } from '../paraglide/runtime';
 
 // Usa a função deLocalizeHref para remover automaticamente o prefixo de idioma da URL atual
 const deLocalizedPath = deLocalizeHref(Astro.url.pathname);
-const lang = Astro.params.lang;
+const current = Astro.params.lang ?? getLocale();
+
+const languages = [
+	{ locale: 'pt-br', flag: 'br', name: m.languageName(undefined, { locale: 'pt-br' }) },
+	{ locale: 'en', flag: 'us', name: m.languageName(undefined, { locale: 'en' }) },
+] as const;
+
+const selected = languages.find((l) => l.locale === current) ?? languages[1];
 ---
 
 <div class="language-picker">
     <button class="language-picker-button" aria-label="Selecionar idioma" aria-haspopup="true" aria-expanded="false">
-        <span>{m.languageName()}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg class="flag" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true">
+            {selected.flag === 'br' ? (
+                <>
+                    <rect width="24" height="16" fill="#009b3a" />
+                    <polygon points="12,1.5 22.5,8 12,14.5 1.5,8" fill="#fedf00" />
+                    <circle cx="12" cy="8" r="3" fill="#002776" />
+                </>
+            ) : (
+                <>
+                    <rect width="24" height="16" fill="#ffffff" />
+                    <rect y="0" width="24" height="1.231" fill="#b22234" />
+                    <rect y="2.462" width="24" height="1.231" fill="#b22234" />
+                    <rect y="4.923" width="24" height="1.231" fill="#b22234" />
+                    <rect y="7.385" width="24" height="1.231" fill="#b22234" />
+                    <rect y="9.846" width="24" height="1.231" fill="#b22234" />
+                    <rect y="12.308" width="24" height="1.231" fill="#b22234" />
+                    <rect y="14.769" width="24" height="1.231" fill="#b22234" />
+                    <rect width="9.6" height="8.615" fill="#3c3b6e" />
+                </>
+            )}
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
     </button>
     <ul class="language-options">
-        <li>
-            <a class={lang === 'pt-br' ? "active" : ""} href={localizeHref(deLocalizedPath, { locale: 'pt-br' })}>{m.languageName(undefined, { locale: 'pt-br' })}</a>
-        </li>
-        <li>
-            <a class={lang === 'en' ? "active" : ""} href={localizeHref(deLocalizedPath, { locale: 'en' })}>{m.languageName(undefined, { locale: 'en' })}</a>
-        </li>
+        {languages.map((l) => (
+            <li>
+                <a class={l.locale === current ? 'active' : ''} href={localizeHref(deLocalizedPath, { locale: l.locale })}>
+                    <svg class="flag" viewBox="0 0 24 16" width="20" height="14" aria-hidden="true">
+                        {l.flag === 'br' ? (
+                            <>
+                                <rect width="24" height="16" fill="#009b3a" />
+                                <polygon points="12,1.5 22.5,8 12,14.5 1.5,8" fill="#fedf00" />
+                                <circle cx="12" cy="8" r="3" fill="#002776" />
+                            </>
+                        ) : (
+                            <>
+                                <rect width="24" height="16" fill="#ffffff" />
+                                <rect y="0" width="24" height="1.231" fill="#b22234" />
+                                <rect y="2.462" width="24" height="1.231" fill="#b22234" />
+                                <rect y="4.923" width="24" height="1.231" fill="#b22234" />
+                                <rect y="7.385" width="24" height="1.231" fill="#b22234" />
+                                <rect y="9.846" width="24" height="1.231" fill="#b22234" />
+                                <rect y="12.308" width="24" height="1.231" fill="#b22234" />
+                                <rect y="14.769" width="24" height="1.231" fill="#b22234" />
+                                <rect width="9.6" height="8.615" fill="#3c3b6e" />
+                            </>
+                        )}
+                    </svg>
+                    <span>{l.name}</span>
+                </a>
+            </li>
+        ))}
     </ul>
 </div>
 
 <style>
     .language-picker {
         position: relative;
+        display: flex;
+        align-items: center;
     }
 
     .language-picker-button {
-        background: var(--gradient-subtle);
-        border: 1px solid var(--gray-800);
-        border-radius: 999rem;
+        background: transparent;
+        border: 0;
+        border-radius: 0.25rem;
         display: flex;
         align-items: center;
-        gap: 0.4em;
-        padding: 0.5rem 1rem;
-        color: var(--gray-300);
+        gap: 0.35em;
+        padding: 0.375rem;
+        color: var(--gray-400);
         cursor: pointer;
-        font-size: var(--text-sm);
+        transition: color var(--theme-transition);
     }
-    
+
+    .language-picker-button:hover,
+    .language-picker-button:focus {
+        color: var(--gray-0);
+    }
+
+    .flag {
+        display: block;
+        flex-shrink: 0;
+        border-radius: 2px;
+        box-shadow: 0 0 0 1px var(--gray-800);
+    }
+
     .language-options {
         display: none;
         position: absolute;
         z-index: 100;
         list-style: none;
         padding: 0.5rem;
-        background: var(--gradient-subtle);
+        background: var(--card-bg);
         border: 1px solid var(--gray-800);
         border-radius: 0.5rem;
         margin-top: 0.25rem;
+        top: 100%;
         right: 0;
         overflow: hidden;
-        min-width: 120px;
+        min-width: 170px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         transform-origin: top right;
         transition: all 0.2s ease;
     }
-    
+
     .language-picker.open .language-options {
         display: block;
         animation: menuAppear 0.2s ease-out;
     }
-    
+
     @keyframes menuAppear {
         from {
             opacity: 0;
@@ -77,8 +141,11 @@ const lang = Astro.params.lang;
     }
 
     .language-options a {
-        display: block;
-        padding: 0.5rem 1rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.5rem 0.75rem;
         text-decoration: none;
         color: var(--gray-300);
         border-radius: 0.25rem;
@@ -99,42 +166,33 @@ const lang = Astro.params.lang;
 </style>
 
 <script is:inline>
-// Script simples para controlar o menu de idiomas
 window.addEventListener('load', function() {
-    // Encontra todos os seletores de idioma na página
     var pickers = document.querySelectorAll('.language-picker');
-    
-    // Para cada seletor...
+
     pickers.forEach(function(picker) {
         var button = picker.querySelector('button');
         if (!button) return;
-        
-        // Manipulador para alternar o menu
+
         function toggleMenu(e) {
             e.preventDefault();
             e.stopPropagation();
-            
-            // Verifica se o menu está aberto
+
             var isOpen = picker.classList.contains('open');
-            
+
             if (isOpen) {
-                // Fecha o menu
                 picker.classList.remove('open');
                 button.setAttribute('aria-expanded', 'false');
                 document.removeEventListener('click', handleOutsideClick);
             } else {
-                // Abre o menu
                 picker.classList.add('open');
                 button.setAttribute('aria-expanded', 'true');
-                
-                // Adiciona evento para detectar cliques fora
+
                 setTimeout(function() {
                     document.addEventListener('click', handleOutsideClick);
                 }, 10);
             }
         }
-        
-        // Fecha o menu ao clicar fora
+
         function handleOutsideClick(e) {
             if (!picker.contains(e.target)) {
                 picker.classList.remove('open');
@@ -142,11 +200,9 @@ window.addEventListener('load', function() {
                 document.removeEventListener('click', handleOutsideClick);
             }
         }
-        
-        // Adiciona evento de clique ao botão
+
         button.addEventListener('click', toggleMenu);
-        
-        // Adiciona suporte para fechar com ESC
+
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && picker.classList.contains('open')) {
                 picker.classList.remove('open');

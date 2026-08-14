@@ -1,5 +1,6 @@
 import { glob } from 'astro/loaders';
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 
 export const collections = {
 	work: defineCollection({
@@ -23,6 +24,7 @@ export const collections = {
 			description: z.string(),
 			publishDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
+			tag: z.string().default('General'),
 			img: z.string().optional(),
 			img_alt: z.string().optional(),
 		}),

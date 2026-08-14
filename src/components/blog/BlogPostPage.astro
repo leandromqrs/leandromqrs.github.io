@@ -14,37 +14,33 @@ interface Props {
 
 const { post, lang = 'en' } = Astro.props;
 const { Content } = await render(post);
-
-const sourceUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
-const targetLang = lang === 'pt-br' ? 'en' : 'pt';
-const targetLabel = lang === 'pt-br' ? 'English' : 'PT-BR';
-const translateUrl = new URL('https://translate.google.com/translate');
-translateUrl.searchParams.set('sl', 'auto');
-translateUrl.searchParams.set('tl', targetLang);
-translateUrl.searchParams.set('u', sourceUrl);
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
+<BaseLayout
+	title={post.data.title}
+	description={post.data.description}
+	image={post.data.img}
+	imageAlt={post.data.img_alt}
+	type="article"
+	publishedTime={post.data.publishDate}
+>
 	<div class="stack gap-20">
 		<div class="stack gap-15">
 			<header>
 				<div class="wrapper stack gap-2">
 					<a class="back-link" href={`/${lang}/blog/`}><Icon icon="arrow-left" /> Blog</a>
 					<div class="post-meta">
+						<span class="tag">{post.data.tag}</span>
 						<div class="date">
 							<FormattedDate date={post.data.publishDate} />
+							{
+								post.data.updatedDate && (
+									<span class="updated">
+										(updated: <FormattedDate date={post.data.updatedDate} />)
+									</span>
+								)
+							}
 						</div>
-						<a
-							class="translate-link"
-							href={translateUrl.toString()}
-							target="_blank"
-							rel="noopener noreferrer"
-							aria-label={`Translate this post to ${targetLabel} with Google Translate`}
-							title={`Translate to ${targetLabel}`}
-						>
-							<Icon icon="translate" size="1.1em" />
-							<span>Translate to {targetLabel}</span>
-						</a>
 					</div>
 					<Hero title={post.data.title} align="start">
 						<div class="details">
@@ -87,32 +83,18 @@ translateUrl.searchParams.set('u', sourceUrl);
 		font-size: var(--text-sm);
 	}
 
-	.translate-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.45rem;
-		width: fit-content;
-		border: 1px solid var(--gray-800);
-		border-radius: 999rem;
-		padding: 0.45rem 0.75rem;
-		background: var(--gradient-subtle);
-		color: var(--gray-200);
-		font-family: var(--font-brand);
-		font-size: var(--text-sm);
-		font-weight: 500;
-		text-decoration: none;
-		box-shadow: var(--shadow-sm);
-		transition:
-			border-color var(--theme-transition),
-			color var(--theme-transition),
-			box-shadow var(--theme-transition);
+	.updated {
+		color: var(--gray-400);
 	}
 
-	.translate-link:hover,
-	.translate-link:focus {
-		border-color: var(--accent-regular);
-		color: var(--accent-regular);
-		box-shadow: var(--shadow-md);
+	.tag {
+		font-family: var(--font-brand);
+		font-size: var(--text-sm);
+		font-weight: 600;
+		color: var(--accent-text-over);
+		background: var(--accent-dark);
+		border-radius: 999rem;
+		padding: 0.3rem 0.85rem;
 	}
 
 	.details {
@@ -150,7 +132,7 @@ translateUrl.searchParams.set('u', sourceUrl);
 	.content :global(img) {
 		border-radius: 1.5rem;
 		box-shadow: var(--shadow-sm);
-		background: var(--gradient-subtle);
+		background: var(--card-bg);
 		border: 1px solid var(--gray-800);
 	}
 
@@ -182,7 +164,7 @@ translateUrl.searchParams.set('u', sourceUrl);
 		border: 1px solid var(--gray-800);
 		border-radius: 0.75rem;
 		padding: 1.5rem;
-		background: var(--gradient-subtle);
+		background: var(--card-bg);
 		box-shadow: var(--shadow-sm);
 	}
 

@@ -1,6 +1,10 @@
 ---
 import Icon from './Icon.astro';
+import { m } from '../paraglide/messages.js';
+import { getLocale } from '../paraglide/runtime.js';
+
 const currentYear = new Date().getFullYear();
+const locale = getLocale();
 ---
 
 <footer>
@@ -15,6 +19,8 @@ const currentYear = new Date().getFullYear();
 		<a href="https://linkedin.com/in/leandromqrs"> LinkedIn</a>
 		<a href="https://github.com/leandromqrs"> GitHub</a>
 		<a href="https://twitter.com/leandromqrs"> Twitter</a>
+		<a href="https://mastodon.social/@leandromqrs" rel="me"> Mastodon</a>
+		<a href={`/${locale}/donate/`}> {m.navDonate()}</a>
 	</p>
 </footer>
 <style>

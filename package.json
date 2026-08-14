@@ -11,7 +11,8 @@
     "machine-translate": "inlang machine translate --project project.inlang"
   },
   "dependencies": {
-    "astro": "^5.7.10",
+    "astro": "^7.2.1",
+    "sharp": "^0.34.5",
     "simple-icons": "^14.12.3"
   },
   "devDependencies": {
