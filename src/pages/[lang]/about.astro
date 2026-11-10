@@ -29,7 +29,7 @@ const cvHref = (lang: string) => `/assets/Leandro-Rodrigues-CV-${lang}.pdf`;
 const employment = experience.filter((job) => !job.contract);
 const contracts = experience.filter((job) => job.contract);
 
-const work = (await getCollection("work")).sort(
+const work = (await getCollection("work")).filter((entry) => entry.data.company === "QW Software").sort(
   (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
 );
 ---
