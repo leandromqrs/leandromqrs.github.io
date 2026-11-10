@@ -13,7 +13,7 @@ tags:
   - Licensing
 ---
 
-Besides the plugins and the big dashboards, QWControl has a set of modules that make it behave like one product. Each one is a folder under `qwcontrolapp/` with its own build, as described in the [modular platform](/work/qwcontrol-modular-platform/) page. This page shows how each module attaches to the Rundeck core and what happens at runtime. The diagram above groups them by what they do for the platform.
+Besides the plugins and the big dashboards, QWControl, the workload automation platform from QW Software, has a set of modules that make it behave like one product. Each one is a folder under `qwcontrolapp/` with its own build, as described in the [modular platform](/work/qwcontrol-modular-platform/) page. This page shows how each module attaches to the Rundeck core and what happens at runtime. The diagram above groups them by what they do for the platform.
 
 ## How modules talk to the core and to each other
 

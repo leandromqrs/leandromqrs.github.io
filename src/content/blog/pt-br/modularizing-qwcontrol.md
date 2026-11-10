@@ -7,7 +7,7 @@ img: '/assets/work/qwcontrol-modularization-card.png'
 img_alt: 'Diagrama do QWControl antes e depois da modularização'
 ---
 
-O QWControl é um orquestrador de jobs construído sobre o Rundeck. Toda funcionalidade que a empresa adicionou a ele vivia dentro do código do Rundeck. Eu liderei o trabalho de tirar essas funcionalidades de lá, principalmente entre o fim de 2023 e 2024, e a pasta onde elas foram parar se chama `qwcontrolapp`.
+O QWControl é uma plataforma comercial de automação de workloads da QW Software, construída sobre o Rundeck e vendida no mesmo mercado do Control-M. Trabalhei nele de março de 2022 a novembro de 2024. Toda funcionalidade que a empresa adicionou a ele vivia dentro do código do Rundeck. Eu liderei o trabalho de tirar essas funcionalidades de lá, principalmente entre o fim de 2023 e 2024, e a pasta onde elas foram parar se chama `qwcontrolapp`.
 
 Vou manter este texto longe dos detalhes internos, porque o código é da empresa. As decisões, porém, são minhas para contar.
 

@@ -13,7 +13,7 @@ tags:
   - Refactoring
 ---
 
-QWControl is a job orchestrator built on top of Rundeck. In the beginning, every feature the product added lived inside the Rundeck code. I led the work that pulled those features out into their own modules, and `qwcontrolapp` is the folder where they live now.
+QWControl is a commercial workload automation platform from QW Software, in the same market as Control-M, built on top of Rundeck. I worked on it from March 2022 to November 2024. In the beginning, every feature the product added lived inside the Rundeck code. I led the work that pulled those features out into their own modules, and `qwcontrolapp` is the folder where they live now. The product belongs to the company, so this page stays at the level of modules and flows.
 
 There is a longer write-up on the [blog](/blog/modularizing-qwcontrol/). This page is the short version.
 

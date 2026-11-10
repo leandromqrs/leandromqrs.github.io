@@ -14,7 +14,7 @@ tags:
   - Monitoring
 ---
 
-QWControl runs jobs against virtual machines, so it helps to see those machines in the same place: what is running, how loaded it is, and whether it is healthy. I built the VM Dashboard Monitor to answer that inside QWControl, next to the jobs that act on them.
+QWControl runs jobs against virtual machines, so it helps to see those machines in the same place: what is running, how loaded it is, and whether it is healthy. I built the VM Dashboard Monitor at QW Software to answer that inside QWControl, the company's workload automation platform, next to the jobs that act on them.
 
 The screenshots on this page come from the real interface, running against fake data.
 

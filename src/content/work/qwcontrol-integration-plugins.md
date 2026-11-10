@@ -14,7 +14,7 @@ tags:
   - z/OS
 ---
 
-A scheduler is only as useful as the systems it can reach. QWControl runs on Rundeck's plugin model, so each external system gets a plugin, and each plugin shows up in the job editor as a new step type. I built these between 2022 and 2024, before and during the move to the [modular platform](/work/qwcontrol-modular-platform/). The diagram above shows how a job step reaches each system.
+A scheduler is only as useful as the systems it can reach. QWControl runs on Rundeck's plugin model, so each external system gets a plugin, and each plugin shows up in the job editor as a new step type. I built these at QW Software between 2022 and 2024, before and during the move to the [modular platform](/work/qwcontrol-modular-platform/). The diagram above shows how a job step reaches each system.
 
 ## One shape for every plugin
 
