@@ -89,3 +89,7 @@ dd {
 	hyphens: none;
 	-webkit-hyphens: none;
 }
+
+p + p {
+	margin-top: 0.4em;
+}
