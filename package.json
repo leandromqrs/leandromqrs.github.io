@@ -8,7 +8,8 @@
     "build": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "machine-translate": "inlang machine translate --project project.inlang"
+    "machine-translate": "inlang machine translate --project project.inlang",
+    "resume": "cd resume && resumx resume.en.md && resumx resume.pt-br.md"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "@inlang/cli": "^3.6.0",
-    "@inlang/paraglide-js": "^3.2.1"
+    "@inlang/paraglide-js": "^3.2.1",
+    "@resumx/resumx": "^0.2.0"
   }
 }
