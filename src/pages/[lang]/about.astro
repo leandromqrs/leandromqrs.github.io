@@ -6,10 +6,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import CallToAction from "../../components/CallToAction.astro";
 import ContactCTA from "../../components/ContactCTA.astro";
 import Hero from "../../components/Hero.astro";
+import ExperienceList from "../../components/ExperienceList.astro";
+import Window from "../../components/Window.astro";
 
 // Paraglide translations
 import { m } from "../../paraglide/messages.js";
 import { getLocale } from "../../paraglide/runtime.js";
+
+import { certifications, education, experience, languages, skills } from "../../data/profile";
 
 // For dynamic routing
 export function getStaticPaths() {
@@ -19,7 +23,11 @@ export function getStaticPaths() {
 	];
 }
 
-const cvHref = `/assets/Leandro-Rodrigues-CV-${getLocale()}.pdf`;
+const locale = getLocale() as "en" | "pt-br";
+const cvHref = (lang: string) => `/assets/Leandro-Rodrigues-CV-${lang}.pdf`;
+
+const employment = experience.filter((job) => !job.contract);
+const contracts = experience.filter((job) => job.contract);
 
 const work = (await getCollection("work")).sort(
   (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
@@ -34,22 +42,32 @@ const work = (await getCollection("work")).sort(
     <main class="wrapper about">
       <Hero title={m.aboutTitle()} tagline={m.aboutTagline()}>
         <div class="cv">
-          <CallToAction href={cvHref} download>{m.aboutDownloadCv()}</CallToAction>
+          <CallToAction href={cvHref(locale)} download>
+            {locale === "en" ? m.aboutDownloadCvEn() : m.aboutDownloadCvPt()}
+          </CallToAction>
         </div>
       </Hero>
 
       <section>
         <h2 class="section-title">{m.aboutBackgroundTitle()}</h2>
         <div class="content">
-          <p>
-            {m.aboutBackgroundP1()}
-          </p>
-          <p>
-            {m.aboutBackgroundP2()}
-          </p>
-          <p>
-            {m.aboutBackgroundP3()}
-          </p>
+          <p>{m.aboutBackgroundP1()}</p>
+          <p>{m.aboutBackgroundP2()}</p>
+          <p>{m.aboutBackgroundP3()}</p>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">{m.aboutExperienceTitle()}</h2>
+        <div class="content">
+          <ExperienceList items={employment} folder="experience" locale={locale} />
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">{m.aboutContractsTitle()}</h2>
+        <div class="content">
+          <ExperienceList items={contracts} folder="contracts" locale={locale} />
         </div>
       </section>
 
@@ -66,21 +84,64 @@ const work = (await getCollection("work")).sort(
       </section>
 
       <section>
-        <h2 class="section-title">{m.aboutEducationTitle()}</h2>
+        <h2 class="section-title">{m.aboutSkillsTitle()}</h2>
         <div class="content">
-          <p>{m.aboutEducationP1()}</p>
-          <p>{m.aboutEducationP2()}</p>
-          <p>{m.aboutEducationP3()}</p>
+          <dl class="skills">
+            {skills.map((group) => (
+              <div>
+                <dt>{group.name[locale]}</dt>
+                <dd>{group.items.join(", ")}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
       <section>
-        <h2 class="section-title">{m.aboutSkillsTitle()}</h2>
+        <h2 class="section-title">{m.aboutEducationTitle()}</h2>
         <div class="content">
-          <p>{m.aboutSkillsP1()}</p>
-          <p>{m.aboutSkillsP2()}</p>
-          <p>{m.aboutSkillsP3()}</p>
-          <p>{m.aboutSkillsP4()}</p>
+          <ul class="plain">
+            {education.map((item) => (
+              <li>
+                <strong>{item.title[locale]}</strong>
+                <span>{item.school}, {item.period[locale]}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">{m.aboutCertificationsTitle()}</h2>
+        <div class="content">
+          <ul class="plain">
+            {certifications[locale].map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">{m.aboutLanguagesTitle()}</h2>
+        <div class="content">
+          <ul class="plain">
+            {languages[locale].map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">{m.aboutResumeTitle()}</h2>
+        <div class="content">
+          <Window title="~/resume/">
+            <div class="resume">
+              <p class="meta">{m.aboutResumeMeta()}</p>
+              <p>{m.aboutResumeNote()}</p>
+              <div class="downloads">
+                <CallToAction href={cvHref("en")} download>{m.aboutDownloadCvEn()}</CallToAction>
+                <CallToAction href={cvHref("pt-br")} variant="secondary" download>{m.aboutDownloadCvPt()}</CallToAction>
+              </div>
+            </div>
+          </Window>
         </div>
       </section>
     </main>
@@ -137,6 +198,57 @@ const work = (await getCollection("work")).sort(
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
+  }
+
+
+  .skills {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .skills dt {
+    color: var(--gray-0);
+    font-weight: 700;
+  }
+
+  .skills dd {
+    margin: 0;
+  }
+
+  .plain {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .plain li {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .plain strong {
+    color: var(--gray-0);
+  }
+
+  .resume {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .meta {
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+
+  .downloads {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
   .content :global(a:hover),

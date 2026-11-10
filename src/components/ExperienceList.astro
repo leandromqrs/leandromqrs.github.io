@@ -1,0 +1,88 @@
+---
+import Pill from "./Pill.astro";
+import Window from "./Window.astro";
+
+import { m } from "../paraglide/messages.js";
+import type { Experience, Locale } from "../data/profile";
+
+interface Props {
+	items: Experience[];
+	folder: string;
+	locale: Locale;
+}
+
+const { items, folder, locale } = Astro.props;
+const slug = (company: string) => company.split(/[ ,(/]/)[0].toLowerCase();
+---
+
+<ol class="timeline">
+	{items.map((job) => (
+		<li>
+			<Window title={`~/${folder}/${slug(job.company)}`}>
+				<article class="job">
+					<header>
+						<h3>{job.company}</h3>
+						<p class="role">{job.role[locale]}</p>
+						<p class="period">{job.period[locale]}</p>
+					</header>
+					<p>{job.summary[locale]}</p>
+					<ul class="stack-list">
+						{job.stack.map((tech) => <li><Pill>{tech}</Pill></li>)}
+					</ul>
+					{job.href && <a class="more" href={`/${job.href}/`}>{m.aboutExperienceSeeWork()}</a>}
+				</article>
+			</Window>
+		</li>
+	))}
+</ol>
+
+<style>
+	.timeline {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		list-style: none;
+		padding: 0;
+	}
+
+	.job {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		padding: 1rem 1.25rem;
+	}
+
+	.job header {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		column-gap: 1rem;
+		row-gap: 0.15rem;
+	}
+
+	.job h3 {
+		grid-column: 1 / -1;
+		font-size: var(--text-lg);
+		color: var(--gray-0);
+	}
+
+	.role {
+		color: var(--accent-regular);
+	}
+
+	.period {
+		color: var(--gray-400);
+		font-size: var(--text-sm);
+	}
+
+	.stack-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 0.75rem;
+		list-style: none;
+		padding: 0;
+	}
+
+	.more {
+		font-size: var(--text-sm);
+	}
+</style>
