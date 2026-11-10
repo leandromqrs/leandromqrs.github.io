@@ -39,7 +39,7 @@ export const experience: Experience[] = [
 		stack: ['Java', 'Spring Boot', 'Quarkus', 'Kafka', 'RabbitMQ', 'Azure DevOps', 'React'],
 	},
 	{
-		company: 'QW Software (Grupo Vernet), QWControl',
+		company: 'QW Software (Grupo Vernet)',
 		role: { en: 'Full Stack Developer', 'pt-br': 'Desenvolvedor Full Stack' },
 		period: { en: 'Mar 2022 - Nov 2024', 'pt-br': 'Mar 2022 - Nov 2024' },
 		summary: {
@@ -54,7 +54,7 @@ export const experience: Experience[] = [
 		company: 'Prodesp',
 		contract: true,
 		role: { en: 'Developer', 'pt-br': 'Desenvolvedor' },
-		period: { en: 'Nov 2023 - Jan 2024', 'pt-br': 'Nov 2023 - Jan 2024' },
+		period: { en: '3 months', 'pt-br': '3 meses' },
 		summary: {
 			en: 'A Visual Basic application for the Snow agent inventory of the São Paulo state government, and SQL Server queries that remove duplicate inventory data.',
 			'pt-br':
@@ -86,11 +86,11 @@ export const experience: Experience[] = [
 		company: 'DATASUS / Fiocruz (FIOTEC)',
 		contract: true,
 		role: { en: 'Software Engineer, consulting', 'pt-br': 'Engenheiro de Software, consultoria' },
-		period: { en: '6 months', 'pt-br': '6 meses' },
+		period: { en: '8 months', 'pt-br': '8 meses' },
 		summary: {
-			en: 'Evolution of the Java 8 and Spring Boot backend of the RNDS, the national health data network, and a technical proposal to migrate it to Java 21.',
+			en: 'Migration of backend services of the RNDS, the national health data network, from Java 8/11 and Spring Boot 2.x to Java 21 and Spring Boot 3.5, plus GraalVM native images that cut memory by 64% to 94% in staging, and the removal of the configuration server.',
 			'pt-br':
-				'Evolução do backend em Java 8 e Spring Boot da RNDS, a rede nacional de dados em saúde, e proposta técnica de migração para Java 21.',
+				'Migração de serviços do backend da RNDS, a rede nacional de dados em saúde, de Java 8/11 e Spring Boot 2.x para Java 21 e Spring Boot 3.5, além de imagens nativas GraalVM que reduziram a memória em 64% a 94% em homologação e da remoção do servidor de configuração.',
 		},
 		stack: ['Java', 'Spring Boot', 'Elasticsearch', 'Kafka', 'AWS', 'Kubernetes'],
 	},
@@ -100,11 +100,11 @@ export const experience: Experience[] = [
 		role: { en: 'Backend Developer', 'pt-br': 'Desenvolvedor Backend' },
 		period: { en: '6 months', 'pt-br': '6 meses' },
 		summary: {
-			en: 'Spring Batch jobs that process 5 million+ invoices per day for Vivo, Oi and Carvajal, with 30% less processing time.',
+			en: 'Spring Batch jobs that turn billing files into PDF, e-mail and SMS notifications for telecom operators, in 1,000-record lots with parallel rendering.',
 			'pt-br':
-				'Jobs com Spring Batch que processam mais de 5 milhões de faturas por dia para Vivo, Oi e Carvajal, com 30% menos tempo de processamento.',
+				'Jobs Spring Batch que transformam arquivos de faturamento em notificações por PDF, e-mail e SMS para operadoras de telecomunicações, em lotes de 1.000 registros com renderização paralela.',
 		},
-		stack: ['Java', 'Spring Batch', 'Python', 'Django', 'PostgreSQL'],
+		stack: ['Java', 'Spring Batch', 'Kafka', 'SQL Server', 'Oracle'],
 	},
 ];
 

@@ -53,7 +53,7 @@ Cliente: CASSI, plano de saúde dos funcionários do Banco do Brasil, com mais d
 - Liderança técnica de equipes sob metodologias ágeis
 - Construção de integrações MCP (Model Context Protocol) conectadas ao Azure, e uso de Claude Code e Codex para geração de código, revisão de pull requests e análise estática de código legado
 
-### QWControl, QW Software (Grupo Vernet) || Mar 2022 - Nov 2024
+### QW Software (Grupo Vernet) || Mar 2022 - Nov 2024
 
 _Desenvolvedor Full Stack_ || Brasília, DF
 
@@ -84,7 +84,7 @@ _Estagiário_ || Brasília, DF
 
 ## Trabalhos por Contrato
 
-### Prodesp || Nov 2023 - Jan 2024
+### Prodesp || 3 meses
 
 _Desenvolvedor_ || Remoto
 
@@ -93,14 +93,17 @@ A Prodesp é a companhia de processamento de dados do governo do estado de São 
 - Desenvolvimento e manutenção de uma aplicação em Visual Basic que registra o usuário atual de cada máquina para o inventário do agente Snow
 - Consultas em SQL Server que removem dados duplicados do inventário, melhorando a precisão do processo
 
-### DATASUS / Fiocruz (FIOTEC) || 6 meses
+### DATASUS / Fiocruz (FIOTEC) || 8 meses
 
 _Engenheiro de Software, consultoria_ || Remoto
 
 O DATASUS é o departamento de informática do SUS. A FIOTEC é a fundação de apoio da Fiocruz.
 
 - Estudo e evolução da arquitetura backend em Java 8 e Spring Boot da RNDS (Rede Nacional de Dados em Saúde), com foco em modularização, escalabilidade e manutenção
-- Proposta técnica de migração do ambiente de Java 8 para Java 21 e atualização da wiki de arquitetura de microsserviços modulares e padrões de integração
+- Migração dos serviços em que atuei de Java 8/11 e Spring Boot 2.x para Java 21 e Spring Boot 3.5, com parte deles em Java 25 e Spring Boot 4, e atualização da wiki de arquitetura de microsserviços modulares e padrões de integração
+- Imagens nativas com GraalVM testadas em homologação em 6 serviços: memória até 64% a 94% menor (666 para 41 MiB no gateway de busca) e inicialização em menos de 2 segundos
+- Remoção do servidor de configuração em 8 serviços, com as configurações movidas para variáveis de ambiente e variáveis de CI/CD por escopo, de modo que os pods não dependem mais dele para subir e escalar
+- Correção de um vazamento de file descriptors no serviço de PDF que derrubava pods, e dos limites de memória do ZGC e do contêiner que reiniciavam pods de desenvolvimento
 - Elasticsearch para busca e indexação de dados em larga escala, e apoio na estruturação de ambientes AWS para escalabilidade e resiliência
 
 ### DataCore Solutions || 6 meses
@@ -109,8 +112,10 @@ _Desenvolvedor Backend_ || Remoto
 
 A DataCore desenvolve integrações e processamento de dados em larga escala para clientes de telecomunicações e serviços.
 
-- Jobs com Spring Batch em Java 8 e 11 processando mais de 5 milhões de faturas por dia para Vivo, Oi e Carvajal, com 30% menos tempo de processamento
-- Serviços REST com Python e Django, interfaces em React, PostgreSQL e MySQL, code review no Bitbucket e times ágeis no Jira
+- Jobs com Spring Batch em Java 8 e 17 que transformam arquivos de faturamento em notificações por PDF, e-mail e SMS para operadoras de telecomunicações, divididos em lotes de 1.000 registros e renderizados em paralelo
+- Entrega dos arquivos gerados a motores de distribuição, com empacotamento, criptografia e controle de capacidade entre as etapas
+- Job de replicação de banco, webhook de status de bounce e atualização de status entre SQL Server e Oracle com retentativas e classificação de erros
+- Consumidor do hub de notificações em Kafka e Azure Event Hubs
 
 ## Habilidades
 
@@ -166,6 +171,10 @@ Idiomas
 
 **Editor Rule Flow e monitoramento de jobs diários, QWControl** - Um editor visual que executa os passos de um job por regras e condições, e um quadro do plano do dia com ações por job. Vue.js, TypeScript, Vue Flow, Groovy, Quartz. [Detalhes](https://leandromqrs.dev/pt-br/work/)
 
-**Processamento de faturas, DataCore Solutions** - Pipelines com Spring Batch para mais de 5 milhões de faturas por dia de clientes de telecomunicações. Java, Spring Batch, PostgreSQL.
+**Pipeline de notificações, DataCore Solutions** - Jobs Spring Batch que transformam arquivos de faturamento em notificações por PDF, e-mail e SMS para operadoras de telecomunicações, em lotes de 1.000 registros, com renderização paralela e entrega baseada em arquivos. Java, Spring Batch, SQL Server, Oracle. [Detalhes](https://leandromqrs.dev/work/file-system-as-message-bus/)
+
+**Gateway de proxy de APIs, CASSI** - Um proxy cujas rotas, mapeamentos de campos e fluxos com várias chamadas ficam no banco e mudam sem deploy, com credenciais criptografadas e renovação de token. Java, Spring Boot, SQL Server. [Detalhes](https://leandromqrs.dev/work/runtime-routes-from-a-database/)
+
+**Modernização dos serviços da RNDS, DATASUS** - Serviços de backend da rede nacional de dados em saúde migrados de Java 8/11 e Spring Boot 2.x para Java 21 e Spring Boot 3.5, com Java 25 e Spring Boot 4 em desenvolvimento, imagens nativas que reduziram a memória em 64% a 94% em homologação e o servidor de configuração removido. Java, Spring Boot, GraalVM, Kubernetes. [Detalhes](https://leandromqrs.dev/work/graalvm-native-images-spring-boot/)
 
 **Aetheris, projeto pessoal** - Cliente Kubernetes nativo para o desktop GNOME. Rust. [Detalhes](https://leandromqrs.dev/pt-br/blog/developing-aetheris/)

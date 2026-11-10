@@ -53,7 +53,7 @@ Client: CASSI, the health plan of Banco do Brasil employees, with 600k+ benefici
 - Technical leadership of teams under Agile methodologies
 - Construction of MCP (Model Context Protocol) integrations connected to Azure, and use of Claude Code and Codex for code generation, pull request review and static analysis of legacy code
 
-### QWControl, QW Software (Grupo Vernet) || Mar 2022 - Nov 2024
+### QW Software (Grupo Vernet) || Mar 2022 - Nov 2024
 
 _Full Stack Developer_ || Brasília, DF
 
@@ -84,7 +84,7 @@ _Intern_ || Brasília, DF
 
 ## Contract Work
 
-### Prodesp || Nov 2023 - Jan 2024
+### Prodesp || 3 months
 
 _Developer_ || Remote
 
@@ -93,14 +93,17 @@ Prodesp is the data processing company of the state government of São Paulo.
 - Development and maintenance of a Visual Basic application that records the current user of each machine for the Snow agent inventory
 - SQL Server queries that remove duplicate inventory data, improving the accuracy of the process
 
-### DATASUS / Fiocruz (FIOTEC) || 6 months
+### DATASUS / Fiocruz (FIOTEC) || 8 months
 
 _Software Engineer, consulting_ || Remote
 
 DATASUS is the IT department of Brazil's public health system, SUS. FIOTEC is the support foundation of Fiocruz.
 
 - Study and evolution of the Java 8 and Spring Boot backend architecture of the RNDS (national health data network), focused on modularization, scalability and maintenance
-- Technical proposal to migrate the environment from Java 8 to Java 21, and update of the architecture wiki on modular microservices and integration patterns
+- Migration of the services I worked on from Java 8/11 and Spring Boot 2.x to Java 21 and Spring Boot 3.5, with part of them moved to Java 25 and Spring Boot 4, and update of the architecture wiki on modular microservices and integration patterns
+- GraalVM native images tested in staging on 6 services: memory down 64% to 94% (666 to 41 MiB on the search gateway) and startup under 2 seconds
+- Removal of the configuration server in 8 services, with settings moved to environment variables and scoped CI/CD variables so pods no longer depend on it to start and scale
+- Fix for a file descriptor leak in the PDF service that crashed pods, and for ZGC and container memory limits that restarted development pods
 - Elasticsearch for search and indexing of data at scale, and support in structuring AWS environments for scalability and resilience
 
 ### DataCore Solutions || 6 months
@@ -109,8 +112,10 @@ _Backend Developer_ || Remote
 
 DataCore builds integrations and large-scale data processing for telecom and services clients.
 
-- Spring Batch jobs on Java 8 and 11 processing 5 million+ invoices per day for Vivo, Oi and Carvajal, with 30% less processing time
-- REST services with Python and Django, React interfaces, PostgreSQL and MySQL, code review on Bitbucket and Agile teams on Jira
+- Spring Batch jobs on Java 8 and 17 that turn billing files into PDF, e-mail and SMS notifications for telecom operators, split into 1,000-record lots and rendered in parallel
+- Delivery of generated files to distribution engines, with packaging, encryption and capacity control between steps
+- Database replication job, bounce-status webhook and status updates across SQL Server and Oracle with retries and error classification
+- Notification hub consumer on Kafka and Azure Event Hubs
 
 ## Skills
 
@@ -166,6 +171,10 @@ Languages
 
 **Rule Flow editor and daily job monitoring, QWControl** - A visual editor that runs job steps by rules and conditions, and a board of the day's plan with per-job actions. Vue.js, TypeScript, Vue Flow, Groovy, Quartz. [Write-ups](https://leandromqrs.dev/en/work/)
 
-**Invoice processing, DataCore Solutions** - Spring Batch pipelines for 5 million+ invoices per day for telecom clients. Java, Spring Batch, PostgreSQL.
+**Notification pipeline, DataCore Solutions** - Spring Batch jobs that turn billing files into PDF, e-mail and SMS notifications for telecom operators, in 1,000-record lots with parallel rendering and a file-based hand-off to delivery. Java, Spring Batch, SQL Server, Oracle. [Write-up](https://leandromqrs.dev/work/file-system-as-message-bus/)
+
+**API proxy gateway, CASSI** - A proxy whose routes, field mappings and multi-call flows live in a database and change without a deploy, with encrypted credentials and token refresh. Java, Spring Boot, SQL Server. [Write-up](https://leandromqrs.dev/work/runtime-routes-from-a-database/)
+
+**RNDS service modernization, DATASUS** - Backend services of the national health data network moved from Java 8/11 and Spring Boot 2.x to Java 21 and Spring Boot 3.5, with Java 25 and Spring Boot 4 in development, native images that cut memory by 64% to 94% in staging, and the configuration server removed. Java, Spring Boot, GraalVM, Kubernetes. [Write-up](https://leandromqrs.dev/work/graalvm-native-images-spring-boot/)
 
 **Aetheris, personal project** - Native Kubernetes client for the GNOME desktop. Rust. [Write-up](https://leandromqrs.dev/en/blog/developing-aetheris/)
