@@ -1,5 +1,6 @@
 ---
-title: QWControl Platform Modules
+title: The modules inside QWControl
+company: QW Software
 publishDate: 2024-07-30 00:00:00
 img: /assets/work/qwcontrol-modules-card.png
 img_alt: Map of the qwcontrolapp modules grouped by experience, operations, platform and infrastructure

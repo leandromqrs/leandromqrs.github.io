@@ -69,7 +69,7 @@ The VMware work in 2024 was a good test. It started as a plugin, then grew into 
 
 The license module can now decide, feature by feature, what an installation may use. A change to the monitoring page no longer shares a tree with a calendar change. Adding z/OS support to file transfer touched only the file transfer plugin.
 
-You can see the results in the [VM Dashboard Monitor](/work/vm-monitor-dashboard/), the [Rule Flow editor](/work/qwcontrol-rule-flow-editor/), [Daily Job Monitoring](/work/qwcontrol-job-monitoring/), the [integration plugins](/work/qwcontrol-integration-plugins/) and the [platform modules](/work/qwcontrol-platform-modules/).
+You can see the results in the [VMware dashboard](/work/vm-monitor-dashboard/), the [Rule Flow editor](/work/qwcontrol-rule-flow-editor/), [Daily job monitoring board](/work/qwcontrol-job-monitoring/), the [integration plugins](/work/qwcontrol-integration-plugins/) and the [platform modules](/work/qwcontrol-platform-modules/).
 
 ## What stayed with me
 

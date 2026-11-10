@@ -1,5 +1,6 @@
 ---
-title: VM Dashboard Monitor
+title: VMware dashboard
+company: QW Software
 publishDate: 2024-10-21 00:00:00
 img: /assets/work/vmware-vms.jpg
 img_alt: QWControl VMware dashboard with power state counters, a donut chart, CPU, memory and storage gauges, and a filterable list of virtual machines

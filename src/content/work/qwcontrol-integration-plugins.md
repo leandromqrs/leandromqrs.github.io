@@ -1,5 +1,6 @@
 ---
-title: Integration Plugins for QWControl
+title: SAP, NetBackup, SQL and z/OS plugins
+company: QW Software
 publishDate: 2024-08-23 00:00:00
 img: /assets/work/qwcontrol-plugins-card.png
 img_alt: Diagram of QWControl job steps, the plugins that implement them and the external systems they reach, such as SAP, NetBackup, databases and z/OS hosts
@@ -140,8 +141,8 @@ The smallest plugin waits for a duration before the next step. The value can be 
 
 ## Rule Flow
 
-The strategy plugin that decides when each step runs has its own page, with the editor: [Rule Flow Strategy and Visual Editor](/work/qwcontrol-rule-flow-editor/).
+The strategy plugin that decides when each step runs has its own page, with the editor: [Rule Flow, a visual editor for job rules](/work/qwcontrol-rule-flow-editor/).
 
 ## VMware and Proxmox
 
-The VMware plugin manages virtual machines from a job step. Its dashboard grew into a separate module and has its own page: [VM Dashboard Monitor](/work/vm-monitor-dashboard/).
+The VMware plugin manages virtual machines from a job step. Its dashboard grew into a separate module and has its own page: [VMware dashboard](/work/vm-monitor-dashboard/).

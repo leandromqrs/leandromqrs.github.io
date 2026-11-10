@@ -69,7 +69,7 @@ O trabalho com VMware em 2024 foi um bom teste. Começou como plugin, cresceu pa
 
 O módulo de licença agora decide, funcionalidade por funcionalidade, o que uma instalação pode usar. Uma mudança na página de monitoramento não divide mais a árvore com uma mudança no calendário. Adicionar suporte a z/OS na transferência de arquivos mexeu apenas no plugin de transferência de arquivos.
 
-Os resultados estão em [VM Dashboard Monitor](/work/vm-monitor-dashboard/), [editor de Rule Flow](/work/qwcontrol-rule-flow-editor/), [Daily Job Monitoring](/work/qwcontrol-job-monitoring/), [plugins de integração](/work/qwcontrol-integration-plugins/) e [módulos da plataforma](/work/qwcontrol-platform-modules/).
+Os resultados estão em [VMware dashboard](/work/vm-monitor-dashboard/), [editor de Rule Flow](/work/qwcontrol-rule-flow-editor/), [Daily job monitoring board](/work/qwcontrol-job-monitoring/), [plugins de integração](/work/qwcontrol-integration-plugins/) e [módulos da plataforma](/work/qwcontrol-platform-modules/).
 
 ## O que ficou
 

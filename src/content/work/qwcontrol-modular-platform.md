@@ -1,5 +1,6 @@
 ---
-title: QWControl Modular Platform
+title: Splitting QWControl into modules and plugins
+company: QW Software
 publishDate: 2024-10-28 00:00:00
 img: /assets/work/qwcontrol-modularization-card.png
 img_alt: Diagram comparing QWControl before, with every feature inside one Rundeck-based codebase, and after, with a core application that loads modules from qwcontrolapp and plugins
@@ -89,6 +90,6 @@ A feature now has an owner folder. The license module can decide which of them a
 
 ## Related
 
-- [VM Dashboard Monitor](/work/vm-monitor-dashboard/)
+- [VMware dashboard](/work/vm-monitor-dashboard/)
 - [Integration plugins](/work/qwcontrol-integration-plugins/)
 - [Platform modules](/work/qwcontrol-platform-modules/)

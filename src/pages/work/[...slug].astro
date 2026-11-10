@@ -40,6 +40,7 @@ const { Content } = await render(entry);
 					<a class="back-link" href="/work/"><Icon icon="arrow-left" /> Work</a>
 					<Hero title={entry.data.title} align="start">
 						<div class="details">
+							<p class="place">{entry.data.company}</p>
 							<div class="tags">
 								{entry.data.tags.map((t) => <Pill>{t}</Pill>)}
 							</div>
@@ -79,6 +80,12 @@ const { Content } = await render(entry);
 		gap: 1.5rem;
 		justify-content: space-between;
 		align-items: center;
+	}
+
+	.place {
+		white-space: nowrap;
+		color: var(--accent-regular);
+		font-size: var(--text-sm);
 	}
 
 	.tags {

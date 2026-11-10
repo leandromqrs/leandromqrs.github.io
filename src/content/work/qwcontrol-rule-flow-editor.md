@@ -1,5 +1,6 @@
 ---
-title: Rule Flow Strategy and Visual Editor
+title: Rule Flow, a visual editor for job rules
+company: QW Software
 publishDate: 2023-12-20 00:00:00
 img: /assets/work/ruleflow-editor-card.jpg
 img_alt: Rule Flow editor in QWControl showing a workflow as connected step nodes, with a palette of unplaced steps on the right

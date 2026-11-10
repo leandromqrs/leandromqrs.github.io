@@ -8,8 +8,11 @@ import PortfolioPreview from "../../components/PortfolioPreview.astro";
 import Hero from "../../components/Hero.astro";
 import Grid from "../../components/Grid.astro";
 
+import { experience } from "../../data/profile";
+
 // Paraglide translations
 import { m } from "../../paraglide/messages.js";
+import { getLocale } from "../../paraglide/runtime.js";
 
 // For dynamic routing
 export function getStaticPaths() {
@@ -19,9 +22,18 @@ export function getStaticPaths() {
 	];
 }
 
+const locale = getLocale() as "en" | "pt-br";
+
 const projects = (await getCollection("work")).sort(
   (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
+
+const places = experience
+  .map((job) => ({
+    job,
+    projects: projects.filter((project) => job.company.startsWith(project.data.company)),
+  }))
+  .filter((place) => place.projects.length > 0);
 ---
 
 <BaseLayout
@@ -35,16 +47,41 @@ const projects = (await getCollection("work")).sort(
         tagline={m.workPageTagline()}
         align="start"
       />
-      <Grid variant="offset">
-        {
-          projects.map((project) => (
-            <li>
-              <PortfolioPreview project={project} />
-            </li>
-          ))
-        }
-      </Grid>
+      {
+        places.map(({ job, projects }) => (
+          <section class="place stack gap-4">
+            <header>
+              <h2>{job.company}</h2>
+              <p>{job.role[locale]}, {job.period[locale]}</p>
+            </header>
+            <Grid variant="offset">
+              {projects.map((project) => (
+                <li>
+                  <PortfolioPreview project={project} />
+                </li>
+              ))}
+            </Grid>
+          </section>
+        ))
+      }
     </main>
     <ContactCTA />
   </div>
 </BaseLayout>
+
+<style>
+  .place h2 {
+    font-size: var(--text-xl);
+    color: var(--gray-0);
+  }
+
+  .place h2::before {
+    content: '## ';
+    color: var(--accent-regular);
+  }
+
+  .place header p {
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+</style>

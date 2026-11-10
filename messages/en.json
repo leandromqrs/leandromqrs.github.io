@@ -33,9 +33,9 @@
   "workSectionTitle": "Selected Work",
   "workSectionDesc": "Projects where complex systems became easier to run and able to scale.",
   "workViewAll": "View All",
-  "workPageTitle": "My Work",
+  "workPageTitle": "Work",
   "workPageDesc": "Explore Leandro Rodrigues' portfolio showcasing his expertise in building scalable systems, integrating complex platforms, and crafting high-performance solutions across diverse industries.",
-  "workPageTagline": "What I built for QWControl at QW Software, a commercial workload automation platform.",
+  "workPageTagline": "What I built, grouped by where I built it.",
   
   "stacksSectionTitle": "Stacks",
   "stacksSectionDesc": "The tools I use to build secure products that scale and are easy to change.",

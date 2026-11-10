@@ -8,6 +8,7 @@ export const collections = {
 		loader: glob({ base: './src/content/work', pattern: '**/*.md', }),
 		schema: z.object({
 			title: z.string(),
+			company: z.string(),
 			description: z.string(),
 			publishDate: z.coerce.date(),
 			tags: z.array(z.string()),
