@@ -11,12 +11,13 @@
     "machine-translate": "inlang machine translate --project project.inlang"
   },
   "dependencies": {
-    "astro": "^7.2.1",
-    "sharp": "^0.34.5",
-    "simple-icons": "^14.12.3"
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.8",
+    "sharp": "^0.35.5",
+    "simple-icons": "^16.37.0"
   },
   "devDependencies": {
-    "@inlang/cli": "^3.0.0",
-    "@inlang/paraglide-js": "2.0.12"
+    "@inlang/cli": "^3.6.0",
+    "@inlang/paraglide-js": "^3.2.1"
   }
 }
