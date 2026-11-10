@@ -49,6 +49,7 @@
   "aboutBackgroundP1": "Sou Leandro Rodrigues, Desenvolvedor Full Stack Sênior com mais de cinco anos de experiência construindo software corporativo de automação, integração e monitoramento. A maior parte desse tempo foi no QWControl, um orquestrador de jobs construído sobre o Rundeck, onde escrevi mais de 1.600 commits desde 2022.",
   "aboutBackgroundP2": "No QWControl, liderei a mudança de um código único para módulos e plugins independentes, e construí o dashboard de VMware, o editor de rule flow e as integrações com SAP, NetBackup, bancos SQL e z/OS. No dia a dia trabalho com Java, Groovy, Spring Boot, Quarkus e Vue.js, e rodo o resultado em Docker, Kubernetes e OpenShift, com Kafka e RabbitMQ onde os sistemas precisam conversar entre si.",
   "aboutBackgroundP3": "Pelo caminho, melhorei a escalabilidade do sistema em mais de 40% com design de microsserviços, automatizei mais de 15 pipelines de CI/CD, acelerei a entrega de software em 25%, desenvolvi mais de 50 plugins personalizados para SAP e ferramentas empresariais e migrei sistemas legados para uma infraestrutura com 99,9% de tempo de atividade. Fora do trabalho, construo o Aetheris, um cliente Kubernetes nativo para o desktop GNOME, escrito em Rust.",
+  "aboutDownloadCv": "Baixar currículo (PDF)",
   "aboutWorkIntro": "Estudos de caso com a interface real rodando sobre dados fictícios:",
   "aboutWorkTitle": "Projetos selecionados",
   "aboutEducationTitle": "Educação",

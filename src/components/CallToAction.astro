@@ -2,12 +2,13 @@
 interface Props {
 	href: string;
 	variant?: 'primary' | 'secondary';
+	download?: boolean;
 }
 
-const { href, variant = 'primary' } = Astro.props;
+const { href, variant = 'primary', download = false } = Astro.props;
 ---
 
-<a href={href} class:list={[variant]}><slot /></a>
+<a href={href} class:list={[variant]} download={download || undefined}><slot /></a>
 
 <style>
 	a {

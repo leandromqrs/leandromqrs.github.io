@@ -1,0 +1,91 @@
+@font-face {
+	font-family: 'JetBrains Mono';
+	font-weight: 400;
+	font-style: normal;
+	src: url('fonts/JetBrainsMono-Regular.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'JetBrains Mono';
+	font-weight: 400;
+	font-style: italic;
+	src: url('fonts/JetBrainsMono-Italic.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'JetBrains Mono';
+	font-weight: 500;
+	font-style: normal;
+	src: url('fonts/JetBrainsMono-Medium.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'JetBrains Mono';
+	font-weight: 700;
+	font-style: normal;
+	src: url('fonts/JetBrainsMono-Bold.woff2') format('woff2');
+}
+
+:root {
+	--paper: #ffffff;
+	--ink: #0e110e;
+	--muted: #4d564b;
+	--rule: #bcc2bc;
+	--accent: #0b6b2e;
+}
+
+@page {
+	size: A4;
+}
+
+html,
+body {
+	background: var(--paper);
+	-webkit-print-color-adjust: exact;
+	print-color-adjust: exact;
+}
+
+h1::before {
+	content: '~$ ';
+	color: var(--accent);
+}
+
+h1::after {
+	content: '';
+	display: inline-block;
+	width: 0.55em;
+	height: 0.95em;
+	margin-left: 0.25em;
+	vertical-align: -0.12em;
+	background: var(--accent);
+}
+
+h2::before {
+	content: '## ';
+	color: var(--accent);
+	white-space: pre;
+}
+
+h2 {
+	text-transform: lowercase;
+}
+
+a {
+	color: var(--accent);
+	text-decoration: none;
+}
+
+li::marker {
+	color: var(--accent);
+}
+
+dt {
+	color: var(--accent);
+}
+
+p,
+li,
+dd {
+	hyphens: none;
+	-webkit-hyphens: none;
+}
