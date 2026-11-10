@@ -1,6 +1,6 @@
 ---
 title: QWControl Modular Platform
-publishDate: 2025-05-12 00:00:00
+publishDate: 2024-10-28 00:00:00
 img: /assets/work/qwcontrol-modularization-card.png
 img_alt: Diagram comparing QWControl before, with every feature inside one Rundeck-based codebase, and after, with a core application that loads modules from qwcontrolapp and plugins
 description: |

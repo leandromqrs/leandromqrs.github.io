@@ -1,6 +1,6 @@
 ---
 title: Daily Job Monitoring
-publishDate: 2025-04-22 00:00:00
+publishDate: 2024-10-07 00:00:00
 img: /assets/work/monitoring-dashboard-card.jpg
 img_alt: QWControl monitoring page with success, failed, running and pending counters above a filterable table of the day's jobs
 description: |
