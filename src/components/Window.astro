@@ -1,0 +1,65 @@
+---
+interface Props {
+	title: string;
+	as?: 'div' | 'section' | 'li' | 'article';
+}
+
+const { title, as: Tag = 'div' } = Astro.props;
+---
+
+<Tag class="window">
+	<div class="titlebar" aria-hidden="true">
+		<span class="dots"><i></i><i></i><i></i></span>
+		<span class="name">{title}</span>
+	</div>
+	<div class="body"><slot /></div>
+</Tag>
+
+<style>
+	.window {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+		border: 1px solid var(--gray-700);
+		background: var(--card-bg);
+	}
+
+	.titlebar {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.4rem 0.75rem;
+		border-bottom: 1px solid var(--gray-700);
+		font-size: var(--text-sm);
+		color: var(--gray-400);
+		background: var(--gray-999);
+	}
+
+	.dots {
+		display: flex;
+		gap: 0.3rem;
+	}
+
+	.dots i {
+		display: block;
+		width: 0.55rem;
+		height: 0.55rem;
+		border: 1px solid var(--gray-500);
+	}
+
+	.dots i:first-child {
+		background: var(--accent-regular);
+		border-color: var(--accent-regular);
+	}
+
+	.name {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.body {
+		flex: 1;
+		min-width: 0;
+	}
+</style>

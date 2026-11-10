@@ -34,6 +34,15 @@ if (iconName in customIcons) {
   iconPath = icon?.path;
   iconHex = icon?.hex;
 }
+
+const resolvedHex = color ?? iconHex;
+const luminance = resolvedHex
+	? (0.299 * parseInt(resolvedHex.slice(0, 2), 16) +
+			0.587 * parseInt(resolvedHex.slice(2, 4), 16) +
+			0.114 * parseInt(resolvedHex.slice(4, 6), 16)) /
+		255
+	: 1;
+const followsTheme = mono || luminance < 0.3;
 ---
 
 <svg
@@ -42,7 +51,7 @@ if (iconName in customIcons) {
     viewBox="0 0 24 24"
     width={size}
     height={size}
-    fill={mono ? 'currentColor' : `#${color ?? iconHex}`}
+    fill={followsTheme ? 'currentColor' : `#${resolvedHex}`}
     xmlns="http://www.w3.org/2000/svg"
 >
     <title>{iconName} icon</title>

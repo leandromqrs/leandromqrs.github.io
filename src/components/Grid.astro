@@ -21,7 +21,7 @@ const { variant } = Astro.props;
 
 	.grid.small {
 		grid-template-columns: 1fr 1fr;
-		gap: 1.5rem;
+		gap: 1rem;
 	}
 
 	.grid.small > :global(:last-child:nth-child(odd)) {
@@ -31,37 +31,23 @@ const { variant } = Astro.props;
 	@media (min-width: 50em) {
 		.grid {
 			grid-template-columns: 1fr 1fr;
-			gap: 4rem;
-		}
-
-		.grid.offset {
-			--row-offset: 7.5rem;
-			padding-bottom: var(--row-offset);
-		}
-
-		.grid.offset > :global(:nth-child(odd)) {
-			transform: translateY(var(--row-offset));
-		}
-
-		.grid.offset > :global(:last-child:nth-child(odd)) {
-			grid-column: 2 / 3;
-			transform: none;
+			gap: 1.5rem;
 		}
 
 		.grid.small {
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
-			gap: 2rem;
+			gap: 1rem;
 		}
 
 		.grid.small > :global(*) {
-			flex-basis: 10rem;
+			flex-basis: 12rem;
 		}
 
 		.grid.spotlight {
 			grid-template-columns: repeat(2, 1fr);
-			gap: 3rem;
+			gap: 1.5rem;
 		}
 
 		.grid.spotlight > :global(li:nth-of-type(1)) {
@@ -73,7 +59,7 @@ const { variant } = Astro.props;
 		}
 
 		.grid.spotlight > :global(li:nth-of-type(1)) .title {
-			font-size: 1.75rem;
+			font-size: var(--text-2xl);
 		}
 
 		.grid.spotlight > :global(li:last-child:nth-of-type(odd):not(:nth-of-type(1))) {

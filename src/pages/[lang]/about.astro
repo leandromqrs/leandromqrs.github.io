@@ -71,12 +71,6 @@ export function getStaticPaths() {
     gap: 3.5rem;
   }
 
-  img {
-    margin-top: 1.5rem;
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow-md);
-  }
-
   section {
     display: flex;
     flex-direction: column;
@@ -90,19 +84,22 @@ export function getStaticPaths() {
     color: var(--gray-0);
   }
 
+  .section-title::before {
+    content: '## ';
+    color: var(--accent-regular);
+  }
+
   .content {
     grid-column: 2 / 4;
   }
 
   .content :global(a) {
-    text-decoration: 1px solid underline transparent;
     text-underline-offset: 0.25em;
-    transition: text-decoration-color var(--theme-transition);
   }
 
   .content :global(a:hover),
   .content :global(a:focus) {
-    text-decoration-color: currentColor;
+    text-decoration-thickness: 2px;
   }
 
   @media (min-width: 50em) {
@@ -117,7 +114,7 @@ export function getStaticPaths() {
 
     section {
       display: contents;
-      font-size: var(--text-lg);
+      font-size: var(--text-md);
     }
   }
 </style>

@@ -10,6 +10,9 @@ const { data, id } = Astro.props.project;
 
 <a class="card" href={`/work/${id}`}>
 	<span class="title">{data.title}</span>
+	<span class="tags">
+		{data.tags.slice(0, 4).map((tag) => <span class="tag">{tag}</span>)}
+	</span>
 	<img src={data.img} alt={data.img_alt || ''} loading="lazy" decoding="async" />
 </a>
 
@@ -19,29 +22,60 @@ const { data, id } = Astro.props.project;
 		grid-template: auto 1fr / auto 1fr;
 		height: 11rem;
 		background: var(--card-bg);
-		border: 1px solid var(--gray-800);
-		border-radius: 0.75rem;
+		border: 1px solid var(--gray-700);
 		overflow: hidden;
-		box-shadow: var(--shadow-sm);
 		text-decoration: none;
 		font-family: var(--font-brand);
-		font-size: var(--text-lg);
-		font-weight: 500;
-		transition: box-shadow var(--theme-transition);
+		font-size: var(--text-md);
+		font-weight: 700;
+		transition: border-color var(--theme-transition);
 	}
 
-	.card:hover {
-		box-shadow: var(--shadow-md);
+	.card:hover,
+	.card:focus-visible {
+		border-color: var(--accent-regular);
 	}
 
 	.title {
 		grid-area: 1 / 1 / 2 / 2;
 		z-index: 1;
-		margin: 0.5rem;
-		padding: 0.5rem 1rem;
+		align-self: start;
+		justify-self: start;
+		padding: 0.4rem 0.9rem;
 		background: var(--gray-999);
-		color: var(--gray-200);
-		border-radius: 0.375rem;
+		color: var(--gray-0);
+		border-right: 1px solid var(--gray-700);
+		border-bottom: 1px solid var(--gray-700);
+	}
+
+	.title::before {
+		content: '> ';
+		color: var(--accent-regular);
+	}
+
+	.tags {
+		grid-area: 2 / 1 / 3 / 3;
+		z-index: 1;
+		align-self: end;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		padding: 0.5rem 0.75rem;
+		background: var(--gray-999);
+		border-top: 1px solid var(--gray-700);
+		font-size: var(--text-sm);
+		font-weight: 500;
+		color: var(--gray-300);
+	}
+
+	.tag::before {
+		content: '#';
+		color: var(--accent-regular);
+	}
+
+	.card:hover .tags,
+	.card:focus-visible .tags {
+		color: var(--accent-regular);
 	}
 
 	img {
@@ -53,12 +87,7 @@ const { data, id } = Astro.props.project;
 
 	@media (min-width: 50em) {
 		.card {
-			height: 22rem;
-			border-radius: 1.5rem;
-		}
-
-		.title {
-			border-radius: 0.9375rem;
+			height: 20rem;
 		}
 	}
 </style>

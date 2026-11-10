@@ -1,99 +1,83 @@
 /* Global variables */
 :root {
-	/* Colors */
-	--gray-0: #090b11;
-	--gray-50: #141925;
-	--gray-100: #283044;
-	--gray-200: #3d4663;
-	--gray-300: #505d84;
-	--gray-400: #6474a2;
-	--gray-500: #8490b5;
-	--gray-600: #a3acc8;
-	--gray-700: #c3cadb;
-	--gray-800: #e3e6ee;
-	--gray-900: #f3f4f7;
-	--gray-999-basis: 0, 0%, 100%;
+	/* Colors (light: paper terminal) */
+	--gray-0: #0e110e;
+	--gray-50: #161a16;
+	--gray-100: #1f241f;
+	--gray-200: #2c322c;
+	--gray-300: #4a514a;
+	--gray-400: #5d655d;
+	--gray-500: #7b837b;
+	--gray-600: #9aa19a;
+	--gray-700: #bcc2bc;
+	--gray-800: #c9cec7;
+	--gray-900: #e7eae2;
+	--gray-999-basis: 75, 14%, 95%;
 	--gray-999_40: hsla(var(--gray-999-basis), 0.4);
-	--gray-999: #ffffff;
+	--gray-999: #f4f5ef;
 
-	--accent-light: #3366cc;
-	--accent-regular: #1a4fb3;
-	--accent-dark: #123a80;
-	--accent-overlay: hsla(222, 80%, 40%, 0.33);
-	--accent-subtle-overlay: var(--accent-overlay);
-	--accent-text-over: var(--gray-999);
+	--accent-light: #1f8f4a;
+	--accent-regular: #0b6b2e;
+	--accent-dark: #0b6b2e;
+	--accent-overlay: hsla(145, 80%, 25%, 0.3);
+	--accent-subtle-overlay: hsla(145, 60%, 30%, 0.12);
+	--accent-text-over: #f4f5ef;
 
 	--link-color: var(--accent-regular);
 
 	/* Card surface */
 	--card-bg: var(--gray-900);
 
-	/* Shadows */
-	--shadow-sm:
-		0px 6px 3px rgba(9, 11, 17, 0.01), 0px 4px 2px rgba(9, 11, 17, 0.01),
-		0px 2px 2px rgba(9, 11, 17, 0.02), 0px 0px 1px rgba(9, 11, 17, 0.03);
-	--shadow-md:
-		0px 28px 11px rgba(9, 11, 17, 0.01), 0px 16px 10px rgba(9, 11, 17, 0.03),
-		0px 7px 7px rgba(9, 11, 17, 0.05), 0px 2px 4px rgba(9, 11, 17, 0.06);
-	--shadow-lg:
-		0px 62px 25px rgba(9, 11, 17, 0.01), 0px 35px 21px rgba(9, 11, 17, 0.05),
-		0px 16px 16px rgba(9, 11, 17, 0.1), 0px 4px 9px rgba(9, 11, 17, 0.12);
+	/* Flat surfaces: terminals have no depth */
+	--shadow-sm: none;
+	--shadow-md: none;
+	--shadow-lg: none;
 
 	/* Text Sizes */
-	--text-sm: 0.875rem;
-	--text-base: 1rem;
-	--text-md: 1.125rem;
-	--text-lg: 1.25rem;
-	--text-xl: 1.625rem;
-	--text-2xl: 2.125rem;
-	--text-3xl: 2.625rem;
-	--text-4xl: 3.5rem;
-	--text-5xl: 4.5rem;
+	--text-sm: 0.8125rem;
+	--text-base: 0.9375rem;
+	--text-md: 1rem;
+	--text-lg: 1.125rem;
+	--text-xl: 1.25rem;
+	--text-2xl: 1.625rem;
+	--text-3xl: 2rem;
+	--text-4xl: 2.5rem;
+	--text-5xl: 3.25rem;
 
 	/* Fonts */
-	--font-system:
-		system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-		'Open Sans', 'Helvetica Neue', sans-serif;
-	--font-body: 'Public Sans', var(--font-system);
-	--font-brand: Rubik, var(--font-system);
+	--font-mono:
+		'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono',
+		monospace;
+	--font-body: var(--font-mono);
+	--font-brand: var(--font-mono);
 
 	/* Transitions */
-	--theme-transition: 0.2s ease-in-out;
+	--theme-transition: 0.12s steps(2, end);
 }
 
 :root.theme-dark {
-	--gray-0: #ffffff;
-	--gray-50: #f3f4f7;
-	--gray-100: #e3e6ee;
-	--gray-200: #c3cadb;
-	--gray-300: #a3acc8;
-	--gray-400: #8490b5;
-	--gray-500: #6474a2;
-	--gray-600: #505d84;
-	--gray-700: #3d4663;
-	--gray-800: #283044;
-	--gray-900: #141925;
-	--gray-999-basis: 225, 31%, 5%;
-	--gray-999: #090b11;
+	--gray-0: #f0f3ee;
+	--gray-50: #e7ebe5;
+	--gray-100: #dfe4dc;
+	--gray-200: #c9d0c7;
+	--gray-300: #a3ada1;
+	--gray-400: #879185;
+	--gray-500: #677165;
+	--gray-600: #4d564b;
+	--gray-700: #38403a;
+	--gray-800: #2a312b;
+	--gray-900: #121512;
+	--gray-999-basis: 120, 12%, 5%;
+	--gray-999: #0b0d0b;
 
-	--accent-light: #6699ff; /* azul claro para o fundo */
-	--accent-regular: #4c7cd6; /* azul médio forte */
-	--accent-dark: #3366cc; /* mais escuro */
-	--accent-overlay: hsla(222, 100%, 70%, 0.33); /* azul claro translúcido */
-	--accent-subtle-overlay: hsla(207, 100%, 30%, 0.33);
-	--accent-text-over: var(--gray-0);
+	--accent-light: #7af0a6;
+	--accent-regular: #46e07c;
+	--accent-dark: #3ccf72;
+	--accent-overlay: hsla(145, 70%, 55%, 0.35);
+	--accent-subtle-overlay: hsla(145, 70%, 55%, 0.12);
+	--accent-text-over: #0b0d0b;
 
-	--link-color: var(--accent-dark);
-
-	--shadow-sm:
-		0px 6px 3px rgba(255, 255, 255, 0.01), 0px 4px 2px rgba(255, 255, 255, 0.01),
-		0px 2px 2px rgba(255, 255, 255, 0.02), 0px 0px 1px rgba(255, 255, 255, 0.03);
-	--shadow-md:
-		0px 28px 11px rgba(255, 255, 255, 0.01), 0px 16px 10px rgba(255, 255, 255, 0.03),
-		0px 7px 7px rgba(255, 255, 255, 0.05), 0px 2px 4px rgba(255, 255, 255, 0.06);
-	--shadow-lg:
-		0px 62px 25px rgba(255, 255, 255, 0.01), 0px 35px 21px rgba(255, 255, 255, 0.05),
-		0px 16px 16px rgba(255, 255, 255, 0.1), 0px 4px 9px rgba(255, 255, 255, 0.12);
+	--link-color: var(--accent-regular);
 }
 
 html,
@@ -106,8 +90,9 @@ body {
 	background-color: var(--gray-999);
 	color: var(--gray-200);
 	font-family: var(--font-body);
+	font-size: var(--text-base);
 	-webkit-font-smoothing: antialiased;
-	line-height: 1.5;
+	line-height: 1.65;
 }
 
 *,
@@ -117,6 +102,16 @@ body {
 	margin: 0;
 }
 
+::selection {
+	background: var(--accent-regular);
+	color: var(--accent-text-over);
+}
+
+:focus-visible {
+	outline: 2px solid var(--accent-regular);
+	outline-offset: 2px;
+}
+
 img {
 	max-width: 100%;
 	height: auto;
@@ -124,6 +119,7 @@ img {
 
 a {
 	color: var(--link-color);
+	text-underline-offset: 0.25em;
 }
 
 h1,
@@ -131,9 +127,10 @@ h2,
 h3,
 h4,
 h5 {
-	line-height: 1.1;
+	line-height: 1.2;
 	font-family: var(--font-brand);
-	font-weight: 600;
+	font-weight: 700;
+	letter-spacing: -0.02em;
 	color: var(--gray-100);
 }
 
@@ -155,6 +152,11 @@ h4 {
 
 h5 {
 	font-size: var(--text-xl);
+}
+
+code,
+pre {
+	font-family: var(--font-mono);
 }
 
 /* Utilities */
@@ -181,6 +183,27 @@ h5 {
 .stack {
 	display: flex;
 	flex-direction: column;
+}
+
+.cursor {
+	display: inline-block;
+	width: 0.6em;
+	height: 1.05em;
+	margin-left: 0.15em;
+	vertical-align: text-bottom;
+	background: var(--accent-regular);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.cursor {
+		animation: blink 1.1s steps(1, end) infinite;
+	}
+}
+
+@keyframes blink {
+	50% {
+		opacity: 0;
+	}
 }
 
 .gap-2 {
@@ -231,6 +254,6 @@ h5 {
 		gap: 7.5rem;
 	}
 	.lg\:gap-48 {
-		gap: 12rem;
+		gap: 8rem;
 	}
 }

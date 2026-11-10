@@ -3,14 +3,22 @@
 <style>
 	.pill {
 		display: flex;
-		padding: 0.5rem 1rem;
+		align-items: center;
+		padding: 0.25rem 0;
 		gap: 0.5rem;
-		color: var(--accent-text-over);
-		border: 1px solid var(--accent-regular);
-		background-color: var(--accent-regular);
-		border-radius: 999rem;
-		font-size: var(--text-md);
+		color: var(--accent-regular);
+		font-size: var(--text-sm);
 		line-height: 1.35;
 		white-space: nowrap;
+	}
+
+	.pill::before {
+		content: '[';
+		margin-right: -0.25rem;
+	}
+
+	.pill::after {
+		content: ']';
+		margin-left: -0.25rem;
 	}
 </style>

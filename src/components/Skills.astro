@@ -1,68 +1,54 @@
 ---
 import Icon from './Icon.astro';
+import Window from './Window.astro';
+import type { iconPaths } from './IconPaths';
 import { m } from "../paraglide/messages.js";
+
+const skills: { file: string; icon: keyof typeof iconPaths; title: string; desc: string }[] = [
+	{ file: 'full-stack.md', icon: 'terminal-window', title: m.skillsFullStackTitle(), desc: m.skillsFullStackDesc() },
+	{ file: 'industry.md', icon: 'trophy', title: m.skillsIndustryTitle(), desc: m.skillsIndustryDesc() },
+	{ file: 'strategy.md', icon: 'strategy', title: m.skillsStrategyTitle(), desc: m.skillsStrategyDesc() },
+	{ file: 'ai-first.md', icon: 'sparkle', title: m.skillsAIFirstTitle(), desc: m.skillsAIFirstDesc() },
+];
 ---
 
-<section class="box skills">
-	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="terminal-window" color="var(--accent-regular)" size="2.5rem" />
-		<h2>{m.skillsFullStackTitle()}</h2>
-		<p>{m.skillsFullStackDesc()}</p>
-	</div>
-	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="trophy" color="var(--accent-regular)" size="2.5rem" />
-		<h2>{m.skillsIndustryTitle()}</h2>
-		<p>{m.skillsIndustryDesc()}</p>
-	</div>
-	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="strategy" color="var(--accent-regular)" size="2.5rem" />
-		<h2>{m.skillsStrategyTitle()}</h2>
-		<p>{m.skillsStrategyDesc()}</p>
-	</div>
-	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="sparkle" color="var(--accent-regular)" size="2.5rem" />
-		<h2>{m.skillsAIFirstTitle()}</h2>
-		<p>{m.skillsAIFirstDesc()}</p>
-	</div>
+<section class="skills">
+	{
+		skills.map((skill) => (
+			<Window title={`~/skills/${skill.file}`}>
+				<div class="skill stack gap-2">
+					<Icon icon={skill.icon} color="var(--accent-regular)" size="2rem" />
+					<h2>{skill.title}</h2>
+					<p>{skill.desc}</p>
+				</div>
+			</Window>
+		))
+	}
 </section>
 
 <style>
-	.box {
-		border: 1px solid var(--gray-800);
-		border-radius: 0.75rem;
-		padding: 1.5rem;
-		background-color: var(--gray-999_40);
-		box-shadow: var(--shadow-sm);
-	}
-
 	.skills {
-		display: flex;
-		flex-direction: column;
-		gap: 3rem;
+		display: grid;
+		gap: 1rem;
 	}
 
-	.skills h2 {
+	.skill {
+		padding: 1.5rem;
+	}
+
+	.skill h2 {
 		font-size: var(--text-lg);
+		margin-top: 0.5rem;
 	}
 
-	.skills p {
-		color: var(--gray-400);
+	.skill p {
+		color: var(--gray-300);
+		font-size: var(--text-sm);
 	}
 
 	@media (min-width: 50em) {
-		.box {
-			border-radius: 1.5rem;
-			padding: 2.5rem;
-		}
-
 		.skills {
-			display: grid;
 			grid-template-columns: repeat(2, 1fr);
-			gap: 3rem;
-		}
-
-		.skills h2 {
-			font-size: var(--text-2xl);
 		}
 	}
 

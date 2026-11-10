@@ -26,6 +26,35 @@ const imageType = resolvedImage.toLowerCase().endsWith('.jpg') || resolvedImage.
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const assetOrigin = import.meta.env.DEV ? Astro.url.origin : (Astro.site ?? Astro.url.origin);
 const socialImage = new URL(resolvedImage, assetOrigin);
+
+const routeLang = Astro.params.lang;
+const alternates = routeLang
+	? (['en', 'pt-br'] as const).map((alt) => ({
+			hreflang: alt === 'pt-br' ? 'pt-BR' : 'en',
+			href: new URL(
+				Astro.url.pathname.replace(`/${routeLang}/`, `/${alt}/`),
+				Astro.site ?? Astro.url.origin,
+			),
+		}))
+	: [];
+
+const siteUrl = (Astro.site ?? Astro.url.origin).toString();
+const personSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: 'Leandro Rodrigues',
+	url: siteUrl,
+	image: new URL('/assets/portrait.jpg', siteUrl).toString(),
+	jobTitle: 'Full Stack Software Engineer',
+	description: m.metaDescription(),
+	knowsAbout: ['Java', 'Spring Boot', 'React', 'TypeScript', 'Kubernetes', 'CI/CD', 'Microservices'],
+	sameAs: [
+		'https://linkedin.com/in/leandromqrs',
+		'https://github.com/leandromqrs',
+		'https://twitter.com/leandromqrs',
+		'https://mastodon.social/@leandromqrs',
+	],
+};
 ---
 
 <meta charset="UTF-8" />
@@ -35,6 +64,9 @@ const socialImage = new URL(resolvedImage, assetOrigin);
 <title>{resolvedTitle}</title>
 
 <link rel="canonical" href={canonical} />
+{alternates.map((alt) => <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />)}
+<meta name="theme-color" content="#0b0d0b" />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 <meta property="og:title" content={resolvedTitle} />
 <meta property="og:description" content={resolvedDescription} />
 <meta property="og:url" content={canonical} />
@@ -62,7 +94,7 @@ const socialImage = new URL(resolvedImage, assetOrigin);
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-	href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&family=Rubik:wght@500;600&display=swap"
+	href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap"
 	rel="stylesheet"
 />
 <script is:inline>
@@ -71,7 +103,7 @@ const socialImage = new URL(resolvedImage, assetOrigin);
 		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
 			return localStorage.getItem('theme');
 		}
-		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+		return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 	};
 	const isDark = getThemePreference() === 'dark';
 	document.documentElement.classList[isDark ? 'add' : 'remove']('theme-dark');

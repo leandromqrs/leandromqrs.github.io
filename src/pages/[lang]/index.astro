@@ -11,9 +11,12 @@ import Icon from '../../components/Icon.astro';
 import Pill from '../../components/Pill.astro';
 import PortfolioPreview from '../../components/PortfolioPreview.astro';
 import TechIcon from '../../components/TechIcon.astro';
+import Window from '../../components/Window.astro';
 
 import ContactCTA from '../../components/ContactCTA.astro';
+import Process from '../../components/Process.astro';
 import Skills from '../../components/Skills.astro';
+import Stats from '../../components/Stats.astro';
 
 import { m } from "../../paraglide/messages.js";
 import { getLocale } from "../../paraglide/runtime.js";
@@ -29,55 +32,92 @@ const projects = (await getCollection('work'))
 	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
 	.slice(0, 4);
 
-const stacks: { icon: string; name: string; mono?: boolean }[] = [
-	{ icon: 'java', name: 'Java' },
-	{ icon: 'grails', name: 'Grails' },
-	{ icon: 'react', name: 'React' },
-	{ icon: 'nodedotjs', name: 'Node.js' },
-	{ icon: 'docker', name: 'Docker' },
-	{ icon: 'kubernetes', name: 'Kubernetes' },
-	{ icon: 'amazonwebservices', name: 'AWS' },
-	{ icon: 'python', name: 'Python' },
-	{ icon: 'typescript', name: 'TypeScript' },
-	{ icon: 'spring', name: 'Spring Boot' },
-	{ icon: 'postgresql', name: 'PostgreSQL' },
-	{ icon: 'mongodb', name: 'MongoDB' },
-	{ icon: 'redis', name: 'Redis' },
-	{ icon: 'apachekafka', name: 'Kafka' },
-	{ icon: 'jenkins', name: 'Jenkins' },
-	{ icon: 'git', name: 'Git' },
-	{ icon: 'nginx', name: 'NGINX' },
-	{ icon: 'mysql', name: 'MySQL' },
-	{ icon: 'html5', name: 'HTML5' },
-	{ icon: 'css3', name: 'CSS3' },
-	{ icon: 'bootstrap', name: 'Bootstrap' },
-	{ icon: 'tailwindcss', name: 'Tailwind CSS' },
-	{ icon: 'vuedotjs', name: 'Vue.js' },
-	{ icon: 'flutter', name: 'Flutter' },
-	{ icon: 'jest', name: 'Jest' },
-	{ icon: 'cypress', name: 'Cypress' },
-	{ icon: 'webpack', name: 'Webpack' },
-	{ icon: 'babel', name: 'Babel' },
-	{ icon: 'eslint', name: 'ESLint' },
-	{ icon: 'prettier', name: 'Prettier' },
-	{ icon: 'postman', name: 'Postman' },
-	{ icon: 'jira', name: 'Jira' },
-	{ icon: 'github', name: 'GitHub', mono: true },
-	{ icon: 'gitlab', name: 'GitLab' },
-	{ icon: 'bitbucket', name: 'Bitbucket' }
-]
+type Stack = { icon: string; name: string; mono?: boolean };
 
+const stackGroups: { dir: string; items: Stack[] }[] = [
+	{
+		dir: 'backend',
+		items: [
+			{ icon: 'java', name: 'Java' },
+			{ icon: 'spring', name: 'Spring Boot' },
+			{ icon: 'grails', name: 'Grails' },
+			{ icon: 'nodedotjs', name: 'Node.js' },
+			{ icon: 'python', name: 'Python' },
+			{ icon: 'typescript', name: 'TypeScript' },
+		],
+	},
+	{
+		dir: 'frontend',
+		items: [
+			{ icon: 'react', name: 'React' },
+			{ icon: 'vuedotjs', name: 'Vue.js' },
+			{ icon: 'html5', name: 'HTML5' },
+			{ icon: 'css', name: 'CSS' },
+			{ icon: 'tailwindcss', name: 'Tailwind CSS' },
+			{ icon: 'bootstrap', name: 'Bootstrap' },
+			{ icon: 'flutter', name: 'Flutter' },
+		],
+	},
+	{
+		dir: 'infra',
+		items: [
+			{ icon: 'docker', name: 'Docker' },
+			{ icon: 'kubernetes', name: 'Kubernetes' },
+			{ icon: 'jenkins', name: 'Jenkins' },
+			{ icon: 'nginx', name: 'NGINX' },
+			{ icon: 'git', name: 'Git' },
+			{ icon: 'github', name: 'GitHub', mono: true },
+			{ icon: 'gitlab', name: 'GitLab' },
+			{ icon: 'bitbucket', name: 'Bitbucket' },
+		],
+	},
+	{
+		dir: 'data',
+		items: [
+			{ icon: 'postgresql', name: 'PostgreSQL' },
+			{ icon: 'mysql', name: 'MySQL' },
+			{ icon: 'mongodb', name: 'MongoDB' },
+			{ icon: 'redis', name: 'Redis' },
+			{ icon: 'apachekafka', name: 'Kafka' },
+		],
+	},
+	{
+		dir: 'tooling',
+		items: [
+			{ icon: 'jest', name: 'Jest' },
+			{ icon: 'cypress', name: 'Cypress' },
+			{ icon: 'webpack', name: 'Webpack' },
+			{ icon: 'babel', name: 'Babel' },
+			{ icon: 'eslint', name: 'ESLint' },
+			{ icon: 'prettier', name: 'Prettier' },
+			{ icon: 'postman', name: 'Postman' },
+			{ icon: 'jira', name: 'Jira' },
+		],
+	},
+];
+
+const locale = getLocale();
 ---
 
 <BaseLayout>
-	<div class="stack gap-20 lg:gap-48">
-		<div class="wrapper stack gap-8 lg:gap-20">
+	<div class="stack gap-20 lg:gap-30">
+		<div class="wrapper stack gap-8 lg:gap-15">
 			<header class="hero">
 				<Hero
 					title={m.heroTitle()}
 					tagline={m.heroTagline()}
 					align="start"
 				>
+					<div class="actions">
+						<CallToAction href={`/${locale}/book-a-call/`}>
+							{m.heroCTAPrimary()}
+							<Icon icon="arrow-right" size="1.2em" />
+						</CallToAction>
+						<CallToAction href={`/${locale}/work/`} variant="secondary">
+							{m.heroCTASecondary()}
+						</CallToAction>
+					</div>
+					<p class="status"><span class="led" aria-hidden="true"></span>{m.heroStatus()}</p>
 					<div class="roles">
 						<Pill><Icon icon="code" size="1.33em" /> {m.heroDeveloper()}</Pill>
 						<Pill><Icon icon="terminal-window" size="1.33em" /> {m.heroArchitect()}</Pill>
@@ -85,18 +125,24 @@ const stacks: { icon: string; name: string; mono?: boolean }[] = [
 					</div>
 				</Hero>
 
-				<Image
-					alt={m.heroImageAlt()}
-					width="360"
-					height="480"
-					src="/assets/portrait.jpg"
-				/>
+				<div class="portrait">
+					<Window title="~/leandro.jpg">
+						<Image
+							alt={m.heroImageAlt()}
+							width="360"
+							height="480"
+							src="/assets/portrait.jpg"
+							loading="eager"
+						/>
+					</Window>
+				</div>
 			</header>
 
+			<Stats />
 			<Skills />
 		</div>
 
-		<main class="wrapper stack gap-20 lg:gap-48">
+		<main class="wrapper stack gap-20 lg:gap-30">
 			<section class="section with-cta">
 				<header class="section-header stack gap-2 lg:gap-4">
 					<h3>{m.workSectionTitle()}</h3>
@@ -116,7 +162,7 @@ const stacks: { icon: string; name: string; mono?: boolean }[] = [
 				</div>
 
 				<div class="cta">
-					<CallToAction href={`/${getLocale()}/work/`}>
+					<CallToAction href={`/${locale}/work/`} variant="secondary">
 						{m.workViewAll()}
 						<Icon icon="arrow-right" size="1.2em" />
 					</CallToAction>
@@ -131,19 +177,25 @@ const stacks: { icon: string; name: string; mono?: boolean }[] = [
 					</p>
 				</header>
 
-				<div class="gallery">
-					<Grid variant="small">
-						{
-							stacks.map((stack) => (
-								<li class="stack-card">
-									<TechIcon iconName={stack.icon} size={34} mono={stack.mono} />
-									<p>{stack.name}</p>
-								</li>
-							))
-						}
-					</Grid>
-				</div>
+				<ul class="gallery stack-groups">
+					{
+						stackGroups.map((group) => (
+							<Window as="li" title={`~/stack/${group.dir}`}>
+								<ul class="stack-list">
+									{group.items.map((stack) => (
+										<li>
+											<TechIcon iconName={stack.icon} size={20} mono={stack.mono} />
+											<span>{stack.name}</span>
+										</li>
+									))}
+								</ul>
+							</Window>
+						))
+					}
+				</ul>
 			</section>
+
+			<Process />
 		</main>
 
 		<ContactCTA />
@@ -158,39 +210,77 @@ const stacks: { icon: string; name: string; mono?: boolean }[] = [
 		gap: 2rem;
 	}
 
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		justify-content: center;
+	}
+
+	.status {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.6rem;
+		font-size: var(--text-sm);
+		color: var(--gray-300);
+	}
+
+	.led {
+		display: inline-block;
+		width: 0.6rem;
+		height: 0.6rem;
+		background: var(--accent-regular);
+	}
+
 	.roles {
 		display: none;
 	}
 
+	.portrait {
+		width: 100%;
+		max-width: 280px;
+	}
+
 	.hero img {
+		display: block;
+		width: 100%;
 		aspect-ratio: 5 / 4;
 		object-fit: cover;
 		object-position: top;
-		border-radius: 1rem;
-		border: 1px solid var(--gray-800);
-		max-width: 280px;
+		filter: grayscale(1) contrast(1.05);
+		transition: filter var(--theme-transition);
+	}
+
+	.hero img:hover {
+		filter: none;
 	}
 
 	@media (min-width: 50em) {
 		.hero {
 			display: grid;
 			grid-template-columns: 7fr 3fr;
-			padding-inline: 2.5rem;
 			gap: 3.75rem;
+		}
+
+		.actions,
+		.status {
+			justify-content: flex-start;
 		}
 
 		.roles {
 			margin-top: 0.5rem;
 			display: flex;
-			gap: 0.5rem;
+			gap: 1rem;
+		}
+
+		.portrait {
+			max-width: 320px;
+			justify-self: center;
 		}
 
 		.hero img {
 			aspect-ratio: 3 / 4;
-			border-radius: 1rem;
-			object-fit: cover;
-			max-width: 320px;
-			justify-self: center;
 		}
 	}
 
@@ -200,22 +290,27 @@ const stacks: { icon: string; name: string; mono?: boolean }[] = [
 	}
 
 	.section-header {
-		justify-self: center;
-		text-align: center;
+		justify-self: start;
+		text-align: left;
 		max-width: 50ch;
 		font-size: var(--text-md);
 		color: var(--gray-300);
 	}
 
 	.section-header h3 {
-		font-size: var(--text-2xl);
+		font-size: var(--text-xl);
+	}
+
+	.section-header h3::before {
+		content: '## ';
+		color: var(--accent-regular);
 	}
 
 	@media (min-width: 50em) {
 		.section {
 			grid-template-columns: repeat(4, 1fr);
 			grid-template-areas: 'header header header header' 'gallery gallery gallery gallery';
-			gap: 5rem;
+			gap: 3rem;
 		}
 
 		.section.with-cta {
@@ -228,7 +323,7 @@ const stacks: { icon: string; name: string; mono?: boolean }[] = [
 		}
 
 		.section-header h3 {
-			font-size: var(--text-4xl);
+			font-size: var(--text-3xl);
 		}
 
 		.with-cta .section-header {
@@ -245,43 +340,47 @@ const stacks: { icon: string; name: string; mono?: boolean }[] = [
 		}
 	}
 
-	.stack-card {
-		display: flex;
-		height: 5rem;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		border: 1px solid var(--gray-800);
-		border-radius: 1rem;
-		color: var(--gray-300);
-		background: var(--card-bg);
-		box-shadow: var(--shadow-sm);
+	.stack-groups {
+		display: grid;
 		gap: 1rem;
-		transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+		list-style: none;
+		padding: 0;
 	}
 
-	.stack-card:hover {
-		transform: translateY(-5px);
-		box-shadow: var(--shadow-md);
+	.stack-list {
+		display: grid;
+		gap: 0.25rem;
+		list-style: none;
+		padding: 0.75rem 1rem;
 	}
 
-	.stack-card .tech-icon {
+	.stack-list li {
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		min-width: 2em;
+		gap: 0.75rem;
+		padding: 0.3rem 0.25rem;
+		color: var(--gray-300);
+		font-size: var(--text-sm);
+		border-left: 2px solid transparent;
+		transition:
+			color var(--theme-transition),
+			border-color var(--theme-transition);
 	}
 
-	.stack-card p {
-		font-weight: 500;
-		font-size: var(--text-md);
+	.stack-list li:hover {
+		color: var(--accent-regular);
+		border-left-color: var(--accent-regular);
 	}
 
-	@media (min-width: 50em) {
-		.stack-card {
-			border-radius: 1rem;
-			padding: 0 1.5rem;
-			height: 4rem;
+	@media (min-width: 40em) {
+		.stack-groups {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (min-width: 64em) {
+		.stack-groups {
+			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 </style>

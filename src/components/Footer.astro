@@ -9,6 +9,7 @@ const locale = getLocale();
 
 <footer>
 	<div class="group">
+		<p class="mode">NORMAL</p>
 		<p>
 			Designed & Developed with <a href="https://astro.build/">Astro</a>
 			<Icon icon="rocket-launch" size="1.2em" />
@@ -16,11 +17,11 @@ const locale = getLocale();
 		<p>&copy; {currentYear} Leandro Rodrigues</p>
 	</div>
 	<p class="socials">
-		<a href="https://linkedin.com/in/leandromqrs"> LinkedIn</a>
-		<a href="https://github.com/leandromqrs"> GitHub</a>
-		<a href="https://twitter.com/leandromqrs"> Twitter</a>
-		<a href="https://mastodon.social/@leandromqrs" rel="me"> Mastodon</a>
-		<a href={`/${locale}/donate/`}> {m.navDonate()}</a>
+		<a href="https://linkedin.com/in/leandromqrs">LinkedIn</a>
+		<a href="https://github.com/leandromqrs">GitHub</a>
+		<a href="https://twitter.com/leandromqrs">Twitter</a>
+		<a href="https://mastodon.social/@leandromqrs" rel="me">Mastodon</a>
+		<a href={`/${locale}/donate/`}>{m.navDonate()}</a>
 	</p>
 </footer>
 <style>
@@ -29,7 +30,8 @@ const locale = getLocale();
 		flex-direction: column;
 		gap: 3rem;
 		margin-top: auto;
-		padding: 3rem 2rem 3rem;
+		padding: 2rem 1.5rem;
+		border-top: 1px solid var(--gray-800);
 		text-align: center;
 		color: var(--gray-400);
 		font-size: var(--text-sm);
@@ -37,14 +39,28 @@ const locale = getLocale();
 
 	footer a {
 		color: var(--gray-400);
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
+		text-decoration: none;
 	}
 
 	footer a:hover,
 	footer a:focus {
-		text-decoration-color: currentColor;
+		color: var(--accent-regular);
+	}
+
+	.socials a::before {
+		content: '[';
+	}
+
+	.socials a::after {
+		content: ']';
+	}
+
+	.mode {
+		align-self: center;
+		padding: 0 0.6rem;
+		font-weight: 700;
+		color: var(--accent-text-over);
+		background: var(--accent-regular);
 	}
 
 	.group {
@@ -64,10 +80,11 @@ const locale = getLocale();
 		footer {
 			flex-direction: row;
 			justify-content: space-between;
-			padding: 2.5rem 5rem;
+			padding: 1.25rem 2.5rem;
 		}
 
 		.group {
+			align-items: center;
 			flex-direction: row;
 			gap: 1rem;
 			flex-wrap: wrap;

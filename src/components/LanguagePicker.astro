@@ -82,8 +82,7 @@ const selected = languages.find((l) => l.locale === current) ?? languages[1];
 
     .language-picker-button {
         background: transparent;
-        border: 0;
-        border-radius: 0.25rem;
+        border: 1px solid var(--gray-700);
         display: flex;
         align-items: center;
         gap: 0.35em;
@@ -95,14 +94,13 @@ const selected = languages.find((l) => l.locale === current) ?? languages[1];
 
     .language-picker-button:hover,
     .language-picker-button:focus {
-        color: var(--gray-0);
+        color: var(--accent-regular);
+        border-color: var(--accent-regular);
     }
 
     .flag {
         display: block;
         flex-shrink: 0;
-        border-radius: 2px;
-        box-shadow: 0 0 0 1px var(--gray-800);
     }
 
     .language-options {
@@ -110,34 +108,18 @@ const selected = languages.find((l) => l.locale === current) ?? languages[1];
         position: absolute;
         z-index: 100;
         list-style: none;
-        padding: 0.5rem;
+        padding: 0;
         background: var(--card-bg);
-        border: 1px solid var(--gray-800);
-        border-radius: 0.5rem;
+        border: 1px solid var(--gray-700);
         margin-top: 0.25rem;
         top: 100%;
         right: 0;
         overflow: hidden;
         min-width: 170px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transform-origin: top right;
-        transition: all 0.2s ease;
     }
 
     .language-picker.open .language-options {
         display: block;
-        animation: menuAppear 0.2s ease-out;
-    }
-
-    @keyframes menuAppear {
-        from {
-            opacity: 0;
-            transform: translateY(-8px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
     }
 
     .language-options a {
@@ -148,20 +130,18 @@ const selected = languages.find((l) => l.locale === current) ?? languages[1];
         padding: 0.5rem 0.75rem;
         text-decoration: none;
         color: var(--gray-300);
-        border-radius: 0.25rem;
-        transition: background-color 0.2s ease;
         font-size: var(--text-sm);
     }
 
     .language-options a:hover {
-        background-color: var(--gray-800);
-        color: var(--gray-200);
+        background-color: var(--accent-subtle-overlay);
+        color: var(--accent-regular);
     }
 
     .language-options a.active {
         background-color: var(--accent-regular);
         color: var(--accent-text-over);
-        font-weight: 500;
+        font-weight: 700;
     }
 </style>
 

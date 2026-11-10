@@ -1,0 +1,98 @@
+---
+import { m } from '../paraglide/messages.js';
+
+const steps = [
+	{ title: m.processTalkTitle(), desc: m.processTalkDesc() },
+	{ title: m.processPlanTitle(), desc: m.processPlanDesc() },
+	{ title: m.processShipTitle(), desc: m.processShipDesc() },
+];
+---
+
+<section class="process">
+	<header class="stack gap-2">
+		<h3>{m.processSectionTitle()}</h3>
+		<p>{m.processSectionDesc()}</p>
+	</header>
+
+	<ol>
+		{
+			steps.map((step, index) => (
+				<li>
+					<span class="index">{String(index + 1).padStart(2, '0')}</span>
+					<h4>{step.title}</h4>
+					<p>{step.desc}</p>
+				</li>
+			))
+		}
+	</ol>
+</section>
+
+<style>
+	.process {
+		display: grid;
+		gap: 2rem;
+	}
+
+	header h3 {
+		font-size: var(--text-xl);
+	}
+
+	header h3::before {
+		content: '## ';
+		color: var(--accent-regular);
+	}
+
+	header p {
+		color: var(--gray-300);
+		max-width: 60ch;
+	}
+
+	ol {
+		display: grid;
+		gap: 1rem;
+		list-style: none;
+		padding: 0;
+		counter-reset: step;
+	}
+
+	li {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		padding: 1.5rem;
+		border: 1px solid var(--gray-700);
+		background: var(--card-bg);
+	}
+
+	.index {
+		font-size: var(--text-sm);
+		font-weight: 700;
+		color: var(--accent-regular);
+	}
+
+	h4 {
+		font-size: var(--text-xl);
+	}
+
+	li p {
+		color: var(--gray-300);
+	}
+
+	@media (min-width: 50em) {
+		ol {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 2.5rem;
+		}
+
+		li:not(:last-child)::after {
+			content: '→';
+			position: absolute;
+			top: 50%;
+			right: -1.9rem;
+			translate: 0 -50%;
+			color: var(--accent-regular);
+			font-size: var(--text-xl);
+		}
+	}
+</style>

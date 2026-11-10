@@ -1,0 +1,120 @@
+---
+import { m } from '../paraglide/messages.js';
+import { getLocale } from '../paraglide/runtime.js';
+
+const stats = [
+	{ value: m.statUptimeValue(), label: m.statUptimeLabel() },
+	{ value: m.statScaleValue(), label: m.statScaleLabel() },
+	{ value: m.statPipelinesValue(), label: m.statPipelinesLabel() },
+	{ value: m.statPluginsValue(), label: m.statPluginsLabel() },
+];
+---
+
+<section class="stats">
+	<header class="stack gap-2">
+		<h3>{m.statsSectionTitle()}</h3>
+		<p>
+			{m.statsSectionDesc()}
+			<a href={`/${getLocale()}/about/`}>{m.statsSource()}</a>
+		</p>
+	</header>
+	<dl>
+		{
+			stats.map((stat) => (
+				<div class="stat">
+					<dt>{stat.value}</dt>
+					<dd>{stat.label}</dd>
+				</div>
+			))
+		}
+	</dl>
+</section>
+
+<style>
+	.stats {
+		display: grid;
+		gap: 2rem;
+	}
+
+	header h3 {
+		font-size: var(--text-xl);
+	}
+
+	header h3::before {
+		content: '## ';
+		color: var(--accent-regular);
+	}
+
+	header p {
+		color: var(--gray-300);
+		max-width: 60ch;
+	}
+
+	dl {
+		display: grid;
+		grid-template-columns: 1fr;
+		border: 1px solid var(--gray-700);
+		margin: 0;
+	}
+
+	.stat {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		padding: 1.5rem;
+		background: var(--card-bg);
+		border-bottom: 1px solid var(--gray-800);
+	}
+
+	.stat:last-child {
+		border-bottom: 0;
+	}
+
+	dt {
+		font-size: var(--text-4xl);
+		font-weight: 700;
+		line-height: 1;
+		letter-spacing: -0.04em;
+		color: var(--accent-regular);
+	}
+
+	dd {
+		margin: 0;
+		color: var(--gray-300);
+		font-size: var(--text-sm);
+		line-height: 1.5;
+	}
+
+	@media (min-width: 40em) {
+		dl {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.stat:nth-child(odd) {
+			border-right: 1px solid var(--gray-800);
+		}
+
+		.stat:nth-last-child(-n + 2) {
+			border-bottom: 0;
+		}
+	}
+
+	@media (min-width: 64em) {
+		dl {
+			grid-template-columns: repeat(4, 1fr);
+		}
+
+		.stat {
+			border-bottom: 0;
+			border-right: 1px solid var(--gray-800);
+		}
+
+		.stat:last-child {
+			border-right: 0;
+		}
+
+		.stat:nth-child(odd) {
+			border-right: 1px solid var(--gray-800);
+		}
+	}
+</style>

@@ -115,8 +115,13 @@ export function getStaticPaths() {
 
 <style>
 	.section-header h2 {
-		font-size: var(--text-2xl);
+		font-size: var(--text-xl);
 		color: var(--gray-0);
+	}
+
+	.section-header h2::before {
+		content: '## ';
+		color: var(--accent-regular);
 	}
 
 	.section-header p {
@@ -133,19 +138,16 @@ export function getStaticPaths() {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.6rem;
-		padding: 0.75rem 1.75rem;
-		border-radius: 999rem;
+		padding: 0.75rem 1.5rem;
 		font-family: var(--font-brand);
-		font-weight: 600;
+		font-weight: 700;
 		text-decoration: none;
-		transition:
-			background-color var(--theme-transition),
-			transform var(--theme-transition);
+		border: 1px solid transparent;
+		transition: background-color var(--theme-transition);
 	}
 
-	.platform-button:hover,
-	.platform-button:focus {
-		transform: translateY(-2px);
+	.platform-button:focus-visible {
+		border-color: var(--gray-0);
 	}
 
 	/* Buy Me a Coffee: amarelo da marca, texto escuro */
@@ -161,8 +163,7 @@ export function getStaticPaths() {
 
 	.table-wrapper {
 		overflow-x: auto;
-		border: 1px solid var(--gray-800);
-		border-radius: 0.75rem;
+		border: 1px solid var(--gray-700);
 		background: var(--card-bg);
 	}
 
@@ -185,8 +186,9 @@ export function getStaticPaths() {
 
 	th {
 		font-family: var(--font-brand);
-		font-weight: 600;
-		color: var(--gray-200);
+		font-weight: 700;
+		color: var(--gray-0);
+		background: var(--accent-subtle-overlay);
 	}
 
 	td {
@@ -194,7 +196,7 @@ export function getStaticPaths() {
 	}
 
 	.coin {
-		font-weight: 600;
+		font-weight: 700;
 		color: var(--gray-100);
 	}
 
@@ -221,8 +223,7 @@ export function getStaticPaths() {
 		align-items: center;
 		flex-shrink: 0;
 		padding: 0.4rem;
-		border: 1px solid var(--gray-800);
-		border-radius: 0.5rem;
+		border: 1px solid var(--gray-700);
 		background: transparent;
 		color: var(--gray-400);
 		font-size: 1rem;
@@ -234,8 +235,8 @@ export function getStaticPaths() {
 
 	.copy-button:hover:not(:disabled),
 	.copy-button:focus:not(:disabled) {
-		color: var(--gray-0);
-		border-color: var(--gray-600);
+		color: var(--accent-regular);
+		border-color: var(--accent-regular);
 	}
 
 	.copy-button:disabled {

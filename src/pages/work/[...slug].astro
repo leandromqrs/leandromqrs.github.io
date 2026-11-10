@@ -107,34 +107,30 @@ const { Content } = await render(entry);
 	}
 
 	.content :global(img) {
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-sm);
 		background: var(--card-bg);
-		border: 1px solid var(--gray-800);
+		border: 1px solid var(--gray-700);
 	}
 
 	.content :global(blockquote) {
-		font-size: var(--text-lg);
+		font-size: var(--text-md);
 		font-family: var(--font-brand);
-		font-weight: 600;
-		line-height: 1.1;
+		font-weight: 500;
+		line-height: 1.5;
 		padding-inline-start: 1.5rem;
-		border-inline-start: 0.25rem solid var(--accent-dark);
+		border-inline-start: 2px solid var(--accent-regular);
 		color: var(--gray-0);
 	}
 
 	.back-link,
 	.content :global(a) {
-		text-decoration: 1px solid underline transparent;
 		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
 	}
 
 	.back-link:hover,
 	.back-link:focus,
 	.content :global(a:hover),
 	.content :global(a:focus) {
-		text-decoration-color: currentColor;
+		text-decoration-thickness: 2px;
 	}
 
 	@media (min-width: 50em) {
@@ -153,7 +149,7 @@ const { Content } = await render(entry);
 		}
 
 		.content :global(blockquote) {
-			font-size: var(--text-2xl);
+			font-size: var(--text-lg);
 		}
 	}
 </style>
