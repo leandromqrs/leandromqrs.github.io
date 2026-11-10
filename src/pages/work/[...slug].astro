@@ -6,6 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContactCTA from '../../components/ContactCTA.astro';
 import Hero from '../../components/Hero.astro';
 import Icon from '../../components/Icon.astro';
+import MermaidDiagrams from '../../components/MermaidDiagrams.astro';
 import Pill from '../../components/Pill.astro';
 import { render } from 'astro:content';
 
@@ -58,6 +59,7 @@ const { Content } = await render(entry);
 		</div>
 		<ContactCTA />
 	</div>
+	<MermaidDiagrams />
 </BaseLayout>
 
 <style>

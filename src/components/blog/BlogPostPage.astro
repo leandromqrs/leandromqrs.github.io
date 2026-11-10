@@ -6,6 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../FormattedDate.astro';
 import Hero from '../Hero.astro';
 import Icon from '../Icon.astro';
+import MermaidDiagrams from '../MermaidDiagrams.astro';
 
 interface Props {
 	post: CollectionEntry<'blog'>;
@@ -59,6 +60,7 @@ const { Content } = await render(post);
 			</main>
 		</div>
 	</div>
+	<MermaidDiagrams />
 </BaseLayout>
 
 <style>
@@ -153,20 +155,6 @@ const { Content } = await render(post);
 		margin-bottom: 1.5rem;
 	}
 
-	.content :global(.mermaid) {
-		width: 100%;
-		overflow-x: auto;
-		border: 1px solid var(--gray-700);
-		padding: 1.5rem;
-		background: var(--card-bg);
-	}
-
-	.content :global(.mermaid svg) {
-		display: block;
-		max-width: 100%;
-		margin-inline: auto;
-	}
-
 	.content :global(code) {
 		font-family: var(--font-mono);
 		font-size: 0.95rem;
@@ -206,33 +194,3 @@ const { Content } = await render(post);
 		}
 	}
 </style>
-
-<script>
-	const highlightedBlocks = Array.from(document.querySelectorAll('pre[data-language="mermaid"]'));
-	const languageBlocks = Array.from(document.querySelectorAll('pre > code.language-mermaid'))
-		.map((block) => block.closest('pre'))
-		.filter((block) => block !== null);
-	const mermaidBlocks = Array.from(new Set([...highlightedBlocks, ...languageBlocks]));
-
-	if (mermaidBlocks.length > 0) {
-		import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs').then(
-			({ default: mermaid }) => {
-				const isDark = document.documentElement.classList.contains('theme-dark');
-				mermaid.initialize({
-					startOnLoad: false,
-					theme: isDark ? 'dark' : 'default',
-					securityLevel: 'strict',
-				});
-
-				for (const block of mermaidBlocks) {
-					const container = document.createElement('div');
-					container.className = 'mermaid';
-					container.textContent = block.textContent ?? '';
-					block.replaceWith(container);
-				}
-
-				mermaid.run({ querySelector: '.mermaid' });
-			},
-		);
-	}
-</script>

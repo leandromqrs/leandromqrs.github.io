@@ -34,6 +34,33 @@ On 24 November I changed the build so that every module is declared in one list 
 
 The interface took its own pass. In 2024 I moved the frontends of monitoring and the node editor into one package, `spa-ui`, with a folder per screen. The monitoring page, the VMware dashboard and the rule flow editor now share the same base and the same look.
 
+## The build and the hooks
+
+The build is the part that makes the rest possible. The main build file has two lists, one for Grails modules and one for Rundeck plugins. The application project turns every entry of the first list into a dependency and packages the second as plugin files. A module that is commented out of the settings and of the list simply leaves the product.
+
+```mermaid
+flowchart LR
+    Settings[settings.gradle includes the folder] --> Root[Root build file]
+    Root --> L1[Bundled Grails plugins]
+    Root --> L2[Bundled Rundeck plugins]
+    L1 -->|implementation project| App[Core application]
+    L2 -->|plugin files| App
+    App --> Out[One deployable application]
+```
+
+At runtime a module attaches to the core through extension points that Rundeck already has, so the core never imports it. The calendar, for example, extends how triggers are built, the license module toggles features that other modules read, and the interface modules inject scripts into pages by path.
+
+```mermaid
+flowchart LR
+    M[Module] -->|trigger extenders and schedule manager| S[Scheduling]
+    M -->|job definition components| J[Job editor]
+    M -->|import and export components| P[Projects]
+    M -->|menu items| Me[Menus]
+    M -->|interceptors| C[Controller actions]
+    M -->|UI plugins| U[Pages]
+    M -->|migrations| D[(Own tables)]
+```
+
 ## What changed afterwards
 
 The VMware work in 2024 was a good test. It started as a plugin, then grew into a dashboard, an hourly metrics job and reports, and it became its own module with its own license check.

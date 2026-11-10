@@ -34,6 +34,33 @@ No dia 24 de novembro mudei o build para que todo módulo fosse declarado em uma
 
 A interface teve uma etapa própria. Em 2024 levei os frontends do monitoramento e do editor de nós para um único pacote, o `spa-ui`, com uma pasta por tela. A página de monitoramento, o dashboard de VMware e o editor de rule flow agora compartilham a mesma base e o mesmo visual.
 
+## O build e os pontos de encaixe
+
+O build é a parte que torna o resto possível. O arquivo de build principal tem duas listas, uma para módulos Grails e outra para plugins Rundeck. O projeto da aplicação transforma cada entrada da primeira lista em dependência e empacota a segunda como arquivos de plugin. Um módulo comentado nas configurações e na lista simplesmente sai do produto.
+
+```mermaid
+flowchart LR
+    Settings[settings.gradle inclui a pasta] --> Root[Build principal]
+    Root --> L1[Plugins Grails embutidos]
+    Root --> L2[Plugins Rundeck embutidos]
+    L1 -->|implementation project| App[Aplicação principal]
+    L2 -->|arquivos de plugin| App
+    App --> Out[Uma aplicação para implantar]
+```
+
+Em tempo de execução, o módulo se encaixa no núcleo por pontos de extensão que o Rundeck já tem, então o núcleo nunca importa o módulo. O calendário, por exemplo, estende a construção dos triggers, o módulo de licença liga e desliga funcionalidades que outros módulos leem, e os módulos de interface injetam scripts nas páginas pelo caminho.
+
+```mermaid
+flowchart LR
+    M[Módulo] -->|extensores de trigger e schedule manager| S[Agendamento]
+    M -->|componentes de definição de job| J[Editor de jobs]
+    M -->|componentes de import e export| P[Projetos]
+    M -->|itens de menu| Me[Menus]
+    M -->|interceptors| C[Ações de controller]
+    M -->|plugins de UI| U[Páginas]
+    M -->|migrations| D[(Tabelas próprias)]
+```
+
 ## O que mudou depois
 
 O trabalho com VMware em 2024 foi um bom teste. Começou como plugin, cresceu para um dashboard, um job horário de métricas e relatórios, e virou um módulo com verificação de licença própria.
