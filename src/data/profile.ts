@@ -45,7 +45,7 @@ export const experience: Experience[] = [
 		summary: {
 			en: 'QWControl is a commercial workload automation platform that competes with Control-M. I led its modularization, wrote 50+ integration plugins, built the VMware dashboard, the monitoring board and the Rule Flow editor, and led teams of up to 5 developers.',
 			'pt-br':
-				'O QWControl é uma plataforma comercial de automação de workloads que concorre com o Control-M. Liderei a modularização, escrevi mais de 50 plugins de integração, construí o dashboard de VMware, o quadro de monitoramento e o editor de Rule Flow, e liderei times de até 5 desenvolvedores.',
+				'O QWControl é uma plataforma comercial de automação de workloads que concorre com o Control-M. Liderei a modularização, escrevi mais de 50 plugins de integração, construí o dashboard de VMware, o dashboard de monitoramento de jobs e o editor de Rule Flow, e liderei times de até 5 desenvolvedores.',
 		},
 		stack: ['Java', 'Groovy', 'Grails', 'Vue.js', 'Quartz', 'SAP R3', 'Docker'],
 		href: 'work',
@@ -90,7 +90,7 @@ export const experience: Experience[] = [
 		summary: {
 			en: 'Migration of backend services of the RNDS, the national health data network, from Java 8/11 and Spring Boot 2.x to Java 21 and Spring Boot 3.5, plus GraalVM native images that cut memory by 64% to 94% in staging, and the removal of the configuration server.',
 			'pt-br':
-				'Migração de serviços do backend da RNDS, a rede nacional de dados em saúde, de Java 8/11 e Spring Boot 2.x para Java 21 e Spring Boot 3.5, além de imagens nativas GraalVM que reduziram a memória em 64% a 94% em homologação e da remoção do servidor de configuração.',
+				'Migração de serviços do backend da RNDS, a rede nacional de dados em saúde, de Java 8/11 e Spring Boot 2.x para Java 21 e Spring Boot 3.5, além de native images do GraalVM que reduziram a memória em 64% a 94% em homologação e da remoção do config server.',
 		},
 		stack: ['Java', 'Spring Boot', 'Elasticsearch', 'Kafka', 'AWS', 'Kubernetes'],
 	},
@@ -134,7 +134,7 @@ export const skills: SkillGroup[] = [
 		items: ['Vue.js', 'React', 'Next.js', 'Angular', 'AstroJS', 'NodeJS', 'ASP.NET'],
 	},
 	{
-		name: { en: 'Cloud and DevOps', 'pt-br': 'Nuvem e DevOps' },
+		name: { en: 'Cloud and DevOps', 'pt-br': 'Cloud e DevOps' },
 		items: ['AWS', 'GCP', 'Azure', 'Azure DevOps', 'Docker', 'Kubernetes', 'OpenShift', 'Rancher', 'Jenkins', 'Linux'],
 	},
 	{
