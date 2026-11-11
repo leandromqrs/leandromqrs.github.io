@@ -3,6 +3,8 @@ title: 'Why you cannot just parent a browser into a Wayland window'
 description: 'Why CEF can embed a native browser window inside a host app on X11 but not on Wayland, and what a fix based on a shared connection looks like.'
 publishDate: 'Oct 22 2026'
 tag: 'CEF'
+img: '/assets/blog/cef-wayland-empty-panel.png'
+img_alt: 'CEF Wayland embedding sample showing an empty panel where the browser window should appear'
 ---
 
 CEF has had `SetAsChild` for years. On X11 you give it the ID of a window, and the browser shows up inside your window. On Wayland the same call can leave a stray window floating on the screen, return success without drawing anything, or crash the process. The upstream issue for this (chromiumembedded/cef#2804, "Linux: Add support for embedded Ozone/Wayland windows") was opened in 2019 and is still open.

@@ -3,6 +3,8 @@ title: '11 review rounds on an AI-assisted patch: what two AI reviewers and one 
 description: 'What 11 rounds of review on my AI-assisted CEF Wayland patch actually found, including the false positives, the bug no diff showed, and the tests that passed for the wrong reason.'
 publishDate: 'Oct 24 2026'
 tag: 'CEF'
+img: '/assets/blog/cef-wayland-empty-panel.png'
+img_alt: 'CEF Wayland embedding sample showing an empty browser panel'
 ---
 
 I wrote my Wayland embedding patch for CEF with heavy help from Claude Code. The commits say so in an `Assisted-by: Claude Code` trailer, because CEF's AI policy requires it, and I take responsibility for what is in them. I had the branch reviewed by two other AI reviewers (Codex and Kimi, as named in my notes), and I added my own manual testing on top. It took 11 rounds. I kept a findings log of 1,155 lines, and this post is what is in it.

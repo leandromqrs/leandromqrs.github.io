@@ -3,6 +3,8 @@ title: 'O shell travou e depois ficou lento para sempre: um contador de memória
 description: 'Como rastreei uma lentidão do GNOME Shell que só passava com logout até uma leitura de imagem do clipboard na minha extensão e um contador de memória que deu a volta no GJS.'
 publishDate: 'Sep 12 2026'
 tag: 'GNOME'
+img: '/assets/blog/aurora-clipboard.jpg'
+img_alt: 'Histórico da área de transferência do Aurora Shell com entradas de exemplo'
 ---
 
 O Aurora Shell é a extensão do GNOME Shell que eu escrevo para o LuminusOS. Em setembro eu estava portando ela para o GNOME 51 quando ela começou a fazer algo que eu não sabia explicar: depois de um ou dois screenshots, o shell inteiro congelava. Corrigi a primeira causa e o congelamento sumiu, mas o shell continuou lento. As animações travavam, principalmente quando o dock aparecia. Nada resolvia, só logout.

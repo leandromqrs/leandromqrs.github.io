@@ -3,6 +3,8 @@ title: 'The shell froze, then got slower forever: a 2^64 memory counter in GJS'
 description: 'How I traced a GNOME Shell slowdown that survived until logout to a clipboard image read in my extension and a memory counter that wrapped around in GJS.'
 publishDate: 'Sep 12 2026'
 tag: 'GNOME'
+img: '/assets/blog/aurora-clipboard.jpg'
+img_alt: 'Aurora Shell clipboard history showing example entries'
 ---
 
 Aurora Shell is the GNOME Shell extension I write for LuminusOS. In September I was porting it to GNOME 51 when it started doing something I could not explain: after one or two screenshots the whole shell froze. I fixed the first cause and the freeze went away, but the shell stayed slow. Animations stuttered, mostly when the dock slid in. Nothing brought it back except logging out.

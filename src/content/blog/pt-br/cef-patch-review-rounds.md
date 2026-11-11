@@ -3,6 +3,8 @@ title: '11 rodadas de review num patch feito com IA: o que dois revisores de IA 
 description: 'O que 11 rodadas de review no meu patch de Wayland para o CEF, escrito com ajuda de IA, realmente encontraram, incluindo os falsos positivos, o bug que nenhum diff mostrava e os testes que passavam pelo motivo errado.'
 publishDate: 'Oct 24 2026'
 tag: 'CEF'
+img: '/assets/blog/cef-wayland-empty-panel.png'
+img_alt: 'Exemplo de incorporação do CEF no Wayland mostrando o painel do navegador vazio'
 ---
 
 Escrevi meu patch de embedding Wayland para o CEF com bastante ajuda do Claude Code. Os commits dizem isso num trailer `Assisted-by: Claude Code`, porque a política de IA do CEF exige, e eu assumo a responsabilidade pelo que está neles. Fiz a branch ser revisada por dois outros revisores de IA (Codex e Kimi, como aparecem nas minhas anotações) e somei meus próprios testes manuais. Foram 11 rodadas. Mantive um log de achados de 1.155 linhas, e este post é o que está nele.

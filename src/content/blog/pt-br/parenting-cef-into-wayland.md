@@ -3,6 +3,8 @@ title: 'Por que você não consegue simplesmente encaixar um navegador numa jane
 description: 'Por que o CEF consegue embutir uma janela nativa do navegador dentro de um app no X11 mas não no Wayland, e como fica uma correção baseada em uma conexão compartilhada.'
 publishDate: 'Oct 22 2026'
 tag: 'CEF'
+img: '/assets/blog/cef-wayland-empty-panel.png'
+img_alt: 'Exemplo de incorporação do CEF no Wayland com o painel vazio onde deveria aparecer o navegador'
 ---
 
 O CEF tem o `SetAsChild` há anos. No X11 você passa o ID de uma janela e o navegador aparece dentro dela. No Wayland a mesma chamada pode deixar uma janela solta flutuando na tela, retornar sucesso sem desenhar nada ou derrubar o processo. A issue upstream desse problema (chromiumembedded/cef#2804, "Linux: Add support for embedded Ozone/Wayland windows") foi aberta em 2019 e continua aberta.
