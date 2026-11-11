@@ -1,5 +1,5 @@
 ---
-title: 'A foreground booster for GNOME, written and redesigned in one afternoon'
+title: 'A foreground booster for GNOME, and the signal Mutter already publishes'
 description: 'I built a daemon that gives the focused GNOME app more CPU, first with a private D-Bus bridge in my shell extension, then by reading a signal Mutter already publishes.'
 publishDate: 'Nov 10 2026'
 tag: 'GNOME'
@@ -7,11 +7,11 @@ tag: 'GNOME'
 
 A build, an export or a video encode running in the background gets the same CPU share as the window you are typing in. On a busy machine the app in front of you can stutter while something you are not looking at finishes. KDE has `plasma-foreground-booster` for this. GNOME has nothing like it, so I wrote `gnome-foreground-booster`, a small Rust daemon that raises the systemd `CPUWeight` of the focused application and puts it back when focus moves on.
 
-I wrote it on 10 November 2026 and redesigned it the same afternoon. The repository has 11 commits between 12:11 and 15:09, and the history shows where the design changed.
+The first version worked, but I threw its central idea away. The commit history shows where the design changed.
 
 ## The first design
 
-At 12:11 the daemon received focus from Aurora Shell, my GNOME Shell extension. I added a module to the extension, `ForegroundBridge`, which exported a private D-Bus interface, `org.luminusos.AuroraShell.Foreground`. Whenever the focused window changed, the extension told the daemon which app had focus. The daemon mapped it to a systemd unit and changed its weight.
+In the first version the daemon received focus from Aurora Shell, my GNOME Shell extension. I added a module to the extension, `ForegroundBridge`, which exported a private D-Bus interface, `org.luminusos.AuroraShell.Foreground`. Whenever the focused window changed, the extension told the daemon which app had focus. The daemon mapped it to a systemd unit and changed its weight.
 
 This works, and it has costs. The booster would only work for people who run Aurora Shell, and the daemon needed a private protocol with a fake implementation in GJS to test it. Two components were coupled through an interface I had invented for the occasion.
 
@@ -19,14 +19,14 @@ This works, and it has costs. The booster would only work for people who run Aur
 
 Mutter already tells everyone about focus, as it turns out. Since GNOME 41, Mutter sets an extended attribute, `user.xdg.inactive-since`, on the cgroup directory of the focused window's unit. The focused unit gets `-1`. The unit that just lost focus gets a monotonic timestamp. It only writes when focus moves between different units.
 
-That is the signal I had been building a bridge to produce. At 14:17 the commit "read focus from Mutter instead of an Aurora Shell bridge" removed the bridge, the private interface and the GJS fake.
+That is the signal I had been building a bridge to produce. The commit "read focus from Mutter instead of an Aurora Shell bridge" removed the bridge, the private interface and the GJS fake.
 
 ```mermaid
 flowchart LR
-    subgraph v1["First design, 12:11"]
+    subgraph v1["First design"]
         A1["Aurora Shell extension"] -->|"private D-Bus interface"| D1["Daemon"]
     end
-    subgraph v2["Final design, 14:17"]
+    subgraph v2["Final design"]
         M["Mutter"] -->|"xattr on the cgroup of the focused unit"| F["cgroup filesystem"]
         F -->|"inotify"| D2["Daemon"]
     end
@@ -51,13 +51,13 @@ A few details came from thinking about what could go wrong:
 
 ## The second bug class
 
-At 14:57 I found a problem that the Mutter signal does not solve. GNOME Shell launches an app and then asks systemd, asynchronously, to move it into its own `app-gnome-*.scope`. An AppImage starts the real program right away. If it forks during that gap, the real process stays in `org.gnome.Shell@*.service`, and Mutter attributes its window to the Shell. I saw it with the Ghostty AppImage. The daemon must never boost the Shell's own unit.
+Later I found a problem that the Mutter signal does not solve. GNOME Shell launches an app and then asks systemd, asynchronously, to move it into its own `app-gnome-*.scope`. An AppImage starts the real program right away. If it forks during that gap, the real process stays in `org.gnome.Shell@*.service`, and Mutter attributes its window to the Shell. I saw it with the Ghostty AppImage. The daemon must never boost the Shell's own unit.
 
 The fix is a rescue step. When a new unit appears under `app.slice`, the daemon reads the Shell's `cgroup.procs`, selects processes whose parent lives in an app unit, adds their descendants that are still in the Shell's cgroup, and moves the group into a transient scope with `StartTransientUnit`. It runs in passes at 50, 300, 1000 and 3000 ms after the new unit appears, because the Shell moves the launcher only after the scope's cgroup exists and the stranded children may still fork. The Shell's own children, such as Xwayland and the image loaders, have the Shell as parent and are never selected.
 
 There is one limit I could not remove. Mutter caches the unit of a window the first time it needs it. A window mapped before the rescue keeps pointing at the Shell's unit until it is closed and opened again.
 
-I also fixed a small one on the same afternoon. By default zbus requests a bus name with replacement allowed, so a second instance of the daemon silently stole the name from the first. It now requests the name with `DoNotQueue` and exits if it is taken.
+I also fixed a smaller one along the way. By default zbus requests a bus name with replacement allowed, so a second instance of the daemon silently stole the name from the first. It now requests the name with `DoNotQueue` and exits if it is taken.
 
 ## What it does not do
 
