@@ -109,7 +109,7 @@ async function renderCard(lang: Locale): Promise<Buffer> {
 	const cursorY = titleTop + titleLineHeight * (card.title.length - 1) + 6;
 	const subtitleTop = titleTop + titleLineHeight * card.title.length + 28;
 	const rolesTop = subtitleTop + 3 * 33 + 30;
-	const siteName = 'leandromqrs.github.io';
+	const siteName = 'leandromqrs.dev';
 	const siteNameLeft = 1136 - Math.round(siteName.length * 16 * GLYPH_ADVANCE);
 
 	const svg = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
