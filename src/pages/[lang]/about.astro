@@ -1,6 +1,4 @@
 ---
-import { getCollection } from "astro:content";
-
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import CallToAction from "../../components/CallToAction.astro";
@@ -28,10 +26,6 @@ const cvHref = (lang: string) => `/assets/Leandro-Rodrigues-CV-${lang}.pdf`;
 
 const employment = experience.filter((job) => !job.contract);
 const contracts = experience.filter((job) => job.contract);
-
-const work = (await getCollection("work")).filter((entry) => entry.data.company === "QW Software").sort(
-  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-);
 ---
 
 <BaseLayout
@@ -56,6 +50,7 @@ const work = (await getCollection("work")).filter((entry) => entry.data.company 
           <p>{m.aboutBackgroundP3()}</p>
           <p>{m.aboutBackgroundP4()}</p>
           <p>{m.aboutBackgroundP5()}</p>
+          <p>{m.aboutBackgroundP6()}</p>
         </div>
       </section>
 
@@ -70,18 +65,6 @@ const work = (await getCollection("work")).filter((entry) => entry.data.company 
         <h2 class="section-title">{m.aboutContractsTitle()}</h2>
         <div class="content">
           <ExperienceList items={contracts} folder="contracts" locale={locale} />
-        </div>
-      </section>
-
-      <section>
-        <h2 class="section-title">{m.aboutWorkTitle()}</h2>
-        <div class="content">
-          <p>{m.aboutWorkIntro()}</p>
-          <ul class="work-list">
-            {work.map((entry) => (
-              <li><a href={`/work/${entry.id}/`}>{entry.data.title}</a></li>
-            ))}
-          </ul>
         </div>
       </section>
 
@@ -193,15 +176,6 @@ const work = (await getCollection("work")).filter((entry) => entry.data.company 
   .content :global(a) {
     text-underline-offset: 0.25em;
   }
-
-  .work-list {
-    margin-top: 0.75rem;
-    padding-inline-start: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-
 
   .skills {
     display: flex;

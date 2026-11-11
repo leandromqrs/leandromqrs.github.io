@@ -8,7 +8,7 @@ import PortfolioPreview from "../../components/PortfolioPreview.astro";
 import Hero from "../../components/Hero.astro";
 import Grid from "../../components/Grid.astro";
 
-import { experience } from "../../data/profile";
+import { companyAnchor, experience } from "../../data/profile";
 
 // Paraglide translations
 import { m } from "../../paraglide/messages.js";
@@ -49,7 +49,7 @@ const places = experience
       />
       {
         places.map(({ job, projects }) => (
-          <section class="place stack gap-4">
+          <section class="place stack gap-4" id={companyAnchor(job.company)}>
             <header>
               <h2>{job.company}</h2>
               <p>{job.role[locale]}, {job.period[locale]}</p>
@@ -70,6 +70,10 @@ const places = experience
 </BaseLayout>
 
 <style>
+  .place {
+    scroll-margin-top: 5rem;
+  }
+
   .place h2 {
     font-size: var(--text-xl);
     color: var(--gray-0);

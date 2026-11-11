@@ -3,7 +3,7 @@ import Pill from "./Pill.astro";
 import Window from "./Window.astro";
 
 import { m } from "../paraglide/messages.js";
-import type { Experience, Locale } from "../data/profile";
+import { companyAnchor, type Experience, type Locale } from "../data/profile";
 
 interface Props {
 	items: Experience[];
@@ -12,13 +12,12 @@ interface Props {
 }
 
 const { items, folder, locale } = Astro.props;
-const slug = (company: string) => company.split(/[ ,(/]/)[0].toLowerCase();
 ---
 
 <ol class="timeline">
 	{items.map((job) => (
 		<li>
-			<Window title={`~/${folder}/${slug(job.company)}`}>
+			<Window title={`~/${folder}/${companyAnchor(job.company)}`}>
 				<article class="job">
 					<header>
 						<h3>{job.company}</h3>
@@ -29,7 +28,11 @@ const slug = (company: string) => company.split(/[ ,(/]/)[0].toLowerCase();
 					<ul class="stack-list">
 						{job.stack.map((tech) => <li><Pill>{tech}</Pill></li>)}
 					</ul>
-					{job.href && <a class="more" href={`/${job.href}/`}>{m.aboutExperienceSeeWork()}</a>}
+					{job.workName && (
+						<a class="more" href={`/${locale}/work/#${companyAnchor(job.company)}`}>
+							{m.aboutExperienceSeeWork({ company: job.workName })}
+						</a>
+					)}
 				</article>
 			</Window>
 		</li>

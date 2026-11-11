@@ -11,9 +11,11 @@ export interface Experience {
 	period: Localized<string>;
 	summary: Localized<string>;
 	stack: string[];
-	href?: string;
+	workName?: string;
 	contract?: boolean;
 }
+
+export const companyAnchor = (company: string) => company.split(/[ ,(/]/)[0].toLowerCase();
 
 export interface SkillGroup {
 	name: Localized<string>;
@@ -37,6 +39,7 @@ export const experience: Experience[] = [
 				'APIs e microsserviços para a CASSI, plano de saúde dos funcionários do Banco do Brasil, com mais de 600 mil beneficiários. A arquitetura de microsserviços elevou a escalabilidade em 60% e reduziu os custos de manutenção em 35%.',
 		},
 		stack: ['Java', 'Spring Boot', 'Quarkus', 'Kafka', 'RabbitMQ', 'Azure DevOps', 'React'],
+		workName: 'CASSI',
 	},
 	{
 		company: 'QW Software (Grupo Vernet)',
@@ -48,7 +51,7 @@ export const experience: Experience[] = [
 				'O QWControl é uma plataforma comercial de automação de workloads que concorre com o Control-M. Liderei a modularização, escrevi mais de 50 plugins de integração, construí o dashboard de VMware, o dashboard de monitoramento de jobs e o editor de Rule Flow, e liderei times de até 5 desenvolvedores.',
 		},
 		stack: ['Java', 'Groovy', 'Grails', 'Vue.js', 'Quartz', 'SAP R3', 'Docker'],
-		href: 'work',
+		workName: 'QW Software',
 	},
 	{
 		company: 'Prodesp',
@@ -93,6 +96,7 @@ export const experience: Experience[] = [
 				'Migração de serviços do backend da RNDS, a rede nacional de dados em saúde, de Java 8/11 e Spring Boot 2.x para Java 21 e Spring Boot 3.5, além de native images do GraalVM que reduziram a memória em 64% a 94% em homologação e da remoção do config server.',
 		},
 		stack: ['Java', 'Spring Boot', 'Elasticsearch', 'Kafka', 'AWS', 'Kubernetes'],
+		workName: 'DATASUS',
 	},
 	{
 		company: 'DataCore Solutions',
@@ -105,6 +109,7 @@ export const experience: Experience[] = [
 				'Jobs Spring Batch que transformam arquivos de faturamento em notificações por PDF, e-mail e SMS para operadoras de telecomunicações, em lotes de 1.000 registros com renderização paralela.',
 		},
 		stack: ['Java', 'Spring Batch', 'Kafka', 'SQL Server', 'Oracle'],
+		workName: 'DataCore',
 	},
 ];
 
