@@ -40,17 +40,17 @@ No lado do Junie, o gateway anuncia 60 IDs de modelo para a minha conta, e 36 de
 
 Dados de quota chegam parciais, atrasados ou num formato que o plugin não reconhece, e o tratamento fácil é mostrar 0. Um zero lê como "não sobrou nada", o que é uma afirmação. Por isso cada plugin separa desconectado, desconhecido, parcial, falhou, ausente e disponível. Erros e valores ausentes nunca viram zero nem "não assinante", e um zero de verdade continua sendo zero (o código checa presença, não truthiness). As outras unidades recebem o mesmo cuidado: créditos não são tokens brutos, o agregado de um time não é a alocação individual e uma data de expiração não é uma data de reset.
 
-## Endurecendo a requisição
+## Hardening da requisição
 
 A requisição final passa por um funil estreito. Ele aceita um único caminho POST fixo, para um destino fixo. O modelo no corpo precisa existir no catálogo ativo. Os headers de upstream são substituídos pelos do próprio plugin, redirects são recusados, retries ficam desligados e não existe fallback automático para pay-as-you-go nem para outra conta. Um fallback que gasta dinheiro sem ninguém pedir é uma surpresa ruim, então qualquer troca tem que ser uma escolha explícita do usuário.
 
 Testando o plugin do Junie, encontrei também uma falha na forma como o host repassa as requisições, e ela enfraquece a garantia contra redirects. Deixo os detalhes fora deste post. O README do plugin avisa para não rodar inferência real até o host ser corrigido.
 
-Os timeouts fazem parte do mesmo design. O prazo é imposto antes de os headers da resposta chegarem e durante todo o corpo em streaming, e o timer e o controller pertencem ao escopo da requisição, então cancelar a requisição cancela o leitor também. A requisição mantém referências fortes a eles, e um teste de regressão força o garbage collector para checar que o prazo continua disparando.
+Os timeouts fazem parte do mesmo design. O deadline é imposto antes de os headers da resposta chegarem e durante todo o corpo em streaming, e o timer e o controller pertencem ao escopo da requisição, então cancelar a requisição cancela o leitor também. A requisição mantém referências fortes a eles, e um teste de regressão força o garbage collector para checar que o deadline continua disparando.
 
 ## Um adaptador loopback com chave própria
 
-O OpenCode tem um plugin de quota que consegue ler de uma fonte HTTP local. Expus a quota do Junie por um adaptador pequeno que escuta só em 127.0.0.1, responde só `GET /quota` e devolve o formato quota-v1 que esse plugin entende. Ele tem uma terceira credencial, independente das outras duas, e rejeita query strings, header Host errado, qualquer Origin de navegador e headers Authorization duplicados. Conexões, tamanho de payload e tempo têm limite. Rodo o adaptador como uma unidade systemd transitória de usuário, que não sobrevive a um reboot, e a documentação diz isso.
+O OpenCode tem um plugin de quota que consegue ler de uma fonte HTTP local. Expus a quota do Junie por um adaptador pequeno que escuta só em 127.0.0.1, responde só `GET /quota` e devolve o formato quota-v1 que esse plugin entende. Ele tem uma terceira credencial, independente das outras duas, e rejeita query strings, header Host errado, qualquer Origin de navegador e headers Authorization duplicados. Conexões, tamanho de payload e tempo têm limite. Rodo o adaptador como uma unit transitória do systemd de usuário, que não sobrevive a um reboot, e a documentação diz isso.
 
 O adaptador me rendeu a melhor história de debugging. O painel insistia em dizer que o provider customizado não estava configurado. A causa era que a chave do adaptador não estava no ambiente do processo servidor do OpenCode. Definir a chave no meu processo de reparo falhou, porque outro cliente tinha ganho a corrida para iniciar o serviço com o ambiente antigo dele. A correção foi gravar a chave na configuração privada de ambiente do servidor e reiniciá-lo.
 

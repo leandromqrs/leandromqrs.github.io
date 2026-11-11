@@ -39,9 +39,9 @@ flowchart LR
     R["matriz do release.yml e build com NDK CMake"] --> F
 ```
 
-## Bibliotecas de link
+## Bibliotecas linkadas
 
-O Linux linka `dl`, `m` e `stdc++`. O ramo do Android linka `dl`, `m` e `c++_shared`, porque compilo o libmem contra o runtime C++ compartilhado do NDK. Isso tem uma consequência para o app que usa a biblioteca: o `libc++_shared.so` precisa ser empacotado no APK junto com a biblioteca Rust.
+O Linux linka `dl`, `m` e `stdc++`. No Android, o link é com `dl`, `m` e `c++_shared`, porque compilo o libmem contra o runtime C++ compartilhado do NDK. Isso tem uma consequência para o app que usa a biblioteca: o `libc++_shared.so` precisa ser empacotado no APK junto com a biblioteca Rust.
 
 ## Compilando com o toolchain do NDK
 

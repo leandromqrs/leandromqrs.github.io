@@ -15,7 +15,7 @@ A ideia era criar um cliente Kubernetes nativo com a identidade do GNOME, escrit
 
 ## O problema que eu queria resolver
 
-O Kubernetes é poderoso, mas o fluxo de trabalho diário pode se tornar fragmentado. Você alterna entre `kubectl get`, `kubectl describe`, `kubectl logs`, `kubectl exec`, editores de YAML, encaminhamento de portas e documentação. Dependendo do ambiente, o OpenShift também pode fazer parte desse fluxo.
+O Kubernetes é poderoso, mas o workflow diário pode se tornar fragmentado. Você alterna entre `kubectl get`, `kubectl describe`, `kubectl logs`, `kubectl exec`, editores de YAML, port-forward e documentação. Dependendo do ambiente, o OpenShift também pode fazer parte desse fluxo.
 
 O Aetheris busca organizar esse trabalho em uma única interface:
 
@@ -23,8 +23,8 @@ O Aetheris busca organizar esse trabalho em uma única interface:
 - um navegador para os recursos do cluster;
 - visualizações detalhadas com visão geral, YAML, eventos, condições e objetos relacionados;
 - logs em tempo real com cores ANSI;
-- terminais interativos dentro de contêineres;
-- operações como apply, exclusão, escalonamento, cordon, drain e encaminhamento de portas.
+- terminais interativos dentro de containers;
+- operações como apply, delete, scale, cordon, drain e port-forward.
 
 O objetivo não era esconder o Kubernetes. Era facilitar sua operação no dia a dia sem retirar o controle de quem utiliza a ferramenta.
 
@@ -40,7 +40,7 @@ Rust também se encaixou muito bem no problema. A aplicação precisa lidar com 
 
 Desde o início, procurei manter uma separação clara entre o comportamento relacionado ao Kubernetes e o comportamento da interface gráfica. O projeto é dividido em dois crates:
 
-- `aetheris-kube`: o back-end Kubernetes puro;
+- `aetheris-kube`: o backend Kubernetes puro;
 - `aetheris-app`: a aplicação GTK/Relm4.
 
 ```mermaid
@@ -63,8 +63,8 @@ flowchart LR
         Client[Clientes Kubernetes]
         Discovery[Descoberta de APIs]
         Resources[Listagem, watch e detalhes de recursos]
-        Streams[Logs, exec e encaminhamento de portas]
-        Mutations[Apply, exclusão, escala, cordon e drain]
+        Streams[Logs, exec e port-forward]
+        Mutations[Apply, delete, scale, cordon e drain]
 
         Config --> Client
         Client --> Discovery
@@ -78,11 +78,11 @@ flowchart LR
     Client --> Cluster[(Cluster Kubernetes)]
 ```
 
-Essa separação parece simples, mas evita muito débito técnico. O crate `aetheris-kube` não conhece GTK, Libadwaita, Relm4, VTE ou widgets. Ele é responsável pela leitura do kubeconfig, clientes, descoberta, comportamento de listagem e watch, logs, exec, encaminhamento de portas, métricas, detalhes de recursos e mutações.
+Essa separação parece simples, mas evita muito débito técnico. O crate `aetheris-kube` não conhece GTK, Libadwaita, Relm4, VTE ou widgets. Ele é responsável pela leitura do kubeconfig, clientes, descoberta, comportamento de listagem e watch, logs, exec, port-forward, métricas, detalhes de recursos e mutações.
 
-O crate `aetheris-app` é responsável por janelas, layout, estado da aplicação, persistência de projetos, handlers, comandos e widgets. Os dois lados se comunicam por meio de tipos de dados exportados pelo back-end.
+O crate `aetheris-app` é responsável por janelas, layout, estado da aplicação, persistência de projetos, handlers, comandos e widgets. Os dois lados se comunicam por meio de tipos de dados exportados pelo backend.
 
-Na prática, essa divisão me deu liberdade para evoluir a interface sem contaminar a lógica do Kubernetes e para alterar o comportamento do back-end sem precisar pensar em botões, páginas ou componentes visuais.
+Na prática, essa divisão me deu liberdade para evoluir a interface sem contaminar a lógica do Kubernetes e para alterar o comportamento do backend sem precisar pensar em botões, páginas ou componentes visuais.
 
 ## O fluxo da aplicação
 
@@ -90,7 +90,7 @@ Quando o Aetheris inicia, ele carrega o kubeconfig, descobre contextos e namespa
 
 Tomei uma decisão importante nesse ponto: contextos criados fora do Aetheris, por meio de `kubectl` ou `oc`, não são adicionados automaticamente a um projeto. A aplicação consegue ler o kubeconfig, mas a organização dos projetos é uma escolha explícita do usuário. Isso evita que clusters pessoais, de produção, de homologação e ambientes temporários apareçam misturados sem intenção.
 
-Quando um projeto é selecionado, a aplicação exibe apenas os clusters atribuídos a ele. Ao abrir um cluster, o back-end se conecta ao contexto selecionado, lista os namespaces, descobre os recursos disponíveis e carrega os dados necessários para a navegação.
+Quando um projeto é selecionado, a aplicação exibe apenas os clusters atribuídos a ele. Ao abrir um cluster, o backend se conecta ao contexto selecionado, lista os namespaces, descobre os recursos disponíveis e carrega os dados necessários para a navegação.
 
 ## Primeiro o snapshot, depois o watch
 
@@ -104,11 +104,11 @@ Outro detalhe foi a criação das linhas em lotes. Em clusters grandes, renderiz
 
 ## Detalhes, YAML e operações
 
-A tela de detalhes concentra grande parte do trabalho da aplicação. Dependendo do recurso, ela pode exibir uma visão geral, YAML, eventos, condições, pods relacionados, logs, contêineres e métricas.
+A tela de detalhes concentra grande parte do trabalho da aplicação. Dependendo do recurso, ela pode exibir uma visão geral, YAML, eventos, condições, pods relacionados, logs, containers e métricas.
 
-Para a edição de YAML, usei GtkSourceView. O objetivo era oferecer uma experiência próxima à de um editor real, com destaque de sintaxe e espaço suficiente para revisar o manifesto antes de aplicá-lo. O apply passa pelo back-end e usa server-side apply em vez de simplesmente enviar texto bruto sem validação.
+Para a edição de YAML, usei GtkSourceView. O objetivo era oferecer uma experiência próxima à de um editor real, com destaque de sintaxe e espaço suficiente para revisar o manifesto antes de aplicá-lo. O apply passa pelo backend e usa server-side apply em vez de simplesmente enviar texto bruto sem validação.
 
-As operações seguem a mesma regra: a interface envia uma intenção, o back-end a executa com kube-rs e o resultado retorna como dados ou como um erro explícito. Exclusão, escala, cordon, drain e encaminhamento de portas não ficam espalhados pela interface. Todas essas ações passam pela camada que entende Kubernetes.
+As operações seguem a mesma regra: a interface envia uma intenção, o backend a executa com kube-rs e o resultado retorna como dados ou como um erro explícito. Delete, scale, cordon, drain e port-forward não ficam espalhados pela interface. Todas essas ações passam pela camada que entende Kubernetes.
 
 Isso é importante porque erros do Kubernetes raramente são genéricos. Eles podem ser causados por RBAC, recursos ausentes, namespaces incorretos, APIs indisponíveis, ausência do metrics-server ou operações parcialmente suportadas naquele cluster. Procurei fazer com que a aplicação falhasse de maneira útil, especialmente quando a resposta é `Forbidden`.
 
@@ -122,7 +122,7 @@ Esse tipo de detalhe muda a percepção da aplicação. Quando uma operação lo
 
 ## Cancelamento e tarefas de longa duração
 
-Um cliente Kubernetes para desktop é cercado por tarefas de longa duração: watches, logs, terminais, encaminhamento de portas e carregamento de detalhes. Se essas tarefas não puderem ser canceladas, a aplicação começa a acumular trabalhos antigos e a mostrar resultados fora de contexto.
+Um cliente Kubernetes para desktop é cercado por tarefas de longa duração: watches, logs, terminais, port-forward e carregamento de detalhes. Se essas tarefas não puderem ser canceladas, a aplicação começa a acumular trabalhos antigos e a mostrar resultados fora de contexto.
 
 Por isso, operações longas usam abort handles. Trocar de cluster, fechar uma janela ou mudar uma visualização de detalhes precisa interromper o trabalho que deixou de fazer sentido. Essa foi uma das decisões que mais ajudaram a manter o comportamento previsível.
 

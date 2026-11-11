@@ -13,7 +13,7 @@ Passei uma parte deste ano nela. Abri o pull request #4233 no CEF, e ele ainda e
 
 ## Três formas de embutir o CEF
 
-O CEF tem três formas de mostrar um navegador dentro de uma aplicação no Linux. O Views entrega uma janela de nível superior gerenciada pelo CEF e funciona no Wayland há alguns anos. O off-screen rendering (OSR) entrega buffers de pixels para você desenhar do seu jeito, e funciona há bastante tempo (o Spotify usa). A terceira é o modo de janela nativa, em que o host passa um handle de pai pelo `SetAsChild` e o CEF cria uma janela filha dentro dele. Só a terceira não existe no Wayland, e é só dela que a issue #2804 trata.
+O CEF tem três formas de mostrar um navegador dentro de uma aplicação no Linux. O Views entrega uma janela top-level gerenciada pelo CEF e funciona no Wayland há alguns anos. O off-screen rendering (OSR) entrega buffers de pixels para você desenhar do seu jeito, e funciona há bastante tempo (o Spotify usa). A terceira é o modo de janela nativa, em que o host passa um handle de parent pelo `SetAsChild` e o CEF cria uma janela filha dentro dele. Só a terceira não existe no Wayland, e é só dela que a issue #2804 trata.
 
 ## Um ID de janela X11 é global, um wl_surface não
 
@@ -31,7 +31,7 @@ Escrevi um app host pequeno em Rust para enxergar as falhas (é um projeto separ
 | `windowed-wayland` | Uma janela XWayland solta flutua sobre o host. O `libcef.so` de release ainda tem o backend X11 compilado, e o `parent_window` chega como 0. |
 | `windowed-wayland --no-xwayland` | `CreateHostWindow()` retorna `true`, `GetHostWindowHandle()` retorna `0xffffffff` e o painel fica vazio. |
 | `osr` | Funciona: 39 chamadas de `OnPaint` em 12 segundos a 1224x582. |
-| `views` | Funciona, numa janela de nível superior separada. |
+| `views` | Funciona, numa janela top-level separada. |
 
 Os dois casos de janela nativa no Wayland terminam com um `SIGSEGV` em `WaylandWindowManager::GetWindow` quando o primeiro evento é despachado, porque o XID é usado como `gfx::AcceleratedWidget`.
 
@@ -53,11 +53,11 @@ flowchart LR
 
 A janela do navegador vira uma `WaylandEmbeddedWindow`, um `wl_subsurface` da surface do host, registrada no `WaylandWindowManager` para que as buscas de widget funcionem. Não precisei de um gêmeo Wayland do `CefWindowX11`, uma classe de 539 linhas, porque no Wayland a janela embutida já é a janela de plataforma do host do views. O views só entende um pai nativo como `gfx::AcceleratedWidget` e já repassa isso ao Ozone, então registrar a surface do cliente produz um e nada no views muda.
 
-Uma armadilha: o views mapeia `TYPE_CONTROL`, que o navegador embutido usa, para um tipo de janela popup, então a checagem de pai estrangeiro precisa rodar antes do switch de tipo em `WaylandWindow::Create()`.
+Uma armadilha: o views mapeia `TYPE_CONTROL`, que o navegador embutido usa, para um tipo de janela popup, então a checagem de foreign parent precisa rodar antes do switch de tipo em `WaylandWindow::Create()`.
 
 ## O que veio de graça e o que não veio
 
-Um subsurface nunca recebe `wl_keyboard.enter`, e a thread da issue tinha concluído que o embedder precisava repassar todas as teclas. Não precisa. O Chromium já recebe esses eventos na conexão compartilhada e os descartava, porque não conseguia resolver o toplevel do host. Ensinar essa busca sobre as surfaces estrangeiras registradas roteia o foco de teclado sem código no embedder.
+Um subsurface nunca recebe `wl_keyboard.enter`, e a thread da issue tinha concluído que o embedder precisava repassar todas as teclas. Não precisa. O Chromium já recebe esses eventos na conexão compartilhada e os descartava, porque não conseguia resolver o toplevel do host. Ensinar essa busca sobre as foreign surfaces registradas roteia o foco de teclado sem código no embedder.
 
 A mesma busca escondia um bug de segurança de memória. Ela convertia o user data de qualquer `wl_surface` para um ponteiro do Chromium, e numa conexão compartilhada esse dado pertence ao toolkit do host (GTK e Qt ambos o preenchem). Reproduzi como crash passando o mouse sobre as bordas de janela desenhadas pelo cliente no winit. A correção marca as surfaces do Chromium com `wl_proxy_set_tag()` e só resolve as marcadas. O drag and drop passa a ser atribuído corretamente sem equivalente ao `XdndProxy`, porque cada lado responde só pelas próprias surfaces.
 
@@ -67,7 +67,7 @@ A geometria também muda. Um subsurface não recebe evento `configure`, então o
 
 ## O que o mantenedor disse
 
-Depois que escrevi esse design, o mantenedor do CEF revisou o pull request em 20 de outubro e reverteu várias escolhas. A que importa aqui: eu tinha feito o `parent_window` carregar o ponteiro do `wl_surface`. Um XID válido e um endereço parecem iguais, então um handle errado vira comportamento indefinido, e não um erro que o CEF consiga reportar. Ele pediu um campo separado para o pai Wayland, mantendo o `parent_window` para o X11. Também quer o display no `CefSettings` em vez de um setter, um caminho Wayland no `cefclient` em vez do meu sample avulso, e evidência no KWin além do Mutter. Estou dividindo o trabalho numa série menor que começa pela mudança de settings.
+Depois que escrevi esse design, o mantenedor do CEF revisou o pull request em 20 de outubro e reverteu várias escolhas. A que importa aqui: eu tinha feito o `parent_window` carregar o ponteiro do `wl_surface`. Um XID válido e um endereço parecem iguais, então um handle errado vira comportamento indefinido, e não um erro que o CEF consiga reportar. Ele pediu um campo separado para o parent Wayland, mantendo o `parent_window` para o X11. Também quer o display no `CefSettings` em vez de um setter, um caminho Wayland no `cefclient` em vez do meu sample avulso, e evidência no KWin além do Mutter. Estou dividindo o trabalho numa série menor que começa pela mudança de settings.
 
 ## O que consegui e o que não consegui verificar
 

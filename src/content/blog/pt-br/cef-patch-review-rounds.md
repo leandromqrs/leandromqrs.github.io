@@ -9,7 +9,7 @@ img_alt: 'Exemplo de incorporação do CEF no Wayland mostrando o painel do nave
 
 Escrevi meu patch de embedding Wayland para o CEF com bastante ajuda do Claude Code. Os commits dizem isso num trailer `Assisted-by: Claude Code`, porque a política de IA do CEF exige, e eu assumo a responsabilidade pelo que está neles. Fiz a branch ser revisada por dois outros revisores de IA (Codex e Kimi, como aparecem nas minhas anotações) e somei meus próprios testes manuais. Foram 11 rodadas. Mantive um log de achados de 1.155 linhas, e este post é o que está nele.
 
-O pull request (chromiumembedded/cef#4233) continua aberto e sem merge. O mantenedor revisou em 20 de outubro e pediu mudanças de design, então parte do código que endureci aqui vai ser reescrita. Volto a isso no final.
+O pull request (chromiumembedded/cef#4233) continua aberto e sem merge. O mantenedor revisou em 20 de outubro e pediu mudanças de design, então parte do código que reforcei aqui vai ser reescrita. Volto a isso no final.
 
 ## O cenário
 
@@ -38,7 +38,7 @@ A ativação de um navegador embutido, ou seja, como ele recebe o foco de teclad
 
 Um patch que precisa explicar por que difere do upstream provavelmente está errado. Eu deveria ter procurado o mecanismo equivalente já na primeira daquelas cinco rodadas.
 
-Também cometi um erro do mesmo tipo nas minhas próprias correções. Uma primeira "degradação graciosa" para um `xdg_surface` nulo abortou o processo do mesmo jeito que o ponteiro nulo. E uma correção ficou pela metade: um caso especial ficou num helper compartilhado por dois caminhos de código que usavam espaços de coordenadas diferentes, um `xdg_popup` ancorado na surface do host e um subsurface de bolha do navegador embutido. Ele era inofensivo até o fallback de bolha existir.
+Também cometi um erro do mesmo tipo nas minhas próprias correções. Uma primeira "graceful degradation" para um `xdg_surface` nulo abortou o processo do mesmo jeito que o ponteiro nulo. E uma correção ficou pela metade: um caso especial ficou num helper compartilhado por dois caminhos de código que usavam espaços de coordenadas diferentes, um `xdg_popup` ancorado na surface do host e um subsurface de bolha do navegador embutido. Ele era inofensivo até o fallback de bolha existir.
 
 ## O bug que nenhum diff continha
 

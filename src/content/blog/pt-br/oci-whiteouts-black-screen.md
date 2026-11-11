@@ -51,14 +51,14 @@ A primeira correção foi reverter a remoção. Tirar o `rpm-ostree` de uma imag
 
 As tentativas seguintes foram de squash. Testei `--squash-all` no build e depois um `buildah commit --squash` após o build, para manter o cache de camadas. O squash aplica os whiteouts e deixa uma única camada com o filesystem final.
 
-O que ficou foi uma proteção estrutural no `Containerfile.installer`, o Containerfile do live root. O último estágio é:
+O que ficou foi uma proteção estrutural no `Containerfile.installer`, o Containerfile do live root. O último stage é:
 
 ```dockerfile
 FROM scratch
 COPY --from=live / /
 ```
 
-Isso copia o filesystem já mesclado para uma camada nova, então nenhum `rm` de um estágio anterior consegue vazar um whiteout. Uma checagem em tempo de build reforça: o `RUN` de verificação falha o build se o `find` encontrar qualquer arquivo chamado `.wh.*`.
+Isso copia o filesystem já com os whiteouts aplicados para uma camada nova, então nenhum `rm` de um stage anterior consegue vazar um whiteout. Uma checagem em tempo de build reforça: o `RUN` de verificação falha o build se o `find` encontrar qualquer arquivo chamado `.wh.*`.
 
 A lição que anotei é que quem consome uma imagem OCI não é obrigado a respeitar whiteouts. Se uma ferramenta de terceiros vai copiar o filesystem para fora da imagem, entregue a imagem sem nenhum.
 
@@ -90,6 +90,6 @@ Os recipes locais do Just e o workflow do CI também usam o mesmo script de empa
 
 ## O que eu verifico primeiro da próxima vez
 
-Quando uma ISO e uma imagem de disco da mesma origem discordam, olho como cada uma é implantada antes de olhar o conteúdo. As duas podem ler a mesma imagem OCI e aplicar regras diferentes a ela. Também leio o console serial antes de qualquer outra coisa, porque tela preta é um sintoma com um número enorme de causas e uma linha de log tem uma só.
+Quando uma ISO e uma imagem de disco da mesma origem discordam, olho como cada uma recebe o deploy antes de olhar o conteúdo. As duas podem ler a mesma imagem OCI e aplicar regras diferentes a ela. Também leio o console serial antes de qualquer outra coisa, porque tela preta é um sintoma com um número enorme de causas e uma linha de log tem uma só.
 
 O pipeline de releases do LuminusOS ainda está em movimento. O canal testing publica todo dia e o primeiro release stable espera o Fedora 45 sair.
