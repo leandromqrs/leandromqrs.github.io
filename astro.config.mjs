@@ -7,6 +7,12 @@ import { paraglideVitePlugin } from "@inlang/paraglide-js";
 export default defineConfig({
     site: 'https://leandromqrs.dev',
     compressHTML: true,
+    markdown: {
+        shikiConfig: {
+            themes: { light: 'github-light', dark: 'github-dark' },
+            defaultColor: false,
+        },
+    },
     integrations: [
         sitemap({
             filter: (page) => !page.includes('/404') && /^https:\/\/[^/]+\/(en|pt-br|work)(\/|$)/.test(page),

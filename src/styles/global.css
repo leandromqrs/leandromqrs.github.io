@@ -159,6 +159,62 @@ pre {
 	font-family: var(--font-mono);
 }
 
+.article-content pre[data-language='mermaid'],
+.article-content pre:has(> code.language-mermaid) {
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+.article-content pre:not([data-language='mermaid']):not(:has(> code.language-mermaid)) {
+	max-width: 100%;
+	margin-block: 1.5rem;
+	border: 1px solid var(--gray-700);
+	background: var(--card-bg) !important;
+	color: var(--shiki-light);
+	overflow-x: auto;
+}
+
+:root.theme-dark .article-content pre:not([data-language='mermaid']):not(:has(> code.language-mermaid)),
+:root.theme-dark .article-content pre:not([data-language='mermaid']):not(:has(> code.language-mermaid)) span {
+	color: var(--shiki-dark);
+}
+
+.article-content pre:not([data-language='mermaid']):not(:has(> code.language-mermaid)) span {
+	color: var(--shiki-light);
+}
+
+.article-content pre:not([data-language='mermaid']):not(:has(> code.language-mermaid))::before {
+	content: attr(data-language);
+	position: sticky;
+	left: 0;
+	display: block;
+	width: 100%;
+	padding: 0.4rem 0.75rem 0.4rem 4.05rem;
+	border-bottom: 1px solid var(--gray-700);
+	background-color: var(--gray-999);
+	background-image:
+		linear-gradient(var(--accent-regular), var(--accent-regular)),
+		linear-gradient(var(--gray-999), var(--gray-999)),
+		linear-gradient(var(--gray-500), var(--gray-500)),
+		linear-gradient(var(--gray-999), var(--gray-999)),
+		linear-gradient(var(--gray-500), var(--gray-500));
+	background-size: 0.55rem 0.55rem, calc(0.55rem - 2px) calc(0.55rem - 2px), 0.55rem 0.55rem, calc(0.55rem - 2px) calc(0.55rem - 2px), 0.55rem 0.55rem;
+	background-position: 0.75rem center, calc(1.6rem + 1px) center, 1.6rem center, calc(2.45rem + 1px) center, 2.45rem center;
+	background-repeat: no-repeat;
+	color: var(--gray-400);
+	font-size: var(--text-sm);
+	line-height: 1.65;
+}
+
+.article-content pre:not([data-language='mermaid']):not(:has(> code.language-mermaid)) > code {
+	display: block;
+	width: max-content;
+	min-width: 100%;
+	padding: 1rem 1.25rem;
+	font-size: 0.875rem;
+	line-height: 1.65;
+}
+
 /* Utilities */
 
 .sr-only {

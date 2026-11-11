@@ -53,7 +53,7 @@ const { Content } = await render(post);
 			<main class="wrapper">
 				<div class="stack gap-10 content">
 					{post.data.img && <img src={post.data.img} alt={post.data.img_alt ?? ''} />}
-					<div class="content">
+					<div class="content article-content">
 						<Content />
 					</div>
 				</div>
@@ -113,6 +113,8 @@ const { Content } = await render(post);
 	}
 
 	.content {
+		width: 100%;
+		min-width: 0;
 		max-width: 28ch;
 		margin-inline: auto;
 		margin-bottom: 2rem;
@@ -143,16 +145,6 @@ const { Content } = await render(post);
 		padding-inline-start: 1.5rem;
 		border-inline-start: 2px solid var(--accent-regular);
 		color: var(--gray-0);
-	}
-
-	.content :global(pre) {
-		background-color: var(--gray-900);
-		color: var(--gray-0);
-		border: 1px solid var(--gray-700);
-		padding: 1.25rem;
-		overflow-x: auto;
-		margin-top: 1.5rem;
-		margin-bottom: 1.5rem;
 	}
 
 	.content :global(code) {
