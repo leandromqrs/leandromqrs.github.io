@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#0b0d0b"/>
+  <path d="M0 78H1200" stroke="#38403a" stroke-width="2"/>
+  <rect x="42" y="31" width="16" height="16" fill="#46e07c"/>
+  <rect x="70" y="31" width="16" height="16" fill="none" stroke="#677165" stroke-width="2"/>
+  <rect x="98" y="31" width="16" height="16" fill="none" stroke="#677165" stroke-width="2"/>
+  <text x="140" y="47" fill="#879185" font-family="'JetBrains Mono', monospace" font-size="22">~/blog/cover</text>
+  <g text-anchor="middle" font-family="'JetBrains Mono', monospace">
+    <text x="600" y="290" fill="#46e07c" font-size="30">$ ls cover.*</text>
+    <text x="600" y="364" fill="#dfe4dc" font-size="54" font-weight="700">No image attached.</text>
+    <text x="600" y="418" fill="#879185" font-size="24">The story is in the text_</text>
+  </g>
+</svg>

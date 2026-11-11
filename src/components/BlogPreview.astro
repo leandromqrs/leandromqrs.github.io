@@ -10,14 +10,14 @@ interface Props {
 
 const { data, id } = Astro.props.post;
 const locale = getLocale();
-const imageSrc = data.img ?? '/blog-placeholder-1.jpg';
+const imageSrc = data.img ?? '/assets/blog/terminal-placeholder.svg';
 // O id inclui o prefixo do idioma (ex.: "en/meu-post"). Remove para montar a URL.
 const slug = id.slice(id.indexOf('/') + 1);
 ---
 
 <a class="card" href={`/${locale}/blog/${slug}/`}>
 	<span class="media">
-		<img src={imageSrc} alt={data.img_alt || ''} loading="lazy" decoding="async" />
+		<img class:list={[{ placeholder: !data.img }]} src={imageSrc} alt={data.img_alt || ''} loading="lazy" decoding="async" />
 	</span>
 	<span class="body">
 		<span class="meta">
@@ -61,6 +61,14 @@ const slug = id.slice(id.indexOf('/') + 1);
 		display: block;
 	}
 
+	.media:has(.placeholder) {
+		background: #0b0d0b;
+	}
+
+	img.placeholder {
+		object-fit: contain;
+	}
+
 	.body {
 		display: grid;
 		align-content: start;
@@ -100,6 +108,13 @@ const slug = id.slice(id.indexOf('/') + 1);
 	@media (min-width: 50em) {
 		.card {
 			height: 22rem;
+			grid-template-rows: minmax(0, 1fr) auto;
+		}
+
+		.media {
+			min-height: 0;
+			height: 100%;
+			aspect-ratio: auto;
 		}
 
 		.body {
