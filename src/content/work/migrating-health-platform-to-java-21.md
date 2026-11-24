@@ -89,4 +89,4 @@ The revert above was the most expensive lesson. Memory tuning was the second, be
 
 I would start the environment branches and tags from the first service, not after the first revert. I would also keep behavior changes out of migration pull requests. When a migration commit also changes a query or a timeout, a failure in staging has too many suspects.
 
-I have no number that isolates the Java 21 effect, because the move came together with the build tool, base image and tuning changes. What I can say is that the services run on a supported stack and that the next upgrade, Java 25 with Boot 4, started from a shared library and a pipeline that already knew how to carry a version bump across every repository.
+I have no number that isolates the Java 21 effect, because the move came together with the build tool, base image and tuning changes. That work gave the next upgrade a starting point: a shared library and a pipeline that could carry a version bump across repositories. I later completed the migration to Java 25 and Spring Boot 4 for the RNDS services I worked on in that phase.

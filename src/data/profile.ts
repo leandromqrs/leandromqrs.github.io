@@ -34,9 +34,9 @@ export const experience: Experience[] = [
 		role: { en: 'Senior Full Stack Developer', 'pt-br': 'Desenvolvedor Full Stack Sênior' },
 		period: { en: 'Nov 2024 - Present', 'pt-br': 'Nov 2024 - Atual' },
 		summary: {
-			en: 'APIs and microservices for CASSI, the health plan of Banco do Brasil employees, with 600k+ beneficiaries. The microservice architecture raised scalability by 60% and cut maintenance costs by 35%.',
+			en: 'APIs and microservices for CASSI, the health plan of Banco do Brasil employees, with 600k+ beneficiaries. I built a Java 21 and Spring Boot API gateway with routes and mappings stored in SQL Server, so scheduling integrations can change without a redeploy.',
 			'pt-br':
-				'APIs e microsserviços para a CASSI, plano de saúde dos funcionários do Banco do Brasil, com mais de 600 mil beneficiários. A arquitetura de microsserviços elevou a escalabilidade em 60% e reduziu os custos de manutenção em 35%.',
+				'APIs e microsserviços para a CASSI, plano de saúde dos funcionários do Banco do Brasil, com mais de 600 mil beneficiários. Desenvolvi um gateway de APIs com Java 21 e Spring Boot que permite alterar rotas e mapeamentos de integrações de agendamento no SQL Server sem novo deploy.',
 		},
 		stack: ['Java', 'Spring Boot', 'Quarkus', 'Kafka', 'RabbitMQ', 'Azure DevOps', 'React'],
 		workName: 'CASSI',
@@ -91,9 +91,9 @@ export const experience: Experience[] = [
 		role: { en: 'Software Engineer, consulting', 'pt-br': 'Engenheiro de Software, consultoria' },
 		period: { en: '8 months', 'pt-br': '8 meses' },
 		summary: {
-			en: 'Migration of backend services of the RNDS, the national health data network, from Java 8/11 and Spring Boot 2.x to Java 21 and Spring Boot 3.5, plus GraalVM native images that cut memory by 64% to 94% in staging, and the removal of the configuration server.',
+			en: 'Completed the Java 25 and Spring Boot 4 migration for the RNDS backend services I worked on in that phase, following the Java 21 and Spring Boot 3.5 upgrade. In staging, GraalVM native images cut memory usage by 64% to 94%. I also removed the configuration server.',
 			'pt-br':
-				'Migração de serviços do backend da RNDS, a rede nacional de dados em saúde, de Java 8/11 e Spring Boot 2.x para Java 21 e Spring Boot 3.5, além de native images do GraalVM que reduziram a memória em 64% a 94% em homologação e da remoção do config server.',
+				'Concluí a migração para Java 25 e Spring Boot 4 nos serviços de backend da RNDS em que atuei nessa etapa, após a atualização para Java 21 e Spring Boot 3.5. Em homologação, as native images do GraalVM reduziram o consumo de memória em 64% a 94%. Também removi o config server.',
 		},
 		stack: ['Java', 'Spring Boot', 'Elasticsearch', 'Kafka', 'AWS', 'Kubernetes'],
 		workName: 'DATASUS',
@@ -159,18 +159,13 @@ export const skills: SkillGroup[] = [
 export const education: EducationEntry[] = [
 	{
 		title: { en: 'MBA in Software Engineering', 'pt-br': 'MBA em Engenharia de Software' },
-		school: 'Universidade de São Paulo',
-		period: { en: 'Apr 2024 - Present', 'pt-br': 'Abr 2024 - Atual' },
+		school: 'USP/Esalq',
+		period: { en: 'May 2025 - In progress', 'pt-br': 'Mai 2025 - Em andamento' },
 	},
 	{
 		title: { en: "Bachelor's in Computer Science", 'pt-br': 'Bacharelado em Ciência da Computação' },
 		school: 'Centro Universitário de Brasília',
 		period: { en: 'Aug 2022 - Dec 2024', 'pt-br': 'Ago 2022 - Dez 2024' },
-	},
-	{
-		title: { en: "Bachelor's in Computer Science", 'pt-br': 'Bacharelado em Ciência da Computação' },
-		school: 'Instituto Federal de Brasília',
-		period: { en: 'Jan 2019 - Nov 2022', 'pt-br': 'Jan 2019 - Nov 2022' },
 	},
 ];
 
