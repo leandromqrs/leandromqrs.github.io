@@ -167,6 +167,14 @@ export const education: EducationEntry[] = [
 		school: 'Centro Universitário de Brasília',
 		period: { en: 'Aug 2022 - Dec 2024', 'pt-br': 'Ago 2022 - Dez 2024' },
 	},
+	{
+		title: {
+			en: 'Computer Science studies, transferred to CEUB',
+			'pt-br': 'Ciência da Computação, com transferência para o CEUB',
+		},
+		school: 'Instituto Federal de Brasília (IFB)',
+		period: { en: '2019 - 2022', 'pt-br': '2019 - 2022' },
+	},
 ];
 
 export const certifications: Localized<string[]> = {

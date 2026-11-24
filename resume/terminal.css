@@ -104,9 +104,8 @@ p + p {
 /* Keep the terminal ornaments visual only, and start the second page
    with a real heading instead of splitting two entries across pages. */
 @media print {
-	#experiencia-adicional,
-	#experincia-adicional,
-	#additional-experience {
+	#consultorias,
+	#consulting {
 		break-before: page;
 	}
 }
